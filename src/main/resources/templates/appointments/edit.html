@@ -5,7 +5,7 @@
 </head>
 <body>
 <h1>Edit Appointment</h1>
-<form th:object="${appointment}" th:action="@{/appointments/{id}(id=${appointment.id})}" method="post">
+<form th:object="${appointment}" th:action="@{/appointments/{id}/update(id=${appointment.id})}"  method="post">
   <input type="hidden" th:field="*{id}" />
   <div>
     <label for="patient">Patient:</label>

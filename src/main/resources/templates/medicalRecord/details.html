@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Medical Record Details</title>
+</head>
+<body>
+<h1>Medical Record Details</h1>
+<table>
+  <tr>
+    <th>Patient</th>
+    <td th:text="${medicalRecord.patient}"></td>
+  </tr>
+  <tr>
+    <th>Doctor</th>
+    <td th:text="${medicalRecord.doctor}"></td>
+  </tr>
+  <tr>
+    <th>Appointment</th>
+    <td th:text="${medicalRecord.appointment}"></td>
+  </tr>
+  <tr>
+    <th>Medical History</th>
+    <td th:text="${medicalRecord.medicalHistory}"></td>
+  </tr>
+  <tr>
+    <th>Diagnosis</th>
+    <td th:text="${medicalRecord.diagnosis}"></td>
+  </tr>
+  <tr>
+    <th>Prescription</th>
+    <td th:text="${medicalRecord.prescription}"></td>
+  </tr>
+  <tr>
+    <th>Notes</th>
+    <td th:text="${medicalRecord.notes}"></td>
+  </tr>
+</table>
+<br>
+<a th:href="@{/medicalrecord/list}">Back to List</a>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="${staff.firstName + ' ' + staff.lastName}">Staff Details</title>
+</head>
+<body>
+<h1 th:text="${staff.firstName + ' ' + staff.lastName}">Staff Details</h1>
+<table>
+    <tr>
+        <td>ID:</td>
+        <td th:text="${staff.id}"></td>
+    </tr>
+    <tr>
+        <td>First Name:</td>
+        <td th:text="${staff.firstName}"></td>
+    </tr>
+    <tr>
+        <td>Last Name:</td>
+        <td th:text="${staff.lastName}"></td>
+    </tr>
+    <tr>
+        <td>Date of Birth:</td>
+        <td th:text="${staff.dateOfBirth}"></td>
+    </tr>
+    <tr>
+        <td>Gender:</td>
+        <td th:text="${staff.gender}"></td>
+    </tr>
+    <tr>
+        <td>Address:</td>
+        <td th:text="${staff.address}"></td>
+    </tr>
+    <tr>
+        <td>Phone Number:</td>
+        <td th:text="${staff.phoneNumber}"></td>
+    </tr>
+    <tr>
+        <td>Email:</td>
+        <td th:text="${staff.email}"></td>
+    </tr>
+    <tr>
+        <td>Job Title:</td>
+        <td th:text="${staff.jobTitle}"></td>
+    </tr>
+</table>
+<a th:href="@{/staff}" th:text="Back to Staff List"></a>
+</body>
+</html>

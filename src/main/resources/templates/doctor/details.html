@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Doctor Details</title>
+</head>
+<body>
+<h1>Doctor Details</h1>
+<table>
+    <tbody>
+    <tr>
+        <td>ID:</td>
+        <td th:text="${doctor.id}"></td>
+    </tr>
+    <tr>
+        <td>First Name:</td>
+        <td th:text="${doctor.firstName}"></td>
+    </tr>
+    <tr>
+        <td>Last Name:</td>
+        <td th:text="${doctor.lastName}"></td>
+    </tr>
+    <tr>
+        <td>Date of Birth:</td>
+        <td th:text="${doctor.dateOfBirth}"></td>
+    </tr>
+    <tr>
+        <td>Gender:</td>
+        <td th:text="${doctor.gender}"></td>
+    </tr>
+    <tr>
+        <td>Address:</td>
+        <td th:text="${doctor.address}"></td>
+    </tr>
+    <tr>
+        <td>Phone Number:</td>
+        <td th:text="${doctor.phoneNumber}"></td>
+    </tr>
+    <tr>
+        <td>Email:</td>
+        <td th:text="${doctor.email}"></td>
+    </tr>
+    <tr>
+        <td>Specialty:</td>
+        <td th:text="${doctor.specialty}"></td>
+    </tr>
+    </tbody>
+</

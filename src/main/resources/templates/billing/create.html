@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>New Billing</title>
+</head>
+<body>
+<h1>New Billing</h1>
+<form th:action="@{/billing/save}" th:object="${bill}" method="post">
+    <label for="dateOfBill">Date of Bill:</label>
+    <input type="date" id="dateOfBill" name="dateOfBill" th:field="*{dateOfBill}"/><br/>
+    <label for="amount">Amount:</label>
+    <input type="number" id="amount" name="amount" th:field="*{amount}"/><br/>
+    <label for="patient">Patient:</label>
+    <select id="patient" name="patient.id" th:field="*{patient.id}">
+        <option value="">-- Select a patient --</option>
+        <option th:each="patient : ${patients}" th:value="${patient.id}" th:text="${patient.name}"></option>
+    </select><br/>
+    <label for="doctor">Doctor:</label>
+    <select id="doctor" name="doctor.id" th:field="*{doctor.id}">
+        <option value="">-- Select a doctor --</option>
+        <option th:each="doctor : ${doctors}" th:value="${doctor.id}" th:text="${doctor.name}"></option>
+    </select><br/>
+    <label for="appointment">Appointment:</label>
+    <select id="appointment" name="appointment.id" th:field="*{appointment.id}">
+        <option value="">-- Select an appointment --</option>
+        <option th:each="appointment : ${appointments}" th:value="${appointment.id}"
+                th:text="${appointment.id}"></option>
+    </select><br/>
+    <input type="submit" value="Save"/>
+</form>
+<a th:href="@{/billing/list}">Back to Billing List</a>
+</body>
+</html>

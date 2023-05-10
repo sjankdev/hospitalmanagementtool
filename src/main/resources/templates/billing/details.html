@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Details for Bill ID: [[${bill.id}]]</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+<h1>Details for Bill ID: [[${bill.id}]]</h1>
+
+<table>
+    <tr>
+        <td>Date of Bill:</td>
+        <td>[[${bill.dateOfBill}]]</td>
+    </tr>
+    <tr>
+        <td>Amount:</td>
+        <td>[[${bill.amount}]]</td>
+    </tr>
+    <tr>
+        <td>Patient:</td>
+        <td>[[${bill.patient.name}]]</td>
+    </tr>
+    <tr>
+        <td>Doctor:</td>
+        <td>[[${bill.doctor.name}]]</td>
+    </tr>
+    <tr>
+        <td>Appointment:</td>
+        <td>[[${bill.appointment.id}]]</td>
+    </tr>
+</table>
+
+<div>
+    <a href="/billing/list">Back to Billing List</a>
+</div>
+</body>
+</html>

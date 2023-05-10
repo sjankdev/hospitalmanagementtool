@@ -1,0 +1,43 @@
+<!-- medicalrecord/index.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Medical Records List</title>
+</head>
+<body>
+<h1>Medical Records List</h1>
+<table>
+  <thead>
+  <tr>
+    <th>ID</th>
+    <th>Patient</th>
+    <th>Doctor</th>
+    <th>Appointment</th>
+    <th>Medical History</th>
+    <th>Diagnosis</th>
+    <th>Prescription</th>
+    <th>Notes</th>
+    <th></th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="medicalRecord : ${medicalRecords}">
+    <td th:text="${medicalRecord.id}"></td>
+    <td th:text="${medicalRecord.patient.name}"></td>
+    <td th:text="${medicalRecord.doctor.name}"></td>
+    <td th:text="${medicalRecord.appointment}"></td>
+    <td th:text="${medicalRecord.medicalHistory}"></td>
+    <td th:text="${medicalRecord.diagnosis}"></td>
+    <td th:text="${medicalRecord.prescription}"></td>
+    <td th:text="${medicalRecord.notes}"></td>
+    <td>
+      <a th:href="@{/medicalrecord/__${medicalRecord.id}__/edit}">Edit</a>
+      <a th:href="@{/medicalrecord/__${medicalRecord.id}__/delete}" onclick="return confirm('Are you sure you want to delete this medical record?')">Delete</a>
+    </td>
+  </tr>
+  </tbody>
+</table>
+<a th:href="@{/medicalrecord/create}">Add New Medical Record</a>
+</body>
+</html>

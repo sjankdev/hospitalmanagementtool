@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Inventory Details</title>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+</head>
+<body>
+<h1>Inventory Details</h1>
+<p th:text="'ID: ' + ${inventory.id}"></p>
+<p th:text="'Name: ' + ${inventory.name}"></p>
+<p th:text="'Description: ' + ${inventory.description}"></p>
+<p th:text="'Quantity: ' + ${inventory.quantity}"></p>
+<p th:text="'Price: ' + ${inventory.price}"></p>
+<a th:href="@{/inventory/}" class="btn btn-secondary">Back to Inventory List</a>
+</body>
+</html>

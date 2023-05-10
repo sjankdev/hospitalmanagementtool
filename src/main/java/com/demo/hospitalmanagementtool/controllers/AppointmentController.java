@@ -17,7 +17,7 @@ public class AppointmentController {
     @Autowired
     private AppointmentService appointmentService;
 
-    @GetMapping
+    @GetMapping("/list")
     public String getAllAppointments(Model model) {
         List<Appointment> appointments = appointmentService.getAllAppointments();
         model.addAttribute("appointments", appointments);
@@ -36,14 +36,14 @@ public class AppointmentController {
         }
     }
 
-    @GetMapping("/new")
+    @GetMapping("/create")
     public String createAppointmentForm(Model model) {
         Appointment appointment = new Appointment();
         model.addAttribute("appointment", appointment);
         return "appointments/create";
     }
 
-    @PostMapping
+    @PostMapping("/save")
     public String saveAppointment(@ModelAttribute("appointment") Appointment appointment) {
         appointmentService.saveAppointment(appointment);
         return "redirect:/appointments";
@@ -61,7 +61,7 @@ public class AppointmentController {
         }
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/{id}/update")
     public String updateAppointment(@PathVariable("id") Long id, @ModelAttribute("appointment") Appointment appointment) {
         appointmentService.updateAppointment(id, appointment);
         return "redirect:/appointments";

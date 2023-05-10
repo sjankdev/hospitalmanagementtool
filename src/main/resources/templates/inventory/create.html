@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Inventory Item</title>
+    <link rel="stylesheet" href="/static/css/styles.css"/>
+</head>
+<body>
+<h1>Create Inventory Item</h1>
+<form th:action="@{/inventory/save}" th:object="${inventory}" method="post">
+    <div>
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" th:field="*{name}" required/>
+    </div>
+    <div>
+        <label for="description">Description:</label>
+        <textarea id="description" name="description" th:field="*{description}"></textarea>
+    </div>
+    <div>
+        <label for="price">Price:</label>
+        <input type="number" id="price" name="price" th:field="*{price}" required/>
+    </div>
+    <div>
+        <label for="quantity">Quantity:</label>
+        <input type="number" id="quantity" name="quantity" th:field="*{quantity}" required/>
+    </div>
+    <button type="submit">Save</button>
+</form>
+<a th:href="@{/inventory/list}">Back to Inventory List</a>
+</body>
+</html>

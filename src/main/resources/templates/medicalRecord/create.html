@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>New Medical Record</title>
+</head>
+<body>
+<h1>New Medical Record</h1>
+<form action="#" th:action="@{/medicalrecords/save}" th:object="${medicalRecord}" method="post">
+  <label for="patient">Patient:</label>
+  <input type="text" id="patient" th:field="*{patient}" />
+
+  <label for="doctor">Doctor:</label>
+  <input type="text" id="doctor" th:field="*{doctor}" />
+
+  <label for="appointment">Appointment:</label>
+  <input type="text" id="appointment" th:field="*{appointment}" />
+
+  <label for="medicalHistory">Medical History:</label>
+  <input type="text" id="medicalHistory" th:field="*{medicalHistory}" />
+
+  <label for="diagnosis">Diagnosis:</label>
+  <input type="text" id="diagnosis" th:field="*{diagnosis}" />
+
+  <label for="prescription">Prescription:</label>
+  <input type="text" id="prescription" th:field="*{prescription}" />
+
+  <label for="notes">Notes:</label>
+  <input type="text" id="notes" th:field="*{notes}" />
+
+  <button type="submit">Save</button>
+</form>
+<a th:href="@{/medicalrecord/list}">Back to Medical Records List</a>
+
+</body>
+</html>

@@ -3,33 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <title>New Appointment</title>
+    <link rel="stylesheet" type="text/css" href="/css/appointment-new.css">
 </head>
 <body>
 <h1>New Appointment</h1>
-<form th:action="@{/appointments}" method="post">
+<form th:action="@{/appointments/save}" method="post" th:object="${appointment}">
     <div>
         <label for="patient">Patient:</label>
-        <select name="patient" id="patient">
+        <select name="patient.id" id="patient">
             <option th:each="patient : ${patients}" th:value="${patient.id}" th:text="${patient.name}"></option>
         </select>
     </div>
     <div>
         <label for="doctor">Doctor:</label>
-        <select name="doctor" id="doctor">
+        <select name="doctor.id" id="doctor">
             <option th:each="doctor : ${doctors}" th:value="${doctor.id}" th:text="${doctor.name}"></option>
         </select>
     </div>
     <div>
         <label for="reasonForVisit">Reason for Visit:</label>
-        <input type="text" name="reasonForVisit" id="reasonForVisit" />
+        <input type="text" name="reasonForVisit" id="reasonForVisit" th:field="*{reasonForVisit}"/>
     </div>
     <div>
         <label for="notes">Notes:</label>
-        <textarea name="notes" id="notes"></textarea>
+        <textarea name="notes" id="notes" th:field="*{notes}"></textarea>
     </div>
     <div>
         <label for="status">Status:</label>
-        <select name="status" id="status">
+        <select name="status" id="status" th:field="*{status}">
             <option value="SCHEDULED">Scheduled</option>
             <option value="IN_PROGRESS">In Progress</option>
             <option value="COMPLETED">Completed</option>
@@ -38,13 +39,14 @@
     </div>
     <div>
         <label for="medicalRecord">Medical Record:</label>
-        <textarea name="medicalRecord" id="medicalRecord"></textarea>
+        <textarea name="medicalRecord" id="medicalRecord" th:field="*{medicalRecord}"></textarea>
     </div>
     <div>
         <label for="dateTime">Date and Time:</label>
-        <input type="datetime-local" name="dateTime" id="dateTime" />
+        <input type="datetime-local" name="dateTime" id="dateTime" th:field="*{dateTime}"/>
     </div>
     <button type="submit">Save</button>
 </form>
+<a th:href="@{/appointments/list}">Back to Appointment list</a>
 </body>
 </html>
