@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>New Appointment</title>
+</head>
+<body>
+<h1>New Appointment</h1>
+<form th:action="@{/appointments}" method="post">
+    <div>
+        <label for="patient">Patient:</label>
+        <select name="patient" id="patient">
+            <option th:each="patient : ${patients}" th:value="${patient.id}" th:text="${patient.name}"></option>
+        </select>
+    </div>
+    <div>
+        <label for="doctor">Doctor:</label>
+        <select name="doctor" id="doctor">
+            <option th:each="doctor : ${doctors}" th:value="${doctor.id}" th:text="${doctor.name}"></option>
+        </select>
+    </div>
+    <div>
+        <label for="reasonForVisit">Reason for Visit:</label>
+        <input type="text" name="reasonForVisit" id="reasonForVisit" />
+    </div>
+    <div>
+        <label for="notes">Notes:</label>
+        <textarea name="notes" id="notes"></textarea>
+    </div>
+    <div>
+        <label for="status">Status:</label>
+        <select name="status" id="status">
+            <option value="SCHEDULED">Scheduled</option>
+            <option value="IN_PROGRESS">In Progress</option>
+            <option value="COMPLETED">Completed</option>
+            <option value="CANCELLED">Cancelled</option>
+        </select>
+    </div>
+    <div>
+        <label for="medicalRecord">Medical Record:</label>
+        <textarea name="medicalRecord" id="medicalRecord"></textarea>
+    </div>
+    <div>
+        <label for="dateTime">Date and Time:</label>
+        <input type="datetime-local" name="dateTime" id="dateTime" />
+    </div>
+    <button type="submit">Save</button>
+</form>
+</body>
+</html>

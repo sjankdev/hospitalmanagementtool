@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Edit Appointment</title>
+</head>
+<body>
+<h1>Edit Appointment</h1>
+<form th:object="${appointment}" th:action="@{/appointments/{id}(id=${appointment.id})}" method="post">
+  <input type="hidden" th:field="*{id}" />
+  <div>
+    <label for="patient">Patient:</label>
+    <select id="patient" name="patient" th:field="*{patient}">
+      <option th:each="patient : ${patients}" th:value="${patient.id}" th:text="${patient.name}"></option>
+    </select>
+  </div>
+  <div>
+    <label for="doctor">Doctor:</label>
+    <select id="doctor" name="doctor" th:field="*{doctor}">
+      <option th:each="doctor : ${doctors}" th:value="${doctor.id}" th:text="${doctor.name}"></option>
+    </select>
+  </div>
+  <div>
+    <label for="reasonForVisit">Reason for Visit:</label>
+    <input id="reasonForVisit" name="reasonForVisit" type="text" th:field="*{reasonForVisit}" />
+  </div>
+  <div>
+    <label for="notes">Notes:</label>
+    <input id="notes" name="notes" type="text" th:field="*{notes}" />
+  </div>
+  <div>
+    <label for="status">Status:</label>
+    <input id="status" name="status" type="text" th:field="*{status}" />
+  </div>
+  <div>
+    <label for="medicalRecord">Medical Record:</label>
+    <input id="medicalRecord" name="medicalRecord" type="text" th:field="*{medicalRecord}" />
+  </div>
+  <div>
+    <label for="dateTime">Date and Time:</label>
+    <input id="dateTime" name="dateTime" type="datetime-local" th:field="*{dateTime}" />
+  </div>
+  <button type="submit">Save Changes</button>
+</form>
+</body>
+</html>

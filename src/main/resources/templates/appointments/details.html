@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Appointment Details</title>
+</head>
+<body>
+<h1>Appointment Details</h1>
+<table>
+  <tr>
+    <td>ID:</td>
+    <td th:text="${appointment.id}"></td>
+  </tr>
+  <tr>
+    <td>Patient:</td>
+    <td th:text="${appointment.patient.name}"></td>
+  </tr>
+  <tr>
+    <td>Doctor:</td>
+    <td th:text="${appointment.doctor.name}"></td>
+  </tr>
+  <tr>
+    <td>Date and Time:</td>
+    <td th:text="${appointment.dateTime}"></td>
+  </tr>
+  <tr>
+    <td>Reason for Visit:</td>
+    <td th:text="${appointment.reasonForVisit}"></td>
+  </tr>
+  <tr>
+    <td>Notes:</td>
+    <td th:text="${appointment.notes}"></td>
+  </tr>
+  <tr>
+    <td>Status:</td>
+    <td th:text="${appointment.status}"></td>
+  </tr>
+  <tr>
+    <td>Medical Record:</td>
+    <td>
+      <a th:href="@{/medical-records/{id}(id=${appointment.medicalRecord.id})}"
+         th:text="${appointment.medicalRecord.name}"></a>
+    </td>
+  </tr>
+</table>
+<a th:href="@{/appointments}">Back to List</a> |
+<a th:href="@{/appointments/{id}/edit(id=${appointment.id})}">Edit</a> |
+<form th:action="@{/appointments/{id}(id=${appointment.id})}" method="post">
+  <input type="hidden" name="_method" value="delete" />
+  <button type="submit">Delete</button>
+</form>
+</body>
+</html>
