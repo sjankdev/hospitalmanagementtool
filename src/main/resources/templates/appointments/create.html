@@ -18,7 +18,6 @@
             </option>
         </select>
     </div>
-
     <div>
         <label for="doctor">Doctor:</label>
         <select th:field="*{doctor.id}" id="doctor">
@@ -29,7 +28,6 @@
             </option>
         </select>
     </div>
-
     <div>
         <label for="staff">Staff:</label>
         <select th:field="*{staff.id}" id="staff">
@@ -40,23 +38,18 @@
             </option>
         </select>
     </div>
-
-
     <div>
         <label for="dateTime">Date and Time:</label>
         <input type="datetime-local" id="dateTime" name="dateTime" th:field="*{dateTime}" required>
     </div>
-
     <div>
         <label for="reasonForVisit">Reason for Visit:</label>
         <input type="text" id="reasonForVisit" name="reasonForVisit" th:field="*{reasonForVisit}" required>
     </div>
-
     <div>
         <label for="notes">Notes:</label>
         <textarea id="notes" name="notes" th:field="*{notes}" required></textarea>
     </div>
-
     <div>
         <label for="status">Status:</label>
         <select id="status" name="status" required>
@@ -68,6 +61,8 @@
     </div>
     <button type="submit">Save</button>
 </form>
-<a th:href="@{/appointments/list}">Back to Appointment list</a>
+<div style="display: flex; align-items: center; justify-content: center;">
+    <a th:href="@{/appointments/list}">Back to Appointment list</a>
+</div>
 </body>
 </html>
