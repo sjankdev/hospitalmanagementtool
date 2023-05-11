@@ -36,7 +36,7 @@ public class AppointmentController {
         return "appointments/list";
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{id}/details")
     public String getAppointmentById(@PathVariable("id") Long id, Model model) {
         try {
             Appointment appointment = appointmentService.getAppointmentById(id);
@@ -62,7 +62,7 @@ public class AppointmentController {
     @PostMapping("/save")
     public String saveAppointment(@ModelAttribute("appointment") Appointment appointment) {
         appointmentService.saveAppointment(appointment);
-        return "redirect:/appointments";
+        return "redirect:/appointments/list";
     }
 
     @GetMapping("/{id}/edit")
@@ -70,6 +70,9 @@ public class AppointmentController {
         try {
             Appointment appointment = appointmentService.getAppointmentById(id);
             model.addAttribute("appointment", appointment);
+            model.addAttribute("doctors", doctorService.getAllDoctors());
+            model.addAttribute("patients", patientService.getAllPatients());
+            model.addAttribute("staff", staffService.getAllStaff());
             return "appointments/edit";
         } catch (NotFoundException ex) {
             model.addAttribute("errorMessage", ex.getMessage());
@@ -77,13 +80,13 @@ public class AppointmentController {
         }
     }
 
-    @PutMapping("/{id}/update")
+    @PostMapping("/{id}/update")
     public String updateAppointment(@PathVariable("id") Long id, @ModelAttribute("appointment") Appointment appointment) {
         appointmentService.updateAppointment(id, appointment);
-        return "redirect:/appointments";
+        return "redirect:/appointments/list";
     }
 
-    @DeleteMapping("/{id}")
+    @PostMapping("/{id}")
     public String deleteAppointment(@PathVariable("id") Long id) {
         appointmentService.deleteAppointment(id);
         return "redirect:/appointments";

@@ -9,15 +9,15 @@
 <table>
   <tr>
     <th>Patient</th>
-    <td th:text="${medicalRecord.patient}"></td>
+    <td th:text="${medicalRecord.patient.firstName}"></td>
   </tr>
   <tr>
     <th>Doctor</th>
-    <td th:text="${medicalRecord.doctor}"></td>
+    <td th:text="${medicalRecord.doctor.firstName}"></td>
   </tr>
   <tr>
     <th>Appointment</th>
-    <td th:text="${medicalRecord.appointment}"></td>
+    <td th:text="${medicalRecord.appointment.notes}"></td>
   </tr>
   <tr>
     <th>Medical History</th>

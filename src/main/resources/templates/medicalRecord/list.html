@@ -24,8 +24,8 @@
   <tbody>
   <tr th:each="medicalRecord : ${medicalRecords}">
     <td th:text="${medicalRecord.id}"></td>
-    <td th:text="${medicalRecord.patient.name}"></td>
-    <td th:text="${medicalRecord.doctor.name}"></td>
+    <td th:text="${medicalRecord.patient.firstName}"></td>
+    <td th:text="${medicalRecord.doctor.firstName}"></td>
     <td th:text="${medicalRecord.appointment}"></td>
     <td th:text="${medicalRecord.medicalHistory}"></td>
     <td th:text="${medicalRecord.diagnosis}"></td>
@@ -38,6 +38,6 @@
   </tr>
   </tbody>
 </table>
-<a th:href="@{/medicalrecord/create}">Add New Medical Record</a>
+<a th:href="@{/medicalrecords/create}">Add New Medical Record</a>
 </body>
 </html>

@@ -1,7 +1,10 @@
 package com.demo.hospitalmanagementtool.controllers;
 
 import com.demo.hospitalmanagementtool.entities.Billing;
+import com.demo.hospitalmanagementtool.service.AppointmentService;
 import com.demo.hospitalmanagementtool.service.BillingService;
+import com.demo.hospitalmanagementtool.service.DoctorService;
+import com.demo.hospitalmanagementtool.service.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +18,15 @@ public class BillingController {
 
     @Autowired
     private BillingService billingService;
+
+    @Autowired
+    private AppointmentService appointmentService;
+
+    @Autowired
+    private DoctorService doctorService;
+
+    @Autowired
+    private PatientService patientService;
 
     @GetMapping("/list")
     public String getAllBills(Model model) {
@@ -34,6 +46,9 @@ public class BillingController {
     public String newBill(Model model) {
         Billing bill = new Billing();
         model.addAttribute("bill", bill);
+        model.addAttribute("doctors", doctorService.getAllDoctors());
+        model.addAttribute("patients", patientService.getAllPatients());
+        model.addAttribute("appointments", appointmentService.getAllAppointments());
         return "billing/create";
     }
 

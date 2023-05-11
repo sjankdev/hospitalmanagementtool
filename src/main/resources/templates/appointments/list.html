@@ -27,7 +27,7 @@
         <td th:text="${appointment.dateTime}"></td>
         <td th:text="${appointment.status}"></td>
         <td>
-            <a th:href="@{/appointments/{id}(id=${appointment.id})}">View</a> |
+            <a th:href="@{/appointments/{id}/details(id=${appointment.id})}">View</a> |
             <a th:href="@{/appointments/{id}/edit(id=${appointment.id})}">Edit</a> |
             <form th:action="@{/appointments/{id}(id=${appointment.id})}" method="post">
                 <input type="hidden" name="_method" value="delete" />

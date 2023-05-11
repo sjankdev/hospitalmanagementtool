@@ -42,7 +42,7 @@ public class Billing {
     @NotBlank(message = "Status is required.")
     private String status;
 
-    @PastOrPresent(message = "Date of bill must be in the past or present.")
+//    @PastOrPresent(message = "Date of bill must be in the past or present.")
     @Column(name = "date_of_bill")
     private LocalDateTime dateOfBill;
 

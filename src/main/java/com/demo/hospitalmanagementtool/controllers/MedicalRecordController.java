@@ -1,7 +1,10 @@
 package com.demo.hospitalmanagementtool.controllers;
 
 import com.demo.hospitalmanagementtool.entities.MedicalRecord;
+import com.demo.hospitalmanagementtool.service.AppointmentService;
+import com.demo.hospitalmanagementtool.service.DoctorService;
 import com.demo.hospitalmanagementtool.service.MedicalRecordService;
+import com.demo.hospitalmanagementtool.service.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,24 +19,36 @@ public class MedicalRecordController {
     @Autowired
     private MedicalRecordService medicalRecordService;
 
+    @Autowired
+    private PatientService patientService;
+
+    @Autowired
+    private DoctorService doctorService;
+
+    @Autowired
+    private AppointmentService appointmentService;
+
     @GetMapping("/list")
     public String getAllMedicalRecords(Model model) {
         List<MedicalRecord> medicalRecords = medicalRecordService.getAllMedicalRecords();
         model.addAttribute("medicalRecords", medicalRecords);
-        return "medicalrecord/list";
+        return "medicalRecord/list";
     }
 
     @GetMapping("/{id}")
     public String getMedicalRecordById(@PathVariable Long id, Model model) {
         MedicalRecord medicalRecord = medicalRecordService.getMedicalRecordById(id);
         model.addAttribute("medicalRecord", medicalRecord);
-        return "medicalrecord/details";
+        return "medicalRecord/details";
     }
 
     @GetMapping("/create")
     public String newMedicalRecord(Model model) {
         model.addAttribute("medicalRecord", new MedicalRecord());
-        return "medicalrecord/create";
+        model.addAttribute("doctors", doctorService.getAllDoctors());
+        model.addAttribute("patients", patientService.getAllPatients());
+        model.addAttribute("appointments", appointmentService.getAllAppointments());
+        return "medicalRecord/create";
     }
 
     @PostMapping("/save")
@@ -46,7 +61,7 @@ public class MedicalRecordController {
     public String editMedicalRecord(@PathVariable Long id, Model model) {
         MedicalRecord medicalRecord = medicalRecordService.getMedicalRecordById(id);
         model.addAttribute("medicalRecord", medicalRecord);
-        return "medicalrecord/edit";
+        return "medicalRecord/edit";
     }
 
     @PostMapping("/{id}/update")

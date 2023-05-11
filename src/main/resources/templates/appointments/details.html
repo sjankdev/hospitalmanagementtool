@@ -13,11 +13,11 @@
   </tr>
   <tr>
     <td>Patient:</td>
-    <td th:text="${appointment.patient.name}"></td>
+    <td th:text="${appointment.patient.firstName}"></td>
   </tr>
   <tr>
     <td>Doctor:</td>
-    <td th:text="${appointment.doctor.name}"></td>
+    <td th:text="${appointment.doctor.firstName}"></td>
   </tr>
   <tr>
     <td>Date and Time:</td>
@@ -38,8 +38,11 @@
   <tr>
     <td>Medical Record:</td>
     <td>
-      <a th:href="@{/medical-records/{id}(id=${appointment.medicalRecord.id})}"
-         th:text="${appointment.medicalRecord.name}"></a>
+    <span th:if="${appointment.medicalRecord != null}">
+      <a th:href="@{/medicalrecords/{id}(id=${appointment.medicalRecord.id})}"
+         th:text="${appointment.medicalRecord.notes}"></a>
+    </span>
+      <span th:if="${appointment.medicalRecord == null}">None</span>
     </td>
   </tr>
 </table>
