@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Medical Record Details</title>
+  <link rel="stylesheet" type="text/css" href="/css/medicalRecord-details.css">
 </head>
 <body>
 <h1>Medical Record Details</h1>
@@ -36,7 +37,14 @@
     <td th:text="${medicalRecord.notes}"></td>
   </tr>
 </table>
-<br>
-<a th:href="@{/medicalrecord/list}">Back to List</a>
+<div style="display: flex; align-items: center; justify-content: center;">
+  <a th:href="@{/medicalrecords/list}" style="margin-right: 10px;">Back to List</a>
+  <a th:href="@{/medicalrecords/{id}/edit(id=${medicalRecord.id})}" style="margin-right: 10px;">Edit</a>
+  <form th:action="@{/medicalrecords/{id}/delete(id=${medicalRecord.id})}" method="post">
+    <input type="hidden" name="_method" value="delete"/>
+    <button type="submit" class="btn delete-btn"
+            onclick="return confirm('Are you sure you want to delete this item?')">Delete
+    </button>
+  </form>
 </body>
 </html>

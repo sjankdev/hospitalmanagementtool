@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Edit Medical Record</title>
+    <link rel="stylesheet" type="text/css" href="/css/medicalRecord-edit.css">
 </head>
 <body>
 <h1>Edit Medical Record</h1>
@@ -18,5 +19,8 @@
     <p>Notes: <input type="text" th:field="*{notes}"/></p>
     <button type="submit">Save</button>
 </form>
+<div style="display: flex; align-items: center; justify-content: center;">
+    <a th:href="@{/medicalrecords/list}">Back to Medical Record list</a>
+</div>
 </body>
 </html>

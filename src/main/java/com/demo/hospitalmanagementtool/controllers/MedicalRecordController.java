@@ -35,7 +35,7 @@ public class MedicalRecordController {
         return "medicalRecord/list";
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{id}/details")
     public String getMedicalRecordById(@PathVariable Long id, Model model) {
         MedicalRecord medicalRecord = medicalRecordService.getMedicalRecordById(id);
         model.addAttribute("medicalRecord", medicalRecord);
@@ -54,7 +54,7 @@ public class MedicalRecordController {
     @PostMapping("/save")
     public String saveMedicalRecord(@ModelAttribute("medicalRecord") MedicalRecord medicalRecord) {
         medicalRecordService.saveMedicalRecord(medicalRecord);
-        return "redirect:/medicalrecords/";
+        return "redirect:/medicalrecords/list";
     }
 
     @GetMapping("/{id}/edit")
@@ -67,13 +67,13 @@ public class MedicalRecordController {
     @PostMapping("/{id}/update")
     public String updateMedicalRecord(@PathVariable Long id, @ModelAttribute("medicalRecord") MedicalRecord medicalRecord) {
         medicalRecordService.updateMedicalRecord(id, medicalRecord);
-        return "redirect:/medicalrecords/";
+        return "redirect:/medicalrecords/list";
     }
 
-    @GetMapping("/{id}/delete")
+    @PostMapping("/{id}/delete")
     public String deleteMedicalRecord(@PathVariable Long id) {
         medicalRecordService.deleteMedicalRecord(id);
-        return "redirect:/medicalrecords/";
+        return "redirect:/medicalrecords/list";
     }
 
 }

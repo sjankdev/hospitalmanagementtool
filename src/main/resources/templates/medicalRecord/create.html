@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>New Medical Record</title>
+    <link rel="stylesheet" type="text/css" href="/css/medicalRecord-new.css">
 </head>
 <body>
 <h1>New Medical Record</h1>
@@ -54,7 +55,8 @@
 
     <button type="submit">Save</button>
 </form>
-<a th:href="@{/medicalrecord/list}">Back to Medical Records List</a>
-
+<div style="display: flex; align-items: center; justify-content: center;">
+    <a th:href="@{/medicalrecords/list}">Back to Medical Records list</a>
+</div>
 </body>
 </html>
