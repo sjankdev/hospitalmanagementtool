@@ -86,9 +86,9 @@ public class AppointmentController {
         return "redirect:/appointments/list";
     }
 
-    @PostMapping("/{id}")
+    @PostMapping("/{id}/delete")
     public String deleteAppointment(@PathVariable("id") Long id) {
         appointmentService.deleteAppointment(id);
-        return "redirect:/appointments";
+        return "redirect:/appointments/list";
     }
 }
