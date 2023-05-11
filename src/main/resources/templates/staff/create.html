@@ -2,6 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Create New Staff</title>
+    <link rel="stylesheet" type="text/css" href="/css/staff-new.css">
 </head>
 <body>
 <h1>Create New Staff</h1>
@@ -44,7 +45,8 @@
     </div>
     <button type="submit">Create</button>
 </form>
-<a th:href="@{/staff/list}">Back to Staff List</a>
-
+<div style="display: flex; align-items: center; justify-content: center;">
+    <a th:href="@{/staff/list}">Back to Staff list</a>
+</div>
 </body>
 </html>

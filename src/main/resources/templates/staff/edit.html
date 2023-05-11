@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Edit Staff</title>
+    <link rel="stylesheet" type="text/css" href="/css/staff-edit.css">
 </head>
 <body>
 <h1>Edit Staff</h1>
@@ -43,7 +44,10 @@
         <label for="jobTitle">Job Title:</label>
         <input type="text" id="jobTitle" th:field="*{jobTitle}" required>
     </p>
-    <input type="submit" value="Save">
+    <button type="submit">Save</button>
 </form>
+<div style="display: flex; align-items: center; justify-content: center;">
+    <a th:href="@{/staff/list}">Back to Staff list</a>
+</div>
 </body>
 </html>

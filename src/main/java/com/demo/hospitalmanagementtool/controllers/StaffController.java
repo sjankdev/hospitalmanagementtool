@@ -23,7 +23,7 @@ public class StaffController {
         return "staff/list";
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{id}/details")
     public String getStaffById(@PathVariable Long id, Model model) {
         Staff staff = staffService.getStaffById(id);
         model.addAttribute("staff", staff);
@@ -55,7 +55,7 @@ public class StaffController {
         return "redirect:/staff/list";
     }
 
-    @GetMapping("/{id}/delete")
+    @PostMapping("/{id}/delete")
     public String deleteStaff(@PathVariable Long id) {
         staffService.deleteStaff(id);
         return "redirect:/staff/list";
