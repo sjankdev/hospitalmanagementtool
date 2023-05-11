@@ -23,7 +23,7 @@ public class PatientController {
         return "patient/list";
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{id}/details")
     public String getPatientById(@PathVariable Long id, Model model) {
         Patient patient = patientService.getPatientById(id);
         model.addAttribute("patient", patient);
@@ -55,7 +55,7 @@ public class PatientController {
         return "redirect:/patients/list";
     }
 
-    @GetMapping("/{id}/delete")
+    @PostMapping("/{id}/delete")
     public String deletePatient(@PathVariable Long id) {
         patientService.deletePatient(id);
         return "redirect:/patients/list";

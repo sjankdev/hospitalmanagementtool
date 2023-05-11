@@ -2,14 +2,14 @@
 
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-
+<link rel="stylesheet" type="text/css" href="/css/patient-edit.css">
 <head>
     <meta charset="UTF-8">
     <title>Edit Patient</title>
 </head>
 
 <body>
-<h2>Edit Patient</h2>
+<h1>Edit Patient</h1>
 <form th:action="@{/patients/{id}/update(id=${patient.id})}" th:object="${patient}" method="post">
     <input type="hidden" th:field="*{id}"/>
     <label>First Name: </label>
@@ -37,8 +37,10 @@
     <label>Email: </label>
     <input type="text" th:field="*{email}"/>
     <br/>
-    <input type="submit" value="Save"/>
+    <button type="submit">Save</button>
 </form>
+<div style="display: flex; align-items: center; justify-content: center;">
+    <a th:href="@{/patients/list}">Back to Patient list</a>
+</div>
 </body>
-
 </html>

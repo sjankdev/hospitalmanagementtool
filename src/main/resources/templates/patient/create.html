@@ -2,6 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>New Patient</title>
+    <link rel="stylesheet" type="text/css" href="/css/patient-new.css">
 </head>
 <body>
 <h1>New Patient</h1>
@@ -33,7 +34,8 @@
 
     <button type="submit">Submit</button>
 </form>
-<a th:href="@{/patients/list}">Back to Patients list</a>
-
+<div style="display: flex; align-items: center; justify-content: center;">
+    <a th:href="@{/patients/list}">Back to Patient list</a>
+</div>
 </body>
 </html>
