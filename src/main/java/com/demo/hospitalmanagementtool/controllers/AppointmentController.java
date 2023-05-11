@@ -3,6 +3,9 @@ package com.demo.hospitalmanagementtool.controllers;
 import com.demo.hospitalmanagementtool.entities.Appointment;
 import com.demo.hospitalmanagementtool.exceptions.NotFoundException;
 import com.demo.hospitalmanagementtool.service.AppointmentService;
+import com.demo.hospitalmanagementtool.service.DoctorService;
+import com.demo.hospitalmanagementtool.service.PatientService;
+import com.demo.hospitalmanagementtool.service.StaffService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +19,15 @@ public class AppointmentController {
 
     @Autowired
     private AppointmentService appointmentService;
+
+    @Autowired
+    private DoctorService doctorService;
+
+    @Autowired
+    private PatientService patientService;
+
+    @Autowired
+    private StaffService staffService;
 
     @GetMapping("/list")
     public String getAllAppointments(Model model) {
@@ -40,6 +52,10 @@ public class AppointmentController {
     public String createAppointmentForm(Model model) {
         Appointment appointment = new Appointment();
         model.addAttribute("appointment", appointment);
+        model.addAttribute("doctors", doctorService.getAllDoctors());
+        model.addAttribute("patients", patientService.getAllPatients());
+        model.addAttribute("staff", staffService.getAllStaff());
+
         return "appointments/create";
     }
 

@@ -10,40 +10,58 @@
 <form th:action="@{/appointments/save}" method="post" th:object="${appointment}">
     <div>
         <label for="patient">Patient:</label>
-        <select name="patient.id" id="patient">
-            <option th:each="patient : ${patients}" th:value="${patient.id}" th:text="${patient.name}"></option>
+        <select th:field="${patients}" id="patient">
+            <option value="">Select a doctor...</option>
+            <option th:each="patient : ${patients}"
+                    th:value="${patient.id}"
+                    th:text="${patient.firstName} + ' ' + ${patient.lastName}">
+            </option>
         </select>
     </div>
     <div>
         <label for="doctor">Doctor:</label>
-        <select name="doctor.id" id="doctor">
-            <option th:each="doctor : ${doctors}" th:value="${doctor.id}" th:text="${doctor.name}"></option>
+        <select th:field="${doctors}" id="doctor">
+            <option value="">Select a doctor...</option>
+            <option th:each="doctor : ${doctors}"
+                    th:value="${doctor.id}"
+                    th:text="${doctor.firstName} + ' ' + ${doctor.lastName}">
+            </option>
         </select>
     </div>
     <div>
-        <label for="reasonForVisit">Reason for Visit:</label>
-        <input type="text" name="reasonForVisit" id="reasonForVisit" th:field="*{reasonForVisit}"/>
-    </div>
-    <div>
-        <label for="notes">Notes:</label>
-        <textarea name="notes" id="notes" th:field="*{notes}"></textarea>
-    </div>
-    <div>
-        <label for="status">Status:</label>
-        <select name="status" id="status" th:field="*{status}">
-            <option value="SCHEDULED">Scheduled</option>
-            <option value="IN_PROGRESS">In Progress</option>
-            <option value="COMPLETED">Completed</option>
-            <option value="CANCELLED">Cancelled</option>
+        <label for="staff">Staff:</label>
+        <select th:field="${staff}" id="staff">
+            <option value="">Select a staff...</option>
+            <option th:each="staff : ${staff}"
+                    th:value="${staff.id}"
+                    th:text="${staff.firstName} + ' ' + ${staff.lastName}">
+            </option>
         </select>
     </div>
-    <div>
-        <label for="medicalRecord">Medical Record:</label>
-        <textarea name="medicalRecord" id="medicalRecord" th:field="*{medicalRecord}"></textarea>
-    </div>
+
     <div>
         <label for="dateTime">Date and Time:</label>
-        <input type="datetime-local" name="dateTime" id="dateTime" th:field="*{dateTime}"/>
+        <input type="datetime-local" id="dateTime" name="dateTime" th:field="*{dateTime}" required>
+    </div>
+
+    <div>
+        <label for="reasonForVisit">Reason for Visit:</label>
+        <input type="text" id="reasonForVisit" name="reasonForVisit" th:field="*{reasonForVisit}" required>
+    </div>
+
+    <div>
+        <label for="notes">Notes:</label>
+        <textarea id="notes" name="notes" th:field="*{notes}" required></textarea>
+    </div>
+
+    <div>
+        <label for="status">Status:</label>
+        <select id="status" name="status" required>
+            <option value="Scheduled">Scheduled</option>
+            <option value="In Progress">In Progress</option>
+            <option value="Completed">Completed</option>
+            <option value="Cancelled">Cancelled</option>
+        </select>
     </div>
     <button type="submit">Save</button>
 </form>
