@@ -1,139 +1,102 @@
-/* Set a default font size and family */
+/* Global styles */
 body {
-    font-size: 16px;
-    font-family: Arial, sans-serif;
+  font-family: Arial, sans-serif;
+  background-color: #f1f1f1;
 }
 
-/* Add a background color and padding to the page header */
-.header {
-    background-color: #4CAF50;
-    padding: 20px;
-    color: white;
-}
-
-/* Style the page title */
 h1 {
-    margin-top: 0;
-    margin-bottom: 20px;
-    font-size: 32px;
-    font-weight: bold;
+  font-size: 2.5rem;
+  text-align: center;
+  margin: 2rem 0;
 }
 
-/* Style the navigation links */
-.navbar {
-    overflow: hidden;
-    background-color: #333;
-}
-
-.navbar a {
-    float: left;
-    color: white;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-    font-size: 17px;
-}
-
-.navbar a:hover {
-    background-color: #ddd;
-    color: black;
-}
-
-.active {
-    background-color: #4CAF50;
-    color: white;
-}
-
-/* Add some padding to the main content area */
-.main {
-    padding: 20px;
-}
-
-/* Style the table */
 table {
-    border-collapse: collapse;
-    width: 100%;
+  border-collapse: collapse;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  background-color: #fff;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
 
-table td, table th {
-    border: 1px solid #ddd;
-    padding: 8px;
+th, td {
+  text-align: center;
+  padding: 1rem;
+  border: 1px solid #ddd;
+
 }
 
-table tr:nth-child(even) {
-    background-color: #f2f2f2;
+th {
+  background-color: #f2f2f2;
+  font-weight: bold;
 }
 
-table th {
-    padding-top: 12px;
-    padding-bottom: 12px;
-    text-align: left;
-    background-color: #4CAF50;
-    color: white;
+td:first-child, th:first-child {
+  width: 5%;
 }
 
-/* Style the form */
-form {
-    border: 3px solid #f1f1f1;
-    padding: 20px;
-    max-width: 500px;
-    margin: auto;
+td:nth-child(2), th:nth-child(2) {
+  width: 20%;
 }
 
-input[type=text], input[type=password], select {
-    width: 100%;
-    padding: 12px 20px;
-    margin: 8px 0;
-    display: inline-block;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
+td:nth-child(3), th:nth-child(3) {
+  width: 20%;
 }
 
-input[type=submit] {
-    background-color: #4CAF50;
-    color: white;
-    padding: 12px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
+td:nth-child(4), th:nth-child(4) {
+  width: 25%;
 }
 
-input[type=submit]:hover {
-    background-color: #45a049;
+td:nth-child(5), th:nth-child(5) {
+  width: 15%;
 }
 
-/* Style the error messages */
-.error-message {
-    color: red;
-    font-weight: bold;
+td:last-child, th:last-child {
+  text-align: center;
 }
 
-/* Add some spacing to the buttons */
 .btn {
   display: inline-block;
-  margin-right: 5px;
   padding: 8px 12px;
-  font-size: 14px;
-  font-weight: 600;
-  color: #fff;
-  background-color: #007bff;
+  margin-right: 10px;
   border: none;
-  border-radius: 4px;
-  cursor: pointer;
+  background-color: #4CAF50;
+  color: white;
   text-decoration: none;
+  font-size: 14px;
+  border-radius: 4px;
 }
 
-button.delete-btn {
-  border: none;
-  outline: none;
+.btn:hover {
+  background-color: #0069d9;
 }
 
-form {
+.delete-btn {
+  background-color: #dc3545;
+}
+
+.delete-btn:hover {
+  background-color: #c82333;
+}
+
+a {
   display: inline-block;
-  margin: 0;
-  padding: 0;
-  border:none;
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  text-align: center;
+  text-decoration: none;
+  color: #fff;
+  background-color: #28a745;
+  transition: all 0.3s ease-in-out;
+  margin: 2rem 0;
 }
 
+a:hover {
+  background-color: #218838;
+}
+.btn + .btn {
+  margin-left: 10px;
+  margin-right: 10px;
+    border-left: none;
 
+}
