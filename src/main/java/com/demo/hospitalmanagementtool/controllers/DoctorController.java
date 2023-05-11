@@ -23,7 +23,7 @@ public class DoctorController {
         return "doctor/list";
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{id}/details")
     public String getDoctorById(@PathVariable Long id, Model model) {
         model.addAttribute("doctor", doctorService.getDoctorById(id));
         return "doctor/details";
@@ -56,14 +56,14 @@ public class DoctorController {
             return "doctor/edit";
         }
         doctorService.updateDoctor(id, doctor);
-        return "redirect:/doctors";
+        return "redirect:/doctors/list";
     }
 
-    @RequestMapping(value = "/{id}/delete", method = RequestMethod.POST)
+    @PostMapping("/{id}/delete")
     public String deleteDoctor(@PathVariable Long id, @RequestParam("_method") String method) {
         if (method.equalsIgnoreCase("delete")) {
             doctorService.deleteDoctor(id);
         }
-        return "redirect:/doctors";
+        return "redirect:/doctors/list";
     }
 }

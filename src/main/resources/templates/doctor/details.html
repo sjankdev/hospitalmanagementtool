@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Doctor Details</title>
+    <link rel="stylesheet" type="text/css" href="/css/doctor-details.css">
 </head>
 <body>
 <h1>Doctor Details</h1>
 <table>
-    <tbody>
     <tr>
         <td>ID:</td>
         <td th:text="${doctor.id}"></td>
@@ -44,5 +44,24 @@
         <td>Specialty:</td>
         <td th:text="${doctor.specialty}"></td>
     </tr>
-    </tbody>
-</
+    <tr>
+        <td>Medical License Number:</td>
+        <td th:text="${doctor.medicalLicenseNumber}"></td>
+    </tr>
+    <tr>
+        <td>Medical School Attended:</td>
+        <td th:text="${doctor.medicalSchoolAttended}"></td>
+    </tr>
+</table>
+<div style="display: flex; align-items: center; justify-content: center;">
+    <a th:href="@{/doctors/list}" style="margin-right: 10px;">Back to List</a>
+    <a th:href="@{/doctors/{id}/edit(id=${doctor.id})}" style="margin-right: 10px;">Edit</a>
+    <form th:action="@{/doctors/{id}/delete(id=${doctor.id})}" method="post">
+        <input type="hidden" name="_method" value="delete"/>
+        <button type="submit" class="btn delete-btn"
+                onclick="return confirm('Are you sure you want to delete this item?')">Delete
+        </button>
+    </form>
+</div>
+</body>
+</html>
