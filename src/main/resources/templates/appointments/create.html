@@ -10,17 +10,18 @@
 <form th:action="@{/appointments/save}" method="post" th:object="${appointment}">
     <div>
         <label for="patient">Patient:</label>
-        <select th:field="${patients}" id="patient">
-            <option value="">Select a doctor...</option>
+        <select th:field="*{patient.id}" id="patient">
+            <option value="">Select a patient...</option>
             <option th:each="patient : ${patients}"
                     th:value="${patient.id}"
                     th:text="${patient.firstName} + ' ' + ${patient.lastName}">
             </option>
         </select>
     </div>
+
     <div>
         <label for="doctor">Doctor:</label>
-        <select th:field="${doctors}" id="doctor">
+        <select th:field="*{doctor.id}" id="doctor">
             <option value="">Select a doctor...</option>
             <option th:each="doctor : ${doctors}"
                     th:value="${doctor.id}"
@@ -28,9 +29,10 @@
             </option>
         </select>
     </div>
+
     <div>
         <label for="staff">Staff:</label>
-        <select th:field="${staff}" id="staff">
+        <select th:field="*{staff.id}" id="staff">
             <option value="">Select a staff...</option>
             <option th:each="staff : ${staff}"
                     th:value="${staff.id}"
@@ -38,6 +40,7 @@
             </option>
         </select>
     </div>
+
 
     <div>
         <label for="dateTime">Date and Time:</label>

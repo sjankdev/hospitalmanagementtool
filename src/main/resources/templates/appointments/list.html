@@ -22,8 +22,8 @@
     <tbody>
     <tr th:each="appointment : ${appointments}">
         <td th:text="${appointment.id}"></td>
-        <td th:text="${appointment.patient.name}"></td>
-        <td th:text="${appointment.doctor.name}"></td>
+        <td th:text="${appointment.patient != null ? appointment.patient.firstName : ''}"></td>
+        <td th:text="${appointment.doctor != null ? appointment.doctor.firstName : ''}"></td>
         <td th:text="${appointment.dateTime}"></td>
         <td th:text="${appointment.status}"></td>
         <td>
