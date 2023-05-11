@@ -2,10 +2,11 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Edit Inventory</title>
+    <link rel="stylesheet" type="text/css" href="/css/inventory-edit.css">
 </head>
 <body>
 <h1>Edit Inventory</h1>
-<form action="@{/inventory/{id}/update(id=${inventory.id})}" method="post" th:object="${inventory}">
+<form action="#" th:action="@{/inventory/{id}/update(id=${inventory.id})}" th:object="${inventory}" method="post">
     <input type="hidden" th:field="*{id}"/>
     <div>
         <label for="name">Name:</label>
@@ -25,5 +26,8 @@
     </div>
     <button type="submit">Save</button>
 </form>
+<div style="display: flex; align-items: center; justify-content: center;">
+    <a th:href="@{/inventory/list}">Back to Inventory list</a>
+</div>
 </body>
 </html>

@@ -1,35 +1,43 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>Inventory List</title>
+    <meta charset="UTF-8">
+    <title>Inventory List</title>
+    <link rel="stylesheet" type="text/css" href="/css/inventory-list.css">
 </head>
 <body>
 <h1>Inventory List</h1>
 <table>
-  <thead>
-  <tr>
-    <th>Name</th>
-    <th>Description</th>
-    <th>Quantity</th>
-    <th>Price</th>
-    <th>Action</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr th:each="inventory : ${inventoryList}">
-    <td th:text="${inventory.name}"></td>
-    <td th:text="${inventory.description}"></td>
-    <td th:text="${inventory.quantity}"></td>
-    <td th:text="${inventory.price}"></td>
-    <td>
-      <a th:href="@{/inventory/__${inventory.id}__}">View</a>
-      <a th:href="@{/inventory/__${inventory.id}__}/edit">Edit</a>
-      <a th:href="@{/inventory/__${inventory.id}__}/delete" onclick="return confirm('Are you sure you want to delete this inventory item?')">Delete</a>
-    </td>
-  </tr>
-  </tbody>
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Quantity</th>
+        <th>Price</th>
+        <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="inventory : ${inventoryList}">
+        <td th:text="${inventory.name}"></td>
+        <td th:text="${inventory.description}"></td>
+        <td th:text="${inventory.quantity}"></td>
+        <td th:text="${inventory.price}"></td>
+        <td style="display: flex; align-items: center;">
+            <a th:href="@{/inventory/{id}/details(id=${inventory.id})}" class="btn">View</a>
+            <a th:href="@{/inventory/__${inventory.id}__/edit}" class="btn">Edit</a>
+            <form th:action="@{/inventory/{id}/delete(id=${inventory.id})}" method="post">
+                <input type="hidden" name="_method" value="delete"/>
+                <button type="submit" class="btn delete-btn"
+                        onclick="return confirm('Are you sure you want to delete this item?')">Delete
+                </button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
 </table>
-<a href="/inventory/create">Create New Inventory Item</a>
+<div style="display: flex; align-items: center; justify-content: center;">
+    <a th:href="@{/inventory/create}">Create New Inventory</a>
+</div>
 </body>
 </html>

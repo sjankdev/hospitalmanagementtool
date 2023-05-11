@@ -28,7 +28,7 @@ public class InventoryController {
         return "inventory/list";
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{id}/details")
     public String getInventoryById(@PathVariable Long id, Model model) {
         Inventory inventory = inventoryService.getInventoryById(id);
         model.addAttribute("inventory", inventory);
@@ -44,25 +44,27 @@ public class InventoryController {
     @PostMapping("/save")
     public String saveInventory(@ModelAttribute("inventory") Inventory inventory) {
         inventoryService.saveInventory(inventory);
-        return "redirect:/inventory/";
+        return "redirect:/inventory/list";
     }
 
     @GetMapping("/{id}/edit")
     public String editInventory(@PathVariable Long id, Model model) {
-        Inventory inventory = inventoryService.getInventoryById(id);
-        model.addAttribute("inventory", inventory);
+        model.addAttribute("inventory", inventoryService.getInventoryById(id));
         return "inventory/edit";
     }
 
     @PostMapping("/{id}/update")
-    public String updateInventory(@PathVariable Long id, @ModelAttribute("inventory") Inventory inventory) {
+    public String updateInventory(@PathVariable Long id, @Valid @ModelAttribute("inventory") Inventory inventory, BindingResult result) {
+        if (result.hasErrors()) {
+            return "inventory/edit";
+        }
         inventoryService.updateInventory(id, inventory);
-        return "redirect:/inventory/";
+        return "redirect:/inventory/list";
     }
 
-    @GetMapping("/{id}/delete")
+    @PostMapping("/{id}/delete")
     public String deleteInventory(@PathVariable Long id) {
         inventoryService.deleteInventory(id);
-        return "redirect:/inventory/";
+        return "redirect:/inventory/list";
     }
 }
