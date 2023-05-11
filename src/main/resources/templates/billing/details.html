@@ -1,38 +1,52 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Details for Bill ID: [[${bill.id}]]</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Billing Details</title>
+    <link rel="stylesheet" type="text/css" href="/css/billing-details.css">
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
 <body>
-<h1>Details for Bill ID: [[${bill.id}]]</h1>
-
+<h1>Billing Details</h1>
 <table>
     <tr>
+        <td>ID:</td>
+        <td th:text="${bill.id}"></td>
+    </tr>
+    <tr>
         <td>Date of Bill:</td>
-        <td>[[${bill.dateOfBill}]]</td>
+        <td th:text="${bill.dateOfBill}"></td>
     </tr>
     <tr>
         <td>Amount:</td>
-        <td>[[${bill.amount}]]</td>
+        <td th:text="${bill.amount}"></td>
     </tr>
     <tr>
         <td>Patient:</td>
-        <td>[[${bill.patient.name}]]</td>
+        <td th:text="${bill.patient.firstName}"></td>
     </tr>
     <tr>
         <td>Doctor:</td>
-        <td>[[${bill.doctor.name}]]</td>
+        <td th:text="${bill.doctor.firstName}"></td>
     </tr>
     <tr>
         <td>Appointment:</td>
-        <td>[[${bill.appointment.id}]]</td>
+        <td th:text="${bill.appointment.id}"></td>
+    </tr>
+    <tr>
+        <td>Status:</td>
+        <td th:text="${bill.status}"></td>
     </tr>
 </table>
-
-<div>
-    <a href="/billing/list">Back to Billing List</a>
+<div style="display: flex; align-items: center; justify-content: center;">
+    <a th:href="@{/billing/list}" style="margin-right: 10px;">Back to List</a>
+    <a th:href="@{/billing/{id}/edit(id=${bill.id})}" style="margin-right: 10px;">Edit</a>
+    <form th:action="@{/billing/{id}/delete(id=${bill.id})}" method="post">
+        <input type="hidden" name="_method" value="delete"/>
+        <button type="submit" class="btn delete-btn"
+                onclick="return confirm('Are you sure you want to delete this item?')">Delete
+        </button>
+    </form>
 </div>
 </body>
 </html>

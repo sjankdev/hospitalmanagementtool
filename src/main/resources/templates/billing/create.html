@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>New Billing</title>
+    <link rel="stylesheet" type="text/css" href="/css/billing-new.css">
 </head>
 <body>
 <h1>New Billing</h1>
@@ -52,8 +53,10 @@
             <option value="Cancelled">Cancelled</option>
         </select>
     </div>
-    <input type="submit" value="Save"/>
+    <button type="submit">Save</button>
 </form>
-<a th:href="@{/billing/list}">Back to Billing List</a>
+<div style="display: flex; align-items: center; justify-content: center;">
+    <a th:href="@{/billing/list}">Back to Billing List</a>
+</div>
 </body>
 </html>

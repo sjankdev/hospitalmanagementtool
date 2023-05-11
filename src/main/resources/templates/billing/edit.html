@@ -3,17 +3,61 @@
 <head>
     <title>Edit Billing</title>
     <meta charset="UTF-8"/>
+    <link rel="stylesheet" type="text/css" href="/css/billing-edit.css">
 </head>
 <body>
 <h1>Edit Billing</h1>
-<form action="#" th:action="@{/billing/{id}/update(id=${billing.id})}" method="post" th:object="${billing}">
-    <label for="date">Date:</label>
-    <input type="date" th:field="*{date}" id="date"/>
-    <br/>
-    <label for="amount">Amount:</label>
-    <input type="number" th:field="*{amount}" id="amount"/>
-    <br/>
-    <input type="submit" value="Update Billing"/>
+<form action="#" th:action="@{/billing/{id}/update(id=${billing.id})}" th:object="${billing}" method="post">
+    <input type="hidden" th:field="*{id}"/>
+    <div>
+        <label for="patient">Patient:</label>
+        <select th:field="*{patient.id}" id="patient">
+            <option value="">Select a patient...</option>
+            <option th:each="patient : ${patients}"
+                    th:value="${patient.id}"
+                    th:text="${patient.firstName} + ' ' + ${patient.lastName}"
+                    th:selected="${patient.id == billing.patient.id}">
+            </option>
+        </select>
+    </div>
+    <div>
+        <label for="doctor">Doctor:</label>
+        <select th:field="*{doctor.id}" id="doctor">
+            <option value="">Select a doctor...</option>
+            <option th:each="doctor : ${doctors}"
+                    th:value="${doctor.id}"
+                    th:text="${doctor.firstName} + ' ' + ${doctor.lastName}"
+                    th:selected="${doctor.id == billing.doctor.id}">
+            </option>
+        </select>
+    </div>
+    <div>
+        <label for="appointment">Appointment:</label>
+        <select th:field="*{appointment.id}" id="appointment">
+            <option value="">Select a Appointment...</option>
+            <option th:each="appointment : ${appointment}"
+                    th:value="${appointment.id}"
+                    th:text="${appointment.notes} + ' ' + ${appointment.notes}"
+                    th:selected="${appointment.id == billing.appointment.id}">
+            </option>
+        </select>
+    </div>
+    <div>
+        <label for="dateOfBill">Date and Time:</label>
+        <input type="datetime-local" id="dateOfBill" name="dateOfBill" th:field="*{dateOfBill}" required>
+    </div>
+    <div>
+        <label for="amount">Amount:</label>
+        <textarea id="amount" name="amount" th:field="*{amount}" required></textarea>
+    </div>
+    <div>
+        <label for="status">Status:</label>
+        <textarea id="status" name="status" th:field="*{status}" required></textarea>
+    </div>
+    <button type="submit">Save</button>
 </form>
+<div style="display: flex; align-items: center; justify-content: center;">
+    <a th:href="@{/billing/list}">Back to Billing list</a>
+</div>
 </body>
 </html>
