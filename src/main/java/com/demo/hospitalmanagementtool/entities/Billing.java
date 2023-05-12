@@ -1,14 +1,19 @@
 package com.demo.hospitalmanagementtool.entities;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.PastOrPresent;
+import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.*;
-import java.time.LocalDate;
+import jakarta.persistence.*;
+
+import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "billing")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -19,10 +24,9 @@ public class Billing {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "date_of_bill")
-    private LocalDate dateOfBill;
-
-    private Double amount;
+    @ManyToOne
+    @JoinColumn(name = "appointment_id")
+    private Appointment appointment;
 
     @ManyToOne
     @JoinColumn(name = "patient_id")
@@ -32,8 +36,15 @@ public class Billing {
     @JoinColumn(name = "doctor_id")
     private Doctor doctor;
 
-    @OneToOne
-    @JoinColumn(name = "appointment_id")
-    private Appointment appointment;
+    @Positive(message = "Amount must be a positive value.")
+    private double amount;
+
+    @NotBlank(message = "Status is required.")
+    private String status;
+
+    @PastOrPresent(message = "Date of bill must be in the past or present.")
+    @Column(name = "date_of_bill")
+    private LocalDateTime dateOfBill;
+
 
 }

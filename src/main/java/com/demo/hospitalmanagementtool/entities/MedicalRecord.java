@@ -5,10 +5,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.*;
-import java.time.LocalDate;
+import jakarta.persistence.*;
 
 @Entity
+@Table(name = "medical_record")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -17,36 +17,32 @@ public class MedicalRecord {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false, updatable = false)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "patient_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "patient_id", nullable = false, updatable = false)
     private Patient patient;
 
-    @ManyToOne
-    @JoinColumn(name = "doctor_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "doctor_id", nullable = false, updatable = false)
     private Doctor doctor;
 
-    @Column(name = "date_of_visit")
-    private LocalDate dateOfVisit;
-
-    private String diagnosis;
-
-    @Column(name = "treatment_plan")
-    private String treatmentPlan;
-
-    @Column(name = "medications_prescribed")
-    private String medicationsPrescribed;
-
-    @Column(name = "lab_results")
-    private String labResults;
-
-    @Column(name = "imaging_results")
-    private String imagingResults;
-
-    @OneToOne
-    @JoinColumn(name = "appointment_id")
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "appointment_id", nullable = false, updatable = false)
     private Appointment appointment;
 
+    @Column(name = "medical_history", nullable = false)
+    private String medicalHistory;
+
+    @Column(nullable = false)
+    private String diagnosis;
+
+    private String prescription;
+
+    private String notes;
 }
+
+
+
 
