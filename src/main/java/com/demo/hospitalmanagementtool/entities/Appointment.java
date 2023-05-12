@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 @Table(name = "appointment")
@@ -45,7 +44,7 @@ public class Appointment {
     @Column(nullable = false)
     private String status;
 
-    @OneToOne(mappedBy = "appointment", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(mappedBy = "appointment", cascade = CascadeType.ALL)
     private MedicalRecord medicalRecord;
 
     public void setStaff(Staff staff) {

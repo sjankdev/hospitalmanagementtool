@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>New Medical Record</title>
+    <link rel="stylesheet" type="text/css" href="/css/medicalRecord-new.css">
+</head>
+<body>
+<h1>New Medical Record</h1>
+<form action="#" th:action="@{/medicalrecords/save}" th:object="${medicalRecord}" method="post">
+    <div>
+        <label for="patient">Patient:</label>
+        <select th:field="*{patient.id}" id="patient">
+            <option value="">Select a patient...</option>
+            <option th:each="patient : ${patients}"
+                    th:value="${patient.id}"
+                    th:text="${patient.firstName} + ' ' + ${patient.lastName}">
+            </option>
+        </select>
+    </div>
+
+    <div>
+        <label for="doctor">Doctor:</label>
+        <select th:field="*{doctor.id}" id="doctor">
+            <option value="">Select a doctor...</option>
+            <option th:each="doctor : ${doctors}"
+                    th:value="${doctor.id}"
+                    th:text="${doctor.firstName} + ' ' + ${doctor.lastName}">
+            </option>
+        </select>
+    </div>
+
+    <div>
+        <label for="appointment">Appointment:</label>
+        <select th:field="*{appointment.id}" id="appointment">
+            <option value="">Select a Appointment...</option>
+            <option th:each="appointment : ${appointments}"
+                    th:value="${appointment.id}"
+                    th:text="${appointment.status} + ' ' + ${appointment.status}">
+            </option>
+        </select>
+    </div>
+
+    <label for="medicalHistory">Medical History:</label>
+    <input type="text" id="medicalHistory" th:field="*{medicalHistory}"/>
+
+    <label for="diagnosis">Diagnosis:</label>
+    <input type="text" id="diagnosis" th:field="*{diagnosis}"/>
+
+    <label for="prescription">Prescription:</label>
+    <input type="text" id="prescription" th:field="*{prescription}"/>
+
+    <label for="notes">Notes:</label>
+    <input type="text" id="notes" th:field="*{notes}"/>
+
+    <button type="submit">Save</button>
+</form>
+<div style="display: flex; align-items: center; justify-content: center;">
+    <a th:href="@{/medicalrecords/list}">Back to Medical Records list</a>
+</div>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!-- patient/index.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Patients List</title>
+    <link rel="stylesheet" type="text/css" href="/css/patient-list.css">
+</head>
+<body>
+<h1>Patients List</h1>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Date of Birth</th>
+        <th>Gender</th>
+        <th>Address</th>
+        <th>Phone Number</th>
+        <th>Email</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="patient : ${patients}">
+        <td th:text="${patient.id}"></td>
+        <td th:text="${patient.firstName}"></td>
+        <td th:text="${patient.lastName}"></td>
+        <td th:text="${patient.dateOfBirth}"></td>
+        <td th:text="${patient.gender}"></td>
+        <td th:text="${patient.address}"></td>
+        <td th:text="${patient.phoneNumber}"></td>
+        <td th:text="${patient.email}"></td>
+        <td style="display: flex; align-items: center;">
+            <a th:href="@{/patients/{id}/details(id=${patient.id})}" class="btn">View</a>
+            <a th:href="@{/patients/{id}/edit(id=${patient.id})}" class="btn">Edit</a>
+            <form th:action="@{/patients/{id}/delete(id=${patient.id})}" method="post">
+                <input type="hidden" name="_method" value="delete"/>
+                <button type="submit" class="btn delete-btn"
+                        onclick="return confirm('Are you sure you want to delete this item?')">Delete
+                </button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<br/>
+<div style="display: flex; align-items: center; justify-content: center;">
+    <a th:href="@{/patients/create}">New Patient</a>
+</div>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Billing List</title>
+    <link rel="stylesheet" type="text/css" href="/css/billing-list.css">
+</head>
+<body>
+<h1>Billing List</h1>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Date of Bill</th>
+        <th>Amount</th>
+        <th>Patient</th>
+        <th>Doctor</th>
+        <th>Appointment</th>
+        <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="bill : ${bills}">
+        <td th:text="${bill.id}"></td>
+        <td th:text="${bill.dateOfBill}"></td>
+        <td th:text="${bill.amount}"></td>
+        <td th:text="${bill.patient.firstName}"></td>
+        <td th:text="${bill.doctor.firstName}"></td>
+        <td th:text="${bill.appointment.id}"></td>
+        <td style="display: flex; align-items: center;">
+            <a th:href="@{/billing/{id}/details(id=${bill.id})}" class="btn">View</a>
+            <a th:href="@{/billing/__${bill.id}__/edit}" class="btn">Edit</a>
+            <form th:action="@{/billing/{id}/delete(id=${bill.id})}" method="post">
+                <input type="hidden" name="_method" value="delete"/>
+                <button type="submit" class="btn delete-btn"
+                        onclick="return confirm('Are you sure you want to delete this item?')">Delete
+                </button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<div style="display: flex; align-items: center; justify-content: center;">
+    <a th:href="@{/billing/create}">Create Bill</a>
+</div>
+</body>
+</html>

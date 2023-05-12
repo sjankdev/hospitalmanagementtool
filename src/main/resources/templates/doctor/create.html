@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Create Doctor</title>
+    <link rel="stylesheet" type="text/css" href="/css/doctor-new.css">
+    <meta charset="UTF-8"/>
+</head>
+<body>
+<h1>Create Doctor</h1>
+<form action="#" th:action="@{/doctors/save}" th:object="${doctor}" method="post">
+    <div>
+        <label for="firstName">First Name:</label>
+        <input type="text" id="firstName" name="firstName" required th:field="*{firstName}"/>
+    </div>
+    <div>
+        <label for="lastName">Last Name:</label>
+        <input type="text" id="lastName" name="lastName" required th:field="*{lastName}"/>
+    </div>
+    <div>
+        <label for="dateOfBirth">Date of Birth:</label>
+        <input type="date" id="dateOfBirth" name="dateOfBirth" required th:field="*{dateOfBirth}"/>
+    </div>
+    <div>
+        <label for="gender">Gender:</label>
+        <select id="gender" name="gender" required th:field="*{gender}">
+            <option value="">--Select--</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+        </select>
+    </div>
+    <div>
+        <label for="address">Address:</label>
+        <input type="text" id="address" name="address" required th:field="*{address}"/>
+    </div>
+    <div>
+        <label for="phoneNumber">Phone Number:</label>
+        <input type="text" id="phoneNumber" name="phoneNumber" required th:field="*{phoneNumber}"/>
+    </div>
+    <div>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required th:field="*{email}"/>
+    </div>
+    <div>
+        <label for="specialty">Specialty:</label>
+        <input type="text" id="specialty" name="specialty" required th:field="*{specialty}"/>
+    </div>
+    <div>
+        <label for="medicalLicenseNumber">Medical License Number:</label>
+        <input type="text" id="medicalLicenseNumber" name="medicalLicenseNumber" required
+               th:field="*{medicalLicenseNumber}"/>
+    </div>
+    <div>
+        <label for="medicalSchoolAttended">Medical School Attended:</label>
+        <input type="text" id="medicalSchoolAttended" name="medicalSchoolAttended" required
+               th:field="*{medicalSchoolAttended}"/>
+    </div>
+    <button type="submit">Save</button>
+</form>
+<div style="display: flex; align-items: center; justify-content: center;">
+    <a th:href="@{/doctors/list}">Back to Doctor List</a>
+</div>
+</body>
+</html>

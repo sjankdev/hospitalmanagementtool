@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class DoctorServiceImpl implements DoctorService {
@@ -32,17 +33,24 @@ public class DoctorServiceImpl implements DoctorService {
     }
 
     @Override
-    public void updateDoctor(Long id, Doctor doctor) {
-        Doctor existingDoctor = getDoctorById(id);
-        existingDoctor.setFirstName(doctor.getFirstName());
-        existingDoctor.setLastName(doctor.getLastName());
-        existingDoctor.setDateOfBirth(doctor.getDateOfBirth());
-        existingDoctor.setGender(doctor.getGender());
-        existingDoctor.setAddress(doctor.getAddress());
-        existingDoctor.setPhoneNumber(doctor.getPhoneNumber());
-        existingDoctor.setEmail(doctor.getEmail());
-        existingDoctor.setSpecialty(doctor.getSpecialty());
-        doctorRepository.save(existingDoctor);
+    public Doctor updateDoctor(Long id, Doctor updatedDoctor) {
+        Optional<Doctor> optionalDoctor = doctorRepository.findById(id);
+        if (optionalDoctor.isPresent()) {
+            Doctor doctor = optionalDoctor.get();
+            doctor.setFirstName(updatedDoctor.getFirstName());
+            doctor.setLastName(updatedDoctor.getLastName());
+            doctor.setDateOfBirth(updatedDoctor.getDateOfBirth());
+            doctor.setGender(updatedDoctor.getGender());
+            doctor.setAddress(updatedDoctor.getAddress());
+            doctor.setPhoneNumber(updatedDoctor.getPhoneNumber());
+            doctor.setEmail(updatedDoctor.getEmail());
+            doctor.setSpecialty(updatedDoctor.getSpecialty());
+            doctor.setMedicalLicenseNumber(updatedDoctor.getMedicalLicenseNumber());
+            doctor.setMedicalSchoolAttended(updatedDoctor.getMedicalSchoolAttended());
+
+            return doctorRepository.save(doctor);
+        }
+        return null;
     }
 
     @Override
