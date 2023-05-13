@@ -27,7 +27,7 @@
         <td th:text="${medicalRecord.id}"></td>
         <td th:text="${medicalRecord.patient.firstName}"></td>
         <td th:text="${medicalRecord.doctor.firstName}"></td>
-        <td th:text="${medicalRecord.appointment}"></td>
+        <td th:text="${medicalRecord.appointment.medicalRecord.diagnosis}"></td>
         <td th:text="${medicalRecord.medicalHistory}"></td>
         <td th:text="${medicalRecord.diagnosis}"></td>
         <td th:text="${medicalRecord.prescription}"></td>
