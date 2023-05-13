@@ -40,7 +40,7 @@
         <td>Medical Record:</td>
         <td>
     <span th:if="${appointment.medicalRecord != null}">
-      <a th:href="@{/medicalrecords/{id}(id=${appointment.medicalRecord.id})}"
+      <a th:href="@{/medicalrecords/{id}/details(id=${appointment.medicalRecord.id})}"
          th:text="${appointment.medicalRecord.notes}"></a>
     </span>
             <span th:if="${appointment.medicalRecord == null}">None</span>
