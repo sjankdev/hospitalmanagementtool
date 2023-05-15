@@ -5,6 +5,7 @@ import com.demo.hospitalmanagementtool.security.token.services.UserDetailsServic
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -58,14 +59,21 @@ public class WebSecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-                .authorizeRequests().requestMatchers("/api/auth/**").permitAll()
-                .requestMatchers("/appointments/**").authenticated()
-                .requestMatchers("/billing/**").authenticated()
-                .requestMatchers("/doctors/**").authenticated()
-                .requestMatchers("/inventory/**").authenticated()
-                .requestMatchers("/medicalrecords/**").authenticated()
-                .requestMatchers("/patients/**").authenticated()
-                .requestMatchers("/staff/**").authenticated()
+                .authorizeRequests()
+                .requestMatchers("/appointments/list", "/appointments/{id}/details").hasAnyRole("MODERATOR", "ADMIN")
+                .requestMatchers("/appointments/**").hasRole("ADMIN")
+                .requestMatchers("/billing/list", "/billing/{id}/details").hasAnyRole("MODERATOR", "ADMIN")
+                .requestMatchers("/billing/**").hasRole("ADMIN")
+                .requestMatchers("/doctors/list", "/doctors/{id}/details").hasAnyRole("MODERATOR", "ADMIN")
+                .requestMatchers("/doctors/**").hasRole("ADMIN")
+                .requestMatchers("/inventory/list", "/inventory/{id}/details").hasAnyRole("MODERATOR", "ADMIN")
+                .requestMatchers("/inventory/**").hasRole("ADMIN")
+                .requestMatchers("/medicalrecords/list", "/medicalrecords/{id}/details").hasAnyRole("MODERATOR", "ADMIN")
+                .requestMatchers("/medicalrecords/**").hasRole("ADMIN")
+                .requestMatchers("/patients/list", "/patients/{id}/details").hasAnyRole("MODERATOR", "ADMIN")
+                .requestMatchers("/patients/**").hasRole("ADMIN")
+                .requestMatchers("/staff/list", "/staff/{id}/details").hasAnyRole("MODERATOR", "ADMIN")
+                .requestMatchers("/staff/**").hasRole("ADMIN")
                 .anyRequest().permitAll()
                 .and()
                 .formLogin().loginPage("/api/auth/loginForm")
@@ -77,5 +85,6 @@ public class WebSecurityConfig {
 
         return http.build();
     }
+
 
 }
