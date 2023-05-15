@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Spring Security Tutorial</title>
+    <meta name="viewport" content="width=device-width"/>
+    <script src="http://localhost:35729/livereload.js"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/registration.css}"/>
+</head>
+<body>
+<div class="main">
+    <input type="checkbox" id="chk" aria-hidden="true"/>
+    <div class="signup">
+        <form method="post" role="form" th:action="@{/api/auth/signup}" th:object="${signup}">
+            <label for="chk" aria-hidden="true">Register</label>
+            <input class="form-control" id="usernameSignUp" name="username" placeholder="Enter username"
+                   th:field="*{username}" type="text" required/>
+            <p th:errors="*{username}" class="text-danger" th:if="${#fields.hasErrors('username')}"></p>
+
+            <input class="form-control" id="firstName" name="firstName" placeholder="Enter first name"
+                   th:field="*{firstName}" type="text" required/>
+            <p th:errors="*{firstName}" class="text-danger" th:if="${#fields.hasErrors('firstName')}"></p>
+
+            <input class="form-control" id="lastName" name="lastName" placeholder="Enter last name"
+                   th:field="*{lastName}" type="text" required/>
+            <p th:errors="*{lastName}" class="text-danger" th:if="${#fields.hasErrors('lastName')}"></p>
+
+            <input class="form-control" id="email" name="email" placeholder="Enter email" th:field="*{email}"
+                   type="email" required/>
+            <p th:errors="*{email}" class="text-danger" th:if="${#fields.hasErrors('email')}"></p>
+
+            <input class="form-control" id="passwordSignUp" name="password" placeholder="Enter password"
+                   th:field="*{password}" type="password" required/>
+            <p th:errors="*{password}" class="text-danger" th:if="${#fields.hasErrors('password')}"></p>
+
+            <button>Register</button>
+        </form>
+
+        <div>
+            <form method="GET" role="form" th:action="@{/api/auth/loginForm}">
+                <button id="loginButton">Login</button>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

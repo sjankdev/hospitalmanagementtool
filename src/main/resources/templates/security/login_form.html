@@ -10,12 +10,15 @@
 <div class="main">
     <div class="login">
         <form method="post" role="form" th:action="@{/api/auth/login}" th:object="${login}">
-            <input class="form-control" id="usernameLogin" name="username" placeholder="Enter username" th:field="*{username}" type="text" required/>
+            <input class="form-control" id="usernameLogin" name="username" placeholder="Enter username"
+                   th:field="*{username}" type="text" required/>
             <p th:errors="*{username}" class="text-danger" th:if="${#fields.hasErrors('username')}"></p>
-            <input class="form-control" id="passwordLogin" name="password" placeholder="Enter password" th:field="*{password}" type="password" required/>
+            <input class="form-control" id="passwordLogin" name="password" placeholder="Enter password"
+                   th:field="*{password}" type="password" required/>
             <p th:errors="*{password}" class="text-danger" th:if="${#fields.hasErrors('password')}"></p>
             <button id="loginButton">Login</button>
         </form>
+
         <div>
             <form method="GET" role="form" th:action="@{/api/auth/registerForm}">
                 <button id="registerButton">Register</button>
