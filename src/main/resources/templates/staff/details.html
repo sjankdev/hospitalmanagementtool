@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Staff Details</title>
-    <link rel="stylesheet" type="text/css" href="/css/staff-details.css">
+    <link rel="stylesheet" type="text/css" href="/css/details.css">
 </head>
 <body>
 <h1>Staff Details</h1>
@@ -45,9 +45,8 @@
         <td th:text="${staff.jobTitle}"></td>
     </tr>
 </table>
-<div style="display: flex; align-items: center; justify-content: center;">
-    <a th:href="@{/staff/list}" style="margin-right: 10px;">Back to List</a>
-    <a th:href="@{/staff/{id}/edit(id=${staff.id})}" style="margin-right: 10px;">Edit</a>
+<div class="button-container">
+    <a th:href="@{/staff/{id}/edit(id=${staff.id})}" class="btn">Edit</a>
     <form th:action="@{/staff/{id}/delete(id=${staff.id})}" method="post">
         <input type="hidden" name="_method" value="delete"/>
         <button type="submit" class="btn delete-btn"
@@ -55,5 +54,14 @@
         </button>
     </form>
 </div>
+
+<div class="button-container">
+    <a th:href="@{/staff/list}" class="btn">Back to Staff List</a>
+    <a th:href="@{/index}" class="btn">Back to homepage</a>
+</div>
+<a href="javascript: document.logoutForm.submit()" class="logout-button" role="menuitem">Logout</a>
+<form name="logoutForm" th:action="@{/api/auth/signout}" method="post" th:hidden="true">
+    <input hidden type="submit" value="Sign Out"/>
+</form>
 </body>
 </html>

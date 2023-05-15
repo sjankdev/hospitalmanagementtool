@@ -1,50 +1,59 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>Medical Record Details</title>
-  <link rel="stylesheet" type="text/css" href="/css/medicalRecord-details.css">
+    <meta charset="UTF-8">
+    <title>Medical Record Details</title>
+    <link rel="stylesheet" type="text/css" href="/css/details.css">
 </head>
 <body>
 <h1>Medical Record Details</h1>
 <table>
-  <tr>
-    <th>Patient</th>
-    <td th:text="${medicalRecord.patient.firstName}"></td>
-  </tr>
-  <tr>
-    <th>Doctor</th>
-    <td th:text="${medicalRecord.doctor.firstName}"></td>
-  </tr>
-  <tr>
-    <th>Appointment</th>
-    <td th:text="${medicalRecord.appointment.notes}"></td>
-  </tr>
-  <tr>
-    <th>Medical History</th>
-    <td th:text="${medicalRecord.medicalHistory}"></td>
-  </tr>
-  <tr>
-    <th>Diagnosis</th>
-    <td th:text="${medicalRecord.diagnosis}"></td>
-  </tr>
-  <tr>
-    <th>Prescription</th>
-    <td th:text="${medicalRecord.prescription}"></td>
-  </tr>
-  <tr>
-    <th>Notes</th>
-    <td th:text="${medicalRecord.notes}"></td>
-  </tr>
+    <tr>
+        <th>Patient</th>
+        <td th:text="${medicalRecord.patient.firstName}"></td>
+    </tr>
+    <tr>
+        <th>Doctor</th>
+        <td th:text="${medicalRecord.doctor.firstName}"></td>
+    </tr>
+    <tr>
+        <th>Appointment</th>
+        <td th:text="${medicalRecord.appointment.notes}"></td>
+    </tr>
+    <tr>
+        <th>Medical History</th>
+        <td th:text="${medicalRecord.medicalHistory}"></td>
+    </tr>
+    <tr>
+        <th>Diagnosis</th>
+        <td th:text="${medicalRecord.diagnosis}"></td>
+    </tr>
+    <tr>
+        <th>Prescription</th>
+        <td th:text="${medicalRecord.prescription}"></td>
+    </tr>
+    <tr>
+        <th>Notes</th>
+        <td th:text="${medicalRecord.notes}"></td>
+    </tr>
 </table>
-<div style="display: flex; align-items: center; justify-content: center;">
-  <a th:href="@{/medicalrecords/list}" style="margin-right: 10px;">Back to List</a>
-  <a th:href="@{/medicalrecords/{id}/edit(id=${medicalRecord.id})}" style="margin-right: 10px;">Edit</a>
-  <form th:action="@{/medicalrecords/{id}/delete(id=${medicalRecord.id})}" method="post">
-    <input type="hidden" name="_method" value="delete"/>
-    <button type="submit" class="btn delete-btn"
-            onclick="return confirm('Are you sure you want to delete this item?')">Delete
-    </button>
-  </form>
+<div class="button-container">
+    <a th:href="@{/medicalrecords/{id}/edit(id=${medicalRecord.id})}" class="btn">Edit</a>
+    <form th:action="@{/medicalrecords/{id}/delete(id=${medicalRecord.id})}" method="post">
+        <input type="hidden" name="_method" value="delete"/>
+        <button type="submit" class="btn delete-btn"
+                onclick="return confirm('Are you sure you want to delete this item?')">Delete
+        </button>
+    </form>
+</div>
+
+<div class="button-container">
+    <a th:href="@{/medicalrecords/list}" class="btn">Back to Medical Record List</a>
+    <a th:href="@{/index}" class="btn">Back to homepage</a>
+</div>
+<a href="javascript: document.logoutForm.submit()" class="logout-button" role="menuitem">Logout</a>
+<form name="logoutForm" th:action="@{/api/auth/signout}" method="post" th:hidden="true">
+    <input hidden type="submit" value="Sign Out"/>
+</form>
 </body>
 </html>

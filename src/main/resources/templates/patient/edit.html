@@ -2,7 +2,7 @@
 
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<link rel="stylesheet" type="text/css" href="/css/patient-edit.css">
+<link rel="stylesheet" type="text/css" href="/css/edit.css">
 <head>
     <meta charset="UTF-8">
     <title>Edit Patient</title>
@@ -39,8 +39,13 @@
     <br/>
     <button type="submit">Save</button>
 </form>
-<div style="display: flex; align-items: center; justify-content: center;">
-    <a th:href="@{/patients/list}">Back to Patient list</a>
+<div class="button-container">
+    <a th:href="@{/patients/list}" class="btn">Back to Patient List</a>
+    <a th:href="@{/index}" class="btn">Back to homepage</a>
 </div>
+<a href="javascript: document.logoutForm.submit()"  class="logout-button" role="menuitem">Logout</a>
+<form name="logoutForm" th:action="@{/api/auth/signout}" method="post" th:hidden="true">
+    <input hidden type="submit" value="Sign Out"/>
+</form>
 </body>
 </html>

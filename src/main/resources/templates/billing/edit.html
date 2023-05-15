@@ -3,7 +3,7 @@
 <head>
     <title>Edit Billing</title>
     <meta charset="UTF-8"/>
-    <link rel="stylesheet" type="text/css" href="/css/billing-edit.css">
+    <link rel="stylesheet" type="text/css" href="/css/edit.css">
 </head>
 <body>
 <h1>Edit Billing</h1>
@@ -56,8 +56,13 @@
     </div>
     <button type="submit">Save</button>
 </form>
-<div style="display: flex; align-items: center; justify-content: center;">
-    <a th:href="@{/billing/list}">Back to Billing list</a>
+<div class="button-container">
+    <a th:href="@{/billing/list}" class="btn">Back to Billing List</a>
+    <a th:href="@{/index}" class="btn">Back to homepage</a>
 </div>
+<a href="javascript: document.logoutForm.submit()" class="logout-button" role="menuitem">Logout</a>
+<form name="logoutForm" th:action="@{/api/auth/signout}" method="post" th:hidden="true">
+    <input hidden type="submit" value="Sign Out"/>
+</form>
 </body>
 </html>

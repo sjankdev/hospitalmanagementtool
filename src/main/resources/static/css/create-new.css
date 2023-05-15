@@ -102,6 +102,7 @@ label[for="dateTime"] {
   text-decoration: none;
   font-size: 14px;
   border-radius: 4px;
+  margin-left: 10px;
 }
 
 .btn:hover {
@@ -131,3 +132,14 @@ a {
 a:hover {
   background-color: #218838;
 }
+  .logout-button {
+        position: fixed;
+        top: 10px;
+        right: 10px;
+        z-index: 9999;
+    }
+    .buttons-switch{
+    display: flex;
+    -items: center;
+    justify-content: center;
+    }
