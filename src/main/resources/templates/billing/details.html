@@ -38,9 +38,8 @@
         <td th:text="${bill.status}"></td>
     </tr>
 </table>
-<div style="display: flex; align-items: center; justify-content: center;">
-    <a th:href="@{/billing/list}" style="margin-right: 10px;">Back to List</a>
-    <a th:href="@{/billing/{id}/edit(id=${bill.id})}" style="margin-right: 10px;">Edit</a>
+<div class="button-container">
+    <a th:href="@{/billing/{id}/edit(id=${bill.id})}" class="btn">Edit</a>
     <form th:action="@{/billing/{id}/delete(id=${bill.id})}" method="post">
         <input type="hidden" name="_method" value="delete"/>
         <button type="submit" class="btn delete-btn"
@@ -48,7 +47,13 @@
         </button>
     </form>
 </div>
-<a href="javascript: document.logoutForm.submit()"  class="logout-button" role="menuitem">Logout</a>
+
+<div class="button-container">
+    <a th:href="@{/billing/list}" class="btn">Back to Billing List</a>
+    <a th:href="@{/index}" class="btn">Back to homepage</a>
+</div>
+
+<a href="javascript: document.logoutForm.submit()" class="logout-button" role="menuitem">Logout</a>
 <form name="logoutForm" th:action="@{/api/auth/signout}" method="post" th:hidden="true">
     <input hidden type="submit" value="Sign Out"/>
 </form>

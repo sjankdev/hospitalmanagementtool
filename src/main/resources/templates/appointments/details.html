@@ -47,8 +47,8 @@
         </td>
     </tr>
 </table>
-<div style="display: flex; align-items: center; justify-content: center;">
-    <a th:href="@{/appointments/{id}/edit(id=${appointment.id})}" style="margin-right: 10px;">Edit</a>
+<div class="button-container">
+    <a th:href="@{/appointments/{id}/edit(id=${appointment.id})}" class="btn">Edit</a>
     <form th:action="@{/appointments/{id}/delete(id=${appointment.id})}" method="post">
         <input type="hidden" name="_method" value="delete"/>
         <button type="submit" class="btn delete-btn"
@@ -56,14 +56,14 @@
         </button>
     </form>
 </div>
-<div style="display: flex; align-items: center; justify-content: center; margin-top: -10px;">
-    <a href="javascript: document.logoutForm.submit()" class="logout-button" role="menuitem">Logout</a>
-</div>
-<div class="buttons-switch">
+
+<div class="button-container">
     <a th:href="@{/appointments/list}" class="btn">Back to Appointments List</a>
-    <a th:href="@{/index}" class="btn" style="margin-left: 10px;">Back to homepage</a>
+    <a th:href="@{/index}" class="btn">Back to homepage</a>
 </div>
 
+<a href="javascript: document.logoutForm.submit()" class="logout-button" role="menuitem">Logout</a>
+</div>
 <form name="logoutForm" th:action="@{/api/auth/signout}" method="post" th:hidden="true">
     <input hidden type="submit" value="Sign Out"/>
 </form>
