@@ -69,8 +69,10 @@ public class AuthController {
 
         model.addAttribute("login", loginRequest);
 
-
-        return "redirect:/index";
+       @GetMapping("/index")
+       public String index() {
+        return "index";
+    }
 
     }
 
