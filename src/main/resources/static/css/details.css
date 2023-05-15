@@ -106,3 +106,8 @@ a:hover {
         right: 10px;
         z-index: 9999;
     }
+       .buttons-switch{
+        display: flex;
+        -items: center;
+        justify-content: center;
+        }

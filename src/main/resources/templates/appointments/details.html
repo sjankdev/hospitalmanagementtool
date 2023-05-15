@@ -39,16 +39,15 @@
     <tr>
         <td>Medical Record:</td>
         <td>
-    <span th:if="${appointment.medicalRecord != null}">
-      <a th:href="@{/medicalrecords/{id}/details(id=${appointment.medicalRecord.id})}"
-         th:text="${appointment.medicalRecord.notes}"></a>
-    </span>
+                <span th:if="${appointment.medicalRecord != null}">
+                    <a th:href="@{/medicalrecords/{id}/details(id=${appointment.medicalRecord.id})}"
+                       th:text="${appointment.medicalRecord.notes}"></a>
+                </span>
             <span th:if="${appointment.medicalRecord == null}">None</span>
         </td>
     </tr>
 </table>
 <div style="display: flex; align-items: center; justify-content: center;">
-    <a th:href="@{/appointments/list}" style="margin-right: 10px;">Back to List</a>
     <a th:href="@{/appointments/{id}/edit(id=${appointment.id})}" style="margin-right: 10px;">Edit</a>
     <form th:action="@{/appointments/{id}/delete(id=${appointment.id})}" method="post">
         <input type="hidden" name="_method" value="delete"/>
@@ -57,7 +56,14 @@
         </button>
     </form>
 </div>
-<a href="javascript: document.logoutForm.submit()"  class="logout-button" role="menuitem">Logout</a>
+<div style="display: flex; align-items: center; justify-content: center; margin-top: -10px;">
+    <a href="javascript: document.logoutForm.submit()" class="logout-button" role="menuitem">Logout</a>
+</div>
+<div class="buttons-switch">
+    <a th:href="@{/appointments/list}" class="btn">Back to Appointments List</a>
+    <a th:href="@{/index}" class="btn" style="margin-left: 10px;">Back to homepage</a>
+</div>
+
 <form name="logoutForm" th:action="@{/api/auth/signout}" method="post" th:hidden="true">
     <input hidden type="submit" value="Sign Out"/>
 </form>

@@ -35,8 +35,9 @@
     </tr>
     </tbody>
 </table>
-<div style="display: flex; align-items: center; justify-content: center;">
-    <a th:href="@{/staff/create}">Create Staff </a>
+<div class="buttons-switch">
+    <a th:href="@{/staff/create}" class="btn">New Staff</a>
+    <a th:href="@{/index}" class="btn" style="margin-left: 10px;">Back to homepage</a>
 </div>
 <a href="javascript: document.logoutForm.submit()" class="logout-button" role="menuitem">Logout</a>
 <form name="logoutForm" th:action="@{/api/auth/signout}" method="post" th:hidden="true">

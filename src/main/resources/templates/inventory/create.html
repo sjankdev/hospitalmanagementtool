@@ -26,8 +26,9 @@
     </div>
     <button type="submit">Save</button>
 </form>
-<div style="display: flex; align-items: center; justify-content: center;">
-    <a th:href="@{/inventory/list}">Back to Inventory List</a>
+<div class="buttons-switch">
+    <a th:href="@{/inventory/list}" class="btn">Back to Inventory list</a>
+    <a th:href="@{/index}" class="btn">Back to homepage</a>
 </div>
 <a href="javascript: document.logoutForm.submit()"  class="logout-button" role="menuitem">Logout</a>
 <form name="logoutForm" th:action="@{/api/auth/signout}" method="post" th:hidden="true">

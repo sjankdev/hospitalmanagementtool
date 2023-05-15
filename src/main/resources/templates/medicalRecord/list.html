@@ -45,8 +45,9 @@
     </tr>
     </tbody>
 </table>
-<div style="display: flex; align-items: center; justify-content: center;">
-    <a th:href="@{/medicalrecords/create}">Add New Medical Record</a>
+<div class="buttons-switch">
+    <a th:href="@{/medicalrecords/create}" class="btn">New Medical Record</a>
+    <a th:href="@{/index}" class="btn" style="margin-left: 10px;">Back to homepage</a>
 </div>
 <a href="javascript: document.logoutForm.submit()" class="logout-button" role="menuitem">Logout</a>
 <form name="logoutForm" th:action="@{/api/auth/signout}" method="post" th:hidden="true">
