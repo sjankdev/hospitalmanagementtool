@@ -59,10 +59,17 @@ public class WebSecurityConfig {
         http.cors().and().csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests().requestMatchers("/api/auth/**").permitAll()
+                .requestMatchers("/appointments/**").authenticated()
+                .requestMatchers("/billing/**").authenticated()
+                .requestMatchers("/doctors/**").authenticated()
+                .requestMatchers("/inventory/**").authenticated()
+                .requestMatchers("/medicalrecords/**").authenticated()
+                .requestMatchers("/patients/**").authenticated()
+                .requestMatchers("/staff/**").authenticated()
+                .anyRequest().permitAll()
                 .and()
                 .formLogin().loginPage("/api/auth/loginForm")
                 .permitAll();
-
 
         http.authenticationProvider(authenticationProvider());
 
@@ -70,4 +77,5 @@ public class WebSecurityConfig {
 
         return http.build();
     }
+
 }
