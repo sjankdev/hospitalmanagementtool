@@ -1,13 +1,11 @@
 package com.demo.hospitalmanagementtool.entities;
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -42,9 +40,7 @@ public class Billing {
     @NotBlank(message = "Status is required.")
     private String status;
 
-//    @PastOrPresent(message = "Date of bill must be in the past or present.")
     @Column(name = "date_of_bill")
     private LocalDateTime dateOfBill;
-
 
 }

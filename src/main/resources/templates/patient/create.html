@@ -40,11 +40,14 @@
 
     <button type="submit">Submit</button>
 </form>
+
 <div class="buttons-switch">
     <a th:href="@{/patients/list}" class="btn">Back to Patients list</a>
     <a th:href="@{/index}" class="btn">Back to homepage</a>
 </div>
+
 <a href="javascript: document.logoutForm.submit()" class="logout-button" role="menuitem">Logout</a>
+
 <form name="logoutForm" th:action="@{/api/auth/signout}" method="post" th:hidden="true">
     <input hidden type="submit" value="Sign Out"/>
 </form>

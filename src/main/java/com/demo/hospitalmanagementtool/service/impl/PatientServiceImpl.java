@@ -15,7 +15,6 @@ public class PatientServiceImpl implements PatientService {
     @Autowired
     PatientRepository patientRepository;
 
-
     @Override
     public List<Patient> getAllPatients() {
         return patientRepository.findAll();
@@ -23,8 +22,7 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     public Patient getPatientById(Long id) {
-        return patientRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Patient with ID " + id + " not found."));
+        return patientRepository.findById(id).orElseThrow(() -> new NotFoundException("Patient with ID " + id + " not found."));
     }
 
     @Override

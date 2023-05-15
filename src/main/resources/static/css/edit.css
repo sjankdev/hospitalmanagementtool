@@ -1,168 +1,144 @@
 body {
-  background-color: #f1f1f1;
-  font-family: Arial, sans-serif;
+     background-color: #f1f1f1;
+     font-family: Arial, sans-serif;
 }
-
-h1 {
-  text-align: center;
-  color: #0077b6;
+ h1 {
+     text-align: center;
+     color: #0077b6;
 }
-
-form {
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 20px;
-  background-color: #fff;
-  border-radius: 5px;
-  box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.5);
+ form {
+     max-width: 600px;
+     margin: 0 auto;
+     padding: 20px;
+     background-color: #fff;
+     border-radius: 5px;
+     box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.5);
 }
-
-label {
-  display: block;
-  margin-bottom: 5px;
-  color: #333;
-  font-weight: bold;
+ label {
+     display: block;
+     margin-bottom: 5px;
+     color: #333;
+     font-weight: bold;
 }
-
-input[type="text"],
-select,
-textarea {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 20px;
-  border-radius: 3px;
-  border: 1px solid #ccc;
-  font-size: 16px;
-  color: #333;
+ input[type="text"], select, textarea {
+     width: 100%;
+     padding: 10px;
+     margin-bottom: 20px;
+     border-radius: 3px;
+     border: 1px solid #ccc;
+     font-size: 16px;
+     color: #333;
 }
-
-select {
-  appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23333'%3E%3Cpath d='M12 16.9L7 11.9 8.4 10.5 12 13.1 15.6 10.5 17 11.9z'/%3E%3C/svg%3E") no-repeat;
-  background-position: right 10px center;
-  background-size: 14px;
-  padding-right: 30px;
+ select {
+     appearance: none;
+     -webkit-appearance: none;
+     -moz-appearance: none;
+     background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23333'%3E%3Cpath d='M12 16.9L7 11.9 8.4 10.5 12 13.1 15.6 10.5 17 11.9z'/%3E%3C/svg%3E") no-repeat;
+     background-position: right 10px center;
+     background-size: 14px;
+     padding-right: 30px;
 }
-
-textarea {
-  height: 100px;
-  resize: vertical;
+ textarea {
+     height: 100px;
+     resize: vertical;
 }
-
-button[type="submit"] {
-  display: block;
-  margin: 0 auto;
-  padding: 10px 20px;
-  background-color: #0077b6;
-  color: #fff;
-  border: none;
-  border-radius: 3px;
-  font-size: 16px;
-  cursor: pointer;
+ button[type="submit"] {
+     display: block;
+     margin: 0 auto;
+     padding: 10px 20px;
+     background-color: #0077b6;
+     color: #fff;
+     border: none;
+     border-radius: 3px;
+     font-size: 16px;
+     cursor: pointer;
 }
-
-a {
-  display: block;
-  margin-top: 20px;
-  text-align: center;
-  color: #333;
+ a {
+     display: block;
+     margin-top: 20px;
+     text-align: center;
+     color: #333;
 }
-/* Style for the "Date and Time" input field */
-/* Center the label */
-/* Style for the "Date and Time" input field */
-#dateTime {
-  display: inline-block;
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
-  font-size: 16px;
-  width: 60%;
-  max-width: 300px;
+ #dateTime {
+     display: inline-block;
+     padding: 8px;
+     border: 1px solid #ccc;
+     border-radius: 4px;
+     box-sizing: border-box;
+     font-size: 16px;
+     width: 60%;
+     max-width: 300px;
 }
-
-/* Style for the "Date and Time" label */
-label[for="dateTime"] {
-  display: flex;
-  width: 35%;
-  margin-right: 10px;
-  text-align: right;
-  font-size: 16px;
-  font-weight: bold;
+ label[for="dateTime"] {
+     display: flex;
+     width: 35%;
+     margin-right: 10px;
+     text-align: right;
+     font-size: 16px;
+     font-weight: bold;
 }
-.btn {
-  display: inline-block;
-  padding: 8px 12px;
-  margin-right: 10px;
-  border: none;
-  background-color: #4CAF50;
-  color: white;
-  text-decoration: none;
-  font-size: 14px;
-  border-radius: 4px;
+ .btn {
+     display: inline-block;
+     padding: 8px 12px;
+     margin-right: 10px;
+     border: none;
+     background-color: #4CAF50;
+     color: white;
+     text-decoration: none;
+     font-size: 14px;
+     border-radius: 4px;
 }
-
-.btn:hover {
-  background-color: #0069d9;
+ .btn:hover {
+     background-color: #0069d9;
 }
-
-.delete-btn {
-  background-color: #dc3545;
+ .delete-btn {
+     background-color: #dc3545;
 }
-
-.delete-btn:hover {
-  background-color: #c82333;
+ .delete-btn:hover {
+     background-color: #c82333;
 }
-
-a {
-  display: inline-block;
-  padding: 0.5rem 1rem;
-  border-radius: 0.25rem;
-  text-align: center;
-  text-decoration: none;
-  color: #fff;
-  background-color: #28a745;
-  transition: all 0.3s ease-in-out;
-  margin: 2rem 0;
+ a {
+     display: inline-block;
+     padding: 0.5rem 1rem;
+     border-radius: 0.25rem;
+     text-align: center;
+     text-decoration: none;
+     color: #fff;
+     background-color: #28a745;
+     transition: all 0.3s ease-in-out;
+     margin: 2rem 0;
 }
-
-a:hover {
-  background-color: #218838;
+ a:hover {
+     background-color: #218838;
 }
  .logout-button {
-        position: fixed;
-        top: 10px;
-        right: 10px;
-        z-index: 9999;
-    }
-    .button-container {
-       display: flex;
-       justify-content: center;
-       margin: 2rem 0;
-     }
-
-     .btn {
-       display: inline-block;
-       padding: 8px 12px;
-       margin: 0 10px;
-       border: none;
-       background-color: #4CAF50;
-       color: white;
-       text-decoration: none;
-       font-size: 14px;
-       border-radius: 4px;
-     }
-
-     .btn:hover {
-       background-color: #0069d9;
-     }
-
-     .delete-btn {
-       background-color: #dc3545;
-     }
-
-     .delete-btn:hover {
-       background-color: #c82333;
-     }
+     position: fixed;
+     top: 10px;
+     right: 10px;
+     z-index: 9999;
+}
+ .button-container {
+     display: flex;
+     justify-content: center;
+     margin: 2rem 0;
+}
+ .btn {
+     display: inline-block;
+     padding: 8px 12px;
+     margin: 0 10px;
+     border: none;
+     background-color: #4CAF50;
+     color: white;
+     text-decoration: none;
+     font-size: 14px;
+     border-radius: 4px;
+}
+ .btn:hover {
+     background-color: #0069d9;
+}
+ .delete-btn {
+     background-color: #dc3545;
+}
+ .delete-btn:hover {
+     background-color: #c82333;
+}

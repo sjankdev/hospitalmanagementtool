@@ -18,6 +18,7 @@
             </option>
         </select>
     </div>
+
     <div>
         <label for="doctor">Doctor:</label>
         <select th:field="*{doctor.id}" id="doctor">
@@ -28,6 +29,7 @@
             </option>
         </select>
     </div>
+
     <div>
         <label for="staff">Staff:</label>
         <select th:field="*{staff.id}" id="staff">
@@ -38,18 +40,22 @@
             </option>
         </select>
     </div>
+
     <div>
         <label for="dateTime">Date and Time:</label>
         <input type="datetime-local" id="dateTime" name="dateTime" th:field="*{dateTime}" required>
     </div>
+
     <div>
         <label for="reasonForVisit">Reason for Visit:</label>
         <input type="text" id="reasonForVisit" name="reasonForVisit" th:field="*{reasonForVisit}" required>
     </div>
+
     <div>
         <label for="notes">Notes:</label>
         <textarea id="notes" name="notes" th:field="*{notes}" required></textarea>
     </div>
+
     <div>
         <label for="status">Status:</label>
         <select id="status" name="status" required>
@@ -59,14 +65,17 @@
             <option value="Cancelled">Cancelled</option>
         </select>
     </div>
+
     <button type="submit">Save</button>
 </form>
+
 <div class="buttons-switch">
     <a th:href="@{/appointments/list}" class="btn">Back to Appointment list</a>
     <a th:href="@{/index}" class="btn">Back to homepage</a>
 </div>
 
 <a href="javascript: document.logoutForm.submit()" class="logout-button" role="menuitem">Logout</a>
+
 <form name="logoutForm" th:action="@{/api/auth/signout}" method="post" th:hidden="true">
     <input hidden type="submit" value="Sign Out"/>
 </form>

@@ -28,7 +28,7 @@ public class PatientController {
         Patient patient = patientService.getPatientById(id);
         model.addAttribute("patient", patient);
         return "patient/details";
-      }
+    }
 
     @GetMapping("/create")
     public String newPatient(Model model) {
@@ -60,5 +60,4 @@ public class PatientController {
         patientService.deletePatient(id);
         return "redirect:/patients/list";
     }
-
 }

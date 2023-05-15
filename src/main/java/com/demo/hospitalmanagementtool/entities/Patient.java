@@ -1,6 +1,5 @@
 package com.demo.hospitalmanagementtool.entities;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -59,6 +58,5 @@ public class Patient {
 
     @OneToMany(mappedBy = "patient")
     private List<Billing> bills;
-
 
 }

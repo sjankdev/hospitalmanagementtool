@@ -61,6 +61,4 @@ public class Staff {
         appointments.remove(appointment);
         appointment.setStaff(null);
     }
-
 }
-

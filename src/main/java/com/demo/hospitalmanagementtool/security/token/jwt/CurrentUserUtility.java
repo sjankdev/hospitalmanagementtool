@@ -18,6 +18,7 @@ public class CurrentUserUtility {
             return null;
         }
     }
+
     private static Authentication getAuthentication() {
         return SecurityContextHolder.getContext().getAuthentication();
     }

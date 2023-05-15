@@ -30,12 +30,12 @@ import java.util.Optional;
 @Controller
 @RequestMapping("/api/auth")
 public class AuthController {
+
     @Autowired
     AuthenticationManager authenticationManager;
 
     @Autowired
     UserRepository userRepository;
-
 
     @Autowired
     PasswordEncoder encoder;
@@ -69,11 +69,8 @@ public class AuthController {
 
         model.addAttribute("login", loginRequest);
 
-       @GetMapping("/index")
-       public String index() {
-        return "index";
-    }
 
+        return "redirect:/index";
     }
 
     @PostMapping("/signup")
@@ -120,14 +117,13 @@ public class AuthController {
     public String registerForm(Model model) {
         SignupRequest signupRequest = new SignupRequest();
         model.addAttribute("signup", signupRequest);
-        return "register_form";
+        return "security/register_form";
     }
 
     @GetMapping("/loginForm")
     public String loginForm(Model model) {
         LoginRequest loginRequest = new LoginRequest();
         model.addAttribute("login", loginRequest);
-        return "login_form";
+        return "security/login_form";
     }
-
 }

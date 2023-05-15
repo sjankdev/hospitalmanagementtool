@@ -13,7 +13,7 @@ import java.util.Optional;
 @Service
 public class DoctorServiceImpl implements DoctorService {
 
-@Autowired
+    @Autowired
     DoctorRepository doctorRepository;
 
     @Override
