@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Edit Doctor</title>
-    <link rel="stylesheet" type="text/css" href="/css/doctor-edit.css">
+    <link rel="stylesheet" type="text/css" href="/css/edit.css">
 </head>
 <body>
 <h1>Edit Doctor</h1>
@@ -49,5 +49,9 @@
 <div style="display: flex; align-items: center; justify-content: center;">
     <a th:href="@{/doctors/list}">Back to Doctor list</a>
 </div>
+<a href="javascript: document.logoutForm.submit()"  class="logout-button" role="menuitem">Logout</a>
+<form name="logoutForm" th:action="@{/api/auth/signout}" method="post" th:hidden="true">
+    <input hidden type="submit" value="Sign Out"/>
+</form>
 </body>
 </html>

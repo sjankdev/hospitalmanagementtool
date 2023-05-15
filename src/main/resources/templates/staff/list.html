@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Staff List</title>
-    <link rel="stylesheet" type="text/css" href="/css/staff-list.css">
+    <link rel="stylesheet" type="text/css" href="/css/list.css">
 </head>
 <body>
 <h1>Staff List</h1>
@@ -36,7 +36,11 @@
     </tbody>
 </table>
 <div style="display: flex; align-items: center; justify-content: center;">
-    <a th:href="@{/staff/create}">Create Staff  </a>
+    <a th:href="@{/staff/create}">Create Staff </a>
 </div>
+<a href="javascript: document.logoutForm.submit()" class="logout-button" role="menuitem">Logout</a>
+<form name="logoutForm" th:action="@{/api/auth/signout}" method="post" th:hidden="true">
+    <input hidden type="submit" value="Sign Out"/>
+</form>
 </body>
 </html>

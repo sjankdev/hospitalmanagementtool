@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>New Medical Record</title>
-    <link rel="stylesheet" type="text/css" href="/css/medicalRecord-new.css">
+    <link rel="stylesheet" type="text/css" href="/css/create-new.css">
 </head>
 <body>
 <h1>New Medical Record</h1>
@@ -59,4 +59,8 @@
     <a th:href="@{/medicalrecords/list}">Back to Medical Records list</a>
 </div>
 </body>
+<a href="javascript: document.logoutForm.submit()"  class="logout-button" role="menuitem">Logout</a>
+<form name="logoutForm" th:action="@{/api/auth/signout}" method="post" th:hidden="true">
+    <input hidden type="submit" value="Sign Out"/>
+</form>
 </html>

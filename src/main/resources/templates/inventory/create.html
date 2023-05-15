@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Create Inventory Item</title>
-    <link rel="stylesheet" type="text/css" href="/css/inventory-new.css">
+    <link rel="stylesheet" type="text/css" href="/css/create-new.css">
 </head>
 <body>
 <h1>Create Inventory Item</h1>
@@ -29,5 +29,9 @@
 <div style="display: flex; align-items: center; justify-content: center;">
     <a th:href="@{/inventory/list}">Back to Inventory List</a>
 </div>
+<a href="javascript: document.logoutForm.submit()"  class="logout-button" role="menuitem">Logout</a>
+<form name="logoutForm" th:action="@{/api/auth/signout}" method="post" th:hidden="true">
+    <input hidden type="submit" value="Sign Out"/>
+</form>
 </body>
 </html>

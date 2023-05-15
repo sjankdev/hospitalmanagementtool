@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Edit Inventory</title>
-    <link rel="stylesheet" type="text/css" href="/css/inventory-edit.css">
+    <link rel="stylesheet" type="text/css" href="/css/edit.css">
 </head>
 <body>
 <h1>Edit Inventory</h1>
@@ -29,5 +29,9 @@
 <div style="display: flex; align-items: center; justify-content: center;">
     <a th:href="@{/inventory/list}">Back to Inventory list</a>
 </div>
+<a href="javascript: document.logoutForm.submit()"  class="logout-button" role="menuitem">Logout</a>
+<form name="logoutForm" th:action="@{/api/auth/signout}" method="post" th:hidden="true">
+    <input hidden type="submit" value="Sign Out"/>
+</form>
 </body>
 </html>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Doctor Details</title>
-    <link rel="stylesheet" type="text/css" href="/css/doctor-details.css">
+    <link rel="stylesheet" type="text/css" href="/css/details.css">
 </head>
 <body>
 <h1>Doctor Details</h1>
@@ -63,5 +63,9 @@
         </button>
     </form>
 </div>
+<a href="javascript: document.logoutForm.submit()"  class="logout-button" role="menuitem">Logout</a>
+<form name="logoutForm" th:action="@{/api/auth/signout}" method="post" th:hidden="true">
+    <input hidden type="submit" value="Sign Out"/>
+</form>
 </body>
 </html>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>New Appointment</title>
-    <link rel="stylesheet" type="text/css" href="/css/appointment-new.css">
+    <link rel="stylesheet" type="text/css" href="/css/create-new.css">
 </head>
 <body>
 <h1>New Appointment</h1>
@@ -64,5 +64,9 @@
 <div style="display: flex; align-items: center; justify-content: center;">
     <a th:href="@{/appointments/list}">Back to Appointment list</a>
 </div>
+<a href="javascript: document.logoutForm.submit()" class="logout-button" role="menuitem">Logout</a>
+<form name="logoutForm" th:action="@{/api/auth/signout}" method="post" th:hidden="true">
+    <input hidden type="submit" value="Sign Out"/>
+</form>
 </body>
 </html>

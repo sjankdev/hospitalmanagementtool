@@ -70,7 +70,7 @@ public class AuthController {
         model.addAttribute("login", loginRequest);
 
 
-        return "redirect:/appointments/list";
+        return "redirect:/index";
 
     }
 

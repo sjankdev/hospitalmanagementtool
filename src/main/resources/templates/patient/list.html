@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Patients List</title>
-    <link rel="stylesheet" type="text/css" href="/css/patient-list.css">
+    <link rel="stylesheet" type="text/css" href="/css/list.css">
 </head>
 <body>
 <h1>Patients List</h1>
@@ -49,5 +49,9 @@
 <div style="display: flex; align-items: center; justify-content: center;">
     <a th:href="@{/patients/create}">New Patient</a>
 </div>
+<a href="javascript: document.logoutForm.submit()"  class="logout-button" role="menuitem">Logout</a>
+<form name="logoutForm" th:action="@{/api/auth/signout}" method="post" th:hidden="true">
+    <input hidden type="submit" value="Sign Out"/>
+</form>
 </body>
 </html>
