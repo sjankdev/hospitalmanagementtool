@@ -78,9 +78,9 @@ public class BillingController {
         return "redirect:/billing/list";
     }
 
-    @GetMapping("/{id}/delete")
+    @PostMapping("/{id}/delete")
     public String deleteBill(@PathVariable Long id) {
         billingService.deleteBill(id);
-        return "redirect:/billing/";
+        return "redirect:/billing/list";
     }
 }
