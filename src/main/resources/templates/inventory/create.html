@@ -12,25 +12,32 @@
         <label for="name">Name:</label>
         <input type="text" id="name" name="name" th:field="*{name}" required/>
     </div>
+
     <div>
         <label for="description">Description:</label>
         <textarea id="description" name="description" th:field="*{description}"></textarea>
     </div>
+
     <div>
         <label for="price">Price:</label>
         <input type="number" id="price" name="price" th:field="*{price}" required/>
     </div>
+
     <div>
         <label for="quantity">Quantity:</label>
         <input type="number" id="quantity" name="quantity" th:field="*{quantity}" required/>
     </div>
+
     <button type="submit">Save</button>
 </form>
+
 <div class="buttons-switch">
     <a th:href="@{/inventory/list}" class="btn">Back to Inventory list</a>
     <a th:href="@{/index}" class="btn">Back to homepage</a>
 </div>
-<a href="javascript: document.logoutForm.submit()"  class="logout-button" role="menuitem">Logout</a>
+
+<a href="javascript: document.logoutForm.submit()" class="logout-button" role="menuitem">Logout</a>
+
 <form name="logoutForm" th:action="@{/api/auth/signout}" method="post" th:hidden="true">
     <input hidden type="submit" value="Sign Out"/>
 </form>

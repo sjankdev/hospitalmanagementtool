@@ -10,8 +10,10 @@
 <form th:action="@{/billing/save}" th:object="${bill}" method="post">
     <label for="dateOfBill">Date of Bill:</label>
     <input type="datetime-local" id="dateOfBill" name="dateOfBill" th:field="*{dateOfBill}"/><br/>
+
     <label for="amount">Amount:</label>
     <input type="number" id="amount" name="amount" th:field="*{amount}"/><br/>
+
     <div>
         <label for="patient">Patient:</label>
         <select th:field="*{patient.id}" id="patient">
@@ -44,6 +46,7 @@
             </option>
         </select>
     </div>
+
     <div>
         <label for="status">Status:</label>
         <select id="status" name="status" required>
@@ -53,13 +56,17 @@
             <option value="Cancelled">Cancelled</option>
         </select>
     </div>
+
     <button type="submit">Save</button>
+
 </form>
 <div class="buttons-switch">
     <a th:href="@{/billing/list}" class="btn">Back to Billing list</a>
     <a th:href="@{/index}" class="btn">Back to homepage</a>
 </div>
-<a href="javascript: document.logoutForm.submit()"  class="logout-button" role="menuitem">Logout</a>
+
+<a href="javascript: document.logoutForm.submit()" class="logout-button" role="menuitem">Logout</a>
+
 <form name="logoutForm" th:action="@{/api/auth/signout}" method="post" th:hidden="true">
     <input hidden type="submit" value="Sign Out"/>
 </form>

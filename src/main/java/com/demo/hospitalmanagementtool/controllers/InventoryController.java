@@ -1,8 +1,6 @@
 package com.demo.hospitalmanagementtool.controllers;
 
-import com.demo.hospitalmanagementtool.entities.Doctor;
 import com.demo.hospitalmanagementtool.entities.Inventory;
-import com.demo.hospitalmanagementtool.service.DoctorService;
 import com.demo.hospitalmanagementtool.service.InventoryService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +10,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
 
 @Controller
 @RequestMapping("/inventory")

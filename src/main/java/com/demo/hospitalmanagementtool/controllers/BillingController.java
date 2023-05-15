@@ -1,7 +1,6 @@
 package com.demo.hospitalmanagementtool.controllers;
 
 import com.demo.hospitalmanagementtool.entities.Billing;
-import com.demo.hospitalmanagementtool.entities.Doctor;
 import com.demo.hospitalmanagementtool.service.AppointmentService;
 import com.demo.hospitalmanagementtool.service.BillingService;
 import com.demo.hospitalmanagementtool.service.DoctorService;
@@ -33,7 +32,7 @@ public class BillingController {
 
     @GetMapping("/list")
     public String getAllBills(Model model) {
-        List<Billing> bills = billingService.getAllBills();
+        List < Billing > bills = billingService.getAllBills();
         model.addAttribute("bills", bills);
         return "billing/list";
     }
@@ -79,11 +78,9 @@ public class BillingController {
         return "redirect:/billing/list";
     }
 
-
     @GetMapping("/{id}/delete")
     public String deleteBill(@PathVariable Long id) {
         billingService.deleteBill(id);
         return "redirect:/billing/";
     }
 }
-

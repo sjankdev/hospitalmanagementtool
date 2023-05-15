@@ -53,6 +53,7 @@
         <td th:text="${doctor.medicalSchoolAttended}"></td>
     </tr>
 </table>
+
 <div class="button-container">
     <a th:href="@{/doctors/{id}/edit(id=${doctor.id})}" class="btn">Edit</a>
     <form th:action="@{/doctors/{id}/delete(id=${doctor.id})}" method="post">
@@ -67,7 +68,9 @@
     <a th:href="@{/doctors/list}" class="btn">Back to Doctors List</a>
     <a th:href="@{/index}" class="btn">Back to homepage</a>
 </div>
-<a href="javascript: document.logoutForm.submit()"  class="logout-button" role="menuitem">Logout</a>
+
+<a href="javascript: document.logoutForm.submit()" class="logout-button" role="menuitem">Logout</a>
+
 <form name="logoutForm" th:action="@{/api/auth/signout}" method="post" th:hidden="true">
     <input hidden type="submit" value="Sign Out"/>
 </form>

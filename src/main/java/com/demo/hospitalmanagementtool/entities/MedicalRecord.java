@@ -42,7 +42,3 @@ public class MedicalRecord {
 
     private String notes;
 }
-
-
-
-

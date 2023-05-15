@@ -18,7 +18,7 @@ public class StaffController {
 
     @GetMapping("/list")
     public String getAllStaff(Model model) {
-        List<Staff> staffList = staffService.getAllStaff();
+        List < Staff > staffList = staffService.getAllStaff();
         model.addAttribute("staffList", staffList);
         return "staff/list";
     }
@@ -60,5 +60,4 @@ public class StaffController {
         staffService.deleteStaff(id);
         return "redirect:/staff/list";
     }
-
 }

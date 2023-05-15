@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-    @RequestMapping("/medicalrecords")
+@RequestMapping("/medicalrecords")
 public class MedicalRecordController {
 
     @Autowired
@@ -75,5 +75,4 @@ public class MedicalRecordController {
         medicalRecordService.deleteMedicalRecord(id);
         return "redirect:/medicalrecords/list";
     }
-
 }

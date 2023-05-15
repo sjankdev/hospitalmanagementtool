@@ -19,11 +19,14 @@
     <p>Notes: <input type="text" th:field="*{notes}"/></p>
     <button type="submit">Save</button>
 </form>
+
 <div class="button-container">
     <a th:href="@{/medicalrecords/list}" class="btn">Back to Medical Record List</a>
     <a th:href="@{/index}" class="btn">Back to homepage</a>
 </div>
+
 <a href="javascript: document.logoutForm.submit()" class="logout-button" role="menuitem">Logout</a>
+
 <form name="logoutForm" th:action="@{/api/auth/signout}" method="post" th:hidden="true">
     <input hidden type="submit" value="Sign Out"/>
 </form>

@@ -38,6 +38,7 @@
         <td th:text="${bill.status}"></td>
     </tr>
 </table>
+
 <div class="button-container">
     <a th:href="@{/billing/{id}/edit(id=${bill.id})}" class="btn">Edit</a>
     <form th:action="@{/billing/{id}/delete(id=${bill.id})}" method="post">
@@ -54,6 +55,7 @@
 </div>
 
 <a href="javascript: document.logoutForm.submit()" class="logout-button" role="menuitem">Logout</a>
+
 <form name="logoutForm" th:action="@{/api/auth/signout}" method="post" th:hidden="true">
     <input hidden type="submit" value="Sign Out"/>
 </form>

@@ -1,111 +1,85 @@
-/* Set box sizing to border-box to include padding in element width */
-* {
-  box-sizing: border-box;
+ * {
+     box-sizing: border-box;
 }
-
-body {
-  margin: 0;
-  padding: 0;
-  font-family: Arial, sans-serif;
-  background-color: #f2f2f2;
+ body {
+     margin: 0;
+     padding: 0;
+     font-family: Arial, sans-serif;
+     background-color: #f2f2f2;
 }
-
-/* Center the main content */
-.main {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
+ .main {
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     height: 100vh;
 }
-
-/* Form styling */
-.signup {
-  background-color: #ffffff;
-  border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  padding: 30px;
-  width: 400px;
-  max-width: 100%;
-  text-align: center;
+ .signup {
+     background-color: #ffffff;
+     border-radius: 5px;
+     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+     padding: 30px;
+     width: 400px;
+     max-width: 100%;
+     text-align: center;
 }
-
-/* Form label styling */
-label {
-  font-weight: bold;
-  font-size: 30px;
-  margin-bottom: 20px;
-  display: block;
+ label {
+     font-weight: bold;
+     font-size: 30px;
+     margin-bottom: 20px;
+     display: block;
 }
-
-/* Form input and button styling */
-input[type="text"],
-input[type="email"],
-input[type="password"] {
-  border: 1px solid black;
-  border-radius: 5px;
-  padding: 10px;
-  margin-bottom: 20px;
-  width: 100%;
-  font-size: 16px;
+ input[type="text"], input[type="email"], input[type="password"] {
+     border: 1px solid black;
+     border-radius: 5px;
+     padding: 10px;
+     margin-bottom: 20px;
+     width: 100%;
+     font-size: 16px;
 }
-
-button {
-  background-color: #008CBA;
-  border: none;
-  color: #ffffff;
-  padding: 10px 20px;
-  border-radius: 5px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background-color 0.3s;
+ button {
+     background-color: #008CBA;
+     border: none;
+     color: #ffffff;
+     padding: 10px 20px;
+     border-radius: 5px;
+     font-size: 16px;
+     cursor: pointer;
+     transition: background-color 0.3s;
 }
-
-button:hover {
-  background-color: #004d60;
+ button:hover {
+     background-color: #004d60;
 }
-
-/* Error message styling */
-.text-danger {
-  color: #ff0000;
-  font-size: 14px;
-  margin-top: 5px;
+ .text-danger {
+     color: #ff0000;
+     font-size: 14px;
+     margin-top: 5px;
 }
-
-/* Checkbox styling */
-#chk {
-  position: absolute;
-  top: -50px;
+ #chk {
+     position: absolute;
+     top: -50px;
 }
-
-/* Hide the checkbox visually but keep it accessible */
-#chk[aria-hidden="true"] {
-  opacity: 0;
-  position: absolute;
-  z-index: -1;
+ #chk[aria-hidden="true"] {
+     opacity: 0;
+     position: absolute;
+     z-index: -1;
 }
-
-/* Show the label text when checkbox is checked */
-#chk:checked + .signup label {
-  display: none;
+ #chk:checked + .signup label {
+     display: none;
 }
-
-#chk:checked ~ .signup {
-  height: 500px;
+ #chk:checked ~ .signup {
+     height: 500px;
 }
-
-/* Login button styling */
-#loginButton {
-  background-color: #dddddd;
-  border: none;
-  color: #333333;
-  padding: 10px 20px;
-  border-radius: 5px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-  margin-top: 20px;
+ #loginButton {
+     background-color: #dddddd;
+     border: none;
+     color: #333333;
+     padding: 10px 20px;
+     border-radius: 5px;
+     font-size: 16px;
+     cursor: pointer;
+     transition: background-color 0.3s;
+     margin-top: 20px;
 }
-
-#loginButton:hover {
-  background-color: #bbbbbb;
+ #loginButton:hover {
+     background-color: #bbbbbb;
 }

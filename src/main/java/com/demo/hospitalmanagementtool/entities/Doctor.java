@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -62,8 +61,3 @@ public class Doctor {
     private List<Billing> bills;
 
 }
-
-
-
-
-
