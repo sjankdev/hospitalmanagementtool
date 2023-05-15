@@ -137,3 +137,32 @@ a:hover {
         right: 10px;
         z-index: 9999;
     }
+    .button-container {
+       display: flex;
+       justify-content: center;
+       margin: 2rem 0;
+     }
+
+     .btn {
+       display: inline-block;
+       padding: 8px 12px;
+       margin: 0 10px;
+       border: none;
+       background-color: #4CAF50;
+       color: white;
+       text-decoration: none;
+       font-size: 14px;
+       border-radius: 4px;
+     }
+
+     .btn:hover {
+       background-color: #0069d9;
+     }
+
+     .delete-btn {
+       background-color: #dc3545;
+     }
+
+     .delete-btn:hover {
+       background-color: #c82333;
+     }

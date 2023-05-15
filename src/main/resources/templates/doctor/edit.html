@@ -39,17 +39,20 @@
     <input type="text" id="specialty" name="specialty" th:value="${doctor.specialty}" required>
     <br><br>
     <label for="medicalLicenseNumber">Medical Licence number:</label>
-    <input type="text" id="medicalLicenseNumber" name="medicalLicenseNumber" th:value="${doctor.medicalLicenseNumber}" required>
+    <input type="text" id="medicalLicenseNumber" name="medicalLicenseNumber" th:value="${doctor.medicalLicenseNumber}"
+           required>
     <br><br>
     <label for="medicalSchoolAttended">Medical School Attended:</label>
-    <input type="text" id="medicalSchoolAttended" name="medicalSchoolAttended" th:value="${doctor.medicalSchoolAttended}" required>
+    <input type="text" id="medicalSchoolAttended" name="medicalSchoolAttended"
+           th:value="${doctor.medicalSchoolAttended}" required>
     <br><br>
     <button type="submit">Update Doctor</button>
 </form>
-<div style="display: flex; align-items: center; justify-content: center;">
-    <a th:href="@{/doctors/list}">Back to Doctor list</a>
+<div class="button-container">
+    <a th:href="@{/doctors/list}" class="btn">Back to Doctors List</a>
+    <a th:href="@{/index}" class="btn">Back to homepage</a>
 </div>
-<a href="javascript: document.logoutForm.submit()"  class="logout-button" role="menuitem">Logout</a>
+<a href="javascript: document.logoutForm.submit()" class="logout-button" role="menuitem">Logout</a>
 <form name="logoutForm" th:action="@{/api/auth/signout}" method="post" th:hidden="true">
     <input hidden type="submit" value="Sign Out"/>
 </form>
