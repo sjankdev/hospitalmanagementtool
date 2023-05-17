@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Doctor Appointment Calendar</title>
+</head>
+
+<body>
+<h1>Doctor Appointment Calendar</h1>
+<h2 th:text="${monthYear}"></h2>
+
+<a th:href="@{/doctorAppointments/doctor-appointment-calendar(year=${previousYear}, month=${previousMonth})}">&lt; Previous Month</a>
+|
+<a th:href="@{/doctorAppointments/doctor-appointment-calendar(year=${nextYear}, month=${nextMonth})}">Next Month &gt;</a>
+
+<table>
+    <thead>
+    <tr>
+        <th>Doctor</th>
+        <th th:each="day : ${calendarDays}" th:text="${#temporals.format(day, 'dd')}"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="entry : ${doctorAppointmentsMap}">
+        <td th:text="${entry.key.firstName}"></td>
+        <td th:each="day : ${calendarDays}">
+            <span th:each="appointment : ${entry.value}">
+                <span th:if="${#temporals.format(appointment.dateTime, 'dd') == #temporals.format(day, 'dd')}"
+                      th:text="${appointment.dateTime}"></span>
+            </span>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+
+</html>
