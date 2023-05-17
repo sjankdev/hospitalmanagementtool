@@ -7,7 +7,8 @@
 </head>
 <body>
 <h1>Doctor Appointment Calendar</h1>
-<h2>Doctor ID: <span th:text="${doctorId}"></span></h2>
+<h2>Doctor: <span th:text="${doctor.firstName}"></span></h2>
+<h3>Current Month: <span th:text="${monthYear}"></span></h3>
 
 <div class="calendar">
     <div class="month-navigation">

@@ -1,6 +1,8 @@
 package com.demo.hospitalmanagementtool.controllers;
 
 import com.demo.hospitalmanagementtool.entities.Appointment;
+import com.demo.hospitalmanagementtool.entities.Doctor;
+import com.demo.hospitalmanagementtool.repository.DoctorRepository;
 import com.demo.hospitalmanagementtool.service.DoctorAppointmentCalendarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,14 +17,17 @@ import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/doctorAppointments")
 public class DoctorAppointmentController {
     private final DoctorAppointmentCalendarService calendarService;
+    private final DoctorRepository doctorRepository;
 
-    public DoctorAppointmentController(DoctorAppointmentCalendarService calendarService) {
+    public DoctorAppointmentController(DoctorAppointmentCalendarService calendarService, DoctorRepository doctorRepository) {
         this.calendarService = calendarService;
+        this.doctorRepository = doctorRepository;
     }
 
     @GetMapping("/doctor-appointment-calendar/{doctorId}")
@@ -38,8 +43,13 @@ public class DoctorAppointmentController {
         // Get calendar days for the specified month
         List<LocalDate> calendarDays = calendarService.getCalendarDays(year, month);
 
+        Optional<Doctor> doctorOptional = doctorRepository.findById(doctorId);
+        Doctor doctor = doctorOptional.orElseThrow(() -> new IllegalArgumentException("Doctor not found."));
+
+
         // Prepare data for rendering in the Thymeleaf template
         model.addAttribute("doctorId", doctorId);
+        model.addAttribute("doctor", doctor);
         model.addAttribute("calendarDays", calendarDays);
         model.addAttribute("appointments", doctorAppointments);
         model.addAttribute("monthYear", YearMonth.of(year, month).format(DateTimeFormatter.ofPattern("MMMM yyyy")));
