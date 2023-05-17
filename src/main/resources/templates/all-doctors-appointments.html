@@ -2,36 +2,99 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <title>Doctor Appointment Calendar</title>
+    <meta charset="UTF-8">
+    <title>Doctor Appointments</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .calendar {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        .calendar th {
+            text-align: center;
+            padding: 10px;
+            font-weight: bold;
+            background-color: #f2f2f2;
+        }
+
+        .calendar td {
+            text-align: center;
+            padding: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .calendar td span {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .prev-month-link,
+        .next-month-link {
+            display: inline-block;
+            padding: 5px 10px;
+            background-color: #f2f2f2;
+            color: #333;
+            text-decoration: none;
+            margin-right: 10px;
+            border-radius: 5px;
+        }
+
+        .prev-month-link:hover,
+        .next-month-link:hover {
+            background-color: #e0e0e0;
+        }
+
+
+
+
+    </style>
 </head>
 
 <body>
-<h1>Doctor Appointment Calendar</h1>
 <h2 th:text="${monthYear}"></h2>
 
-<a th:href="@{/doctorAppointments/doctor-appointment-calendar(year=${previousYear}, month=${previousMonth})}">&lt; Previous Month</a>
-|
-<a th:href="@{/doctorAppointments/doctor-appointment-calendar(year=${nextYear}, month=${nextMonth})}">Next Month &gt;</a>
-
-<table>
+<table class="calendar">
     <thead>
     <tr>
-        <th>Doctor</th>
-        <th th:each="day : ${calendarDays}" th:text="${#temporals.format(day, 'dd')}"></th>
+        <th>Sun</th>
+        <th>Mon</th>
+        <th>Tue</th>
+        <th>Wed</th>
+        <th>Thu</th>
+        <th>Fri</th>
+        <th>Sat</th>
     </tr>
     </thead>
     <tbody>
-    <tr th:each="entry : ${doctorAppointmentsMap}">
-        <td th:text="${entry.key.firstName}"></td>
-        <td th:each="day : ${calendarDays}">
-            <span th:each="appointment : ${entry.value}">
-                <span th:if="${#temporals.format(appointment.dateTime, 'dd') == #temporals.format(day, 'dd')}"
-                      th:text="${appointment.dateTime}"></span>
-            </span>
+    <tr th:each="week : ${calendarDays}" th:with="weekDates=${week}">
+        <td th:each="day : ${weekDates}">
+            <span th:text="${day.getDayOfMonth()}"></span>
+            <br>
+            <span th:each="entry : ${doctorAppointmentsMap}" th:with="doctor=${entry.key}, appointments=${entry.value}">
+                        <span th:each="appointment : ${appointments}" th:block
+                              th:if="${appointment.dateTime.toLocalDate() == day}">
+                            <span th:text="${doctor.firstName}"></span>
+                            <br>
+                        </span>
+                    </span>
         </td>
     </tr>
     </tbody>
 </table>
+
+<div>
+    <a class="prev-month-link"
+       th:href="@{/doctorAppointments/doctor-appointment-calendar(year=__${previousYear}__, month=__${previousMonth}__)}">Previous
+        Month</a>
+    <a class="next-month-link"
+       th:href="@{/doctorAppointments/doctor-appointment-calendar(year=__${nextYear}__, month=__${nextMonth}__)}">Next
+        Month</a>
+</div>
 </body>
 
 </html>
