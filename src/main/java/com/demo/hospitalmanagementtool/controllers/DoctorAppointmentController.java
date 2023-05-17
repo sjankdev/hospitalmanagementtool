@@ -11,9 +11,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
+import java.time.format.TextStyle;
 import java.util.*;
 
 @Controller
@@ -28,12 +30,7 @@ public class DoctorAppointmentController {
     }
 
     @GetMapping("/doctor-appointment-calendar/{doctorId}")
-    public String getDoctorAppointmentCalendar(
-            @PathVariable("doctorId") Long doctorId,
-            @RequestParam(value = "year", required = false, defaultValue = "2023") int year,
-            @RequestParam(value = "month", required = false, defaultValue = "1") int month,
-            Model model
-    ) {
+    public String getDoctorAppointmentCalendar(@PathVariable("doctorId") Long doctorId, @RequestParam(value = "year", required = false, defaultValue = "2023") int year, @RequestParam(value = "month", required = false, defaultValue = "1") int month, Model model) {
         List<Appointment> doctorAppointments = calendarService.getDoctorAppointmentDatesByDoctorId(doctorId, year, month);
 
         List<LocalDate> calendarDays = calendarService.getCalendarDays(year, month);
@@ -60,11 +57,7 @@ public class DoctorAppointmentController {
     }
 
     @GetMapping("/doctor-appointment-calendar")
-    public String getAllDoctorAppointments(
-            @RequestParam(value = "year", required = false, defaultValue = "2023") int year,
-            @RequestParam(value = "month", required = false, defaultValue = "1") int month,
-            Model model
-    ) {
+    public String getAllDoctorAppointments(@RequestParam(value = "year", required = false, defaultValue = "2023") int year, @RequestParam(value = "month", required = false, defaultValue = "1") int month, Model model) {
         List<Doctor> doctors = doctorRepository.findAll();
         Map<Doctor, List<Appointment>> doctorAppointmentsMap = new HashMap<>();
 
@@ -75,9 +68,23 @@ public class DoctorAppointmentController {
 
         List<LocalDate> calendarDays = calendarService.getCalendarDays(year, month);
 
+        LocalDate firstDayOfMonth = LocalDate.of(year, month, 1);
+        DayOfWeek firstDayOfWeek = firstDayOfMonth.getDayOfWeek();
+
+        List<String> dayNames = new ArrayList<>();
+        DayOfWeek currentDay = firstDayOfWeek;
+        Locale locale = Locale.getDefault();
+        for (int i = 0; i < 7; i++) {
+            String dayName = currentDay.getDisplayName(TextStyle.SHORT, locale);
+            dayNames.add(dayName);
+            currentDay = currentDay.plus(1);
+        }
+
         model.addAttribute("doctorAppointmentsMap", doctorAppointmentsMap);
         model.addAttribute("calendarDays", calendarDays);
         model.addAttribute("monthYear", YearMonth.of(year, month).format(DateTimeFormatter.ofPattern("MMMM yyyy")));
+        model.addAttribute("firstDayOfWeek", firstDayOfWeek.getValue());
+        model.addAttribute("dayNames", dayNames);
 
         YearMonth currentMonth = YearMonth.of(year, month);
         YearMonth previousMonth = currentMonth.minusMonths(1);
@@ -90,6 +97,7 @@ public class DoctorAppointmentController {
 
         return "all-doctors-appointments";
     }
+
 }
 
 
