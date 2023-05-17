@@ -8,12 +8,12 @@
             justify-content: flex-start;
         }
 
-.header-center {
+    .header-center {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-        margin-bottom: 20px; /* Add the desired gap value */
+        margin-bottom: 20px;
 
 }
 
