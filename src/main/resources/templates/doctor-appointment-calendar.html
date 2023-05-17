@@ -6,25 +6,17 @@
     <link rel="stylesheet" type="text/css" href="/css/appointment-calendar.css">
 </head>
 <body>
-<h1>Doctor Appointment Calendar</h1>
-<h2>Doctor: <span th:text="${doctor.firstName}"></span></h2>
-<h3>Current Month: <span th:text="${monthYear}"></span></h3>
+<div class="center-container">
+    <h1>Doctor Appointment Calendar</h1>
+    <h2 th:text="${doctor.firstName}"></h2>
+    <h3>Current Month: <span th:text="${monthYear}"></span></h3>
+    <a th:href="@{/doctorAppointments/doctor-appointment-calendar/{doctorId}(doctorId=${doctorId}, year=${previousYear}, month=${previousMonth})}">Previous
+        Month</a>
+    <a th:href="@{/doctorAppointments/doctor-appointment-calendar/{doctorId}(doctorId=${doctorId}, year=${nextYear}, month=${nextMonth})}">Next
+        Month</a>
+</div>
 
 <div class="calendar">
-    <div class="month-navigation">
-        <a th:href="@{/doctorAppointments/doctor-appointment-calendar/{doctorId}(doctorId=${doctorId}, year=${previousYear}, month=${previousMonth})}">Previous Month</a>
-        <a th:href="@{/doctorAppointments/doctor-appointment-calendar/{doctorId}(doctorId=${doctorId}, year=${nextYear}, month=${nextMonth})}">Next Month</a>
-    </div>
-
-    <div class="day-header">
-        <span>Sun</span>
-        <span>Mon</span>
-        <span>Tue</span>
-        <span>Wed</span>
-        <span>Thu</span>
-        <span>Fri</span>
-        <span>Sat</span>
-    </div>
 
     <div class="day" th:each="day : ${calendarDays}">
         <h4 th:text="${#temporals.format(day, 'd')}"></h4>
