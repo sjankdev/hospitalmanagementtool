@@ -8,11 +8,9 @@ import java.util.Map;
 
 public interface DoctorAppointmentCalendarService {
 
-    public List<Appointment> getDoctorAppointments(Long doctorId);
 
-    public List<LocalDate> getCalendarDays();
-
-    public Map<String, String> getDoctorAppointmentDates(Long doctorId);
+    List<Appointment> getDoctorAppointmentDatesByDoctorId(Long doctorId, int year, int month);
+    List<LocalDate> getCalendarDays(int year, int month);
 
 
 }
