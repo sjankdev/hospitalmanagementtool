@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Doctor Appointments</title>
+    <link rel="stylesheet" type="text/css" href="/css/all-doctors-appointments.css">
+</head>
+
+<body>
+<div class="header-center">
+    <h2 th:text="${monthYear}"></h2>
+    <div class="button-container">
+        <a class="btn btn-previous"
+           th:href="@{/doctorAppointments/doctor-appointment-calendar(year=__${previousYear}__, month=__${previousMonth}__)}">Previous
+            Month</a>
+        <a class="btn btn-next"
+           th:href="@{/doctorAppointments/doctor-appointment-calendar(year=__${nextYear}__, month=__${nextMonth}__)}">Next
+            Month</a>
+    </div>
+</div>
+<div class="calendar">
+    <div class="calendar-header">
+        <div th:each="dayName : ${dayNames}">
+            <div th:text="${dayName}"></div>
+        </div>
+        <div th:each="week : ${calendarDays}" th:with="weekDates=${week}">
+            <div th:each="day : ${weekDates}" class="calendar-day">
+                <div class="day-number" th:text="${day.getDayOfMonth()}"></div>
+                <div th:each="entry : ${doctorAppointmentsMap}"
+                     th:with="doctor=${entry.key}, appointments=${entry.value}">
+                    <div th:each="appointment : ${appointments}" th:block
+                         th:if="${appointment.dateTime.toLocalDate() == day}">
+                        <div th:text="${doctor.firstName}"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+</html>
