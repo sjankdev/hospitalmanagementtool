@@ -17,17 +17,39 @@
 </div>
 
 <div class="calendar">
-
     <div class="day" th:each="day : ${calendarDays}">
         <h4 th:text="${#temporals.format(day, 'd')}"></h4>
-        <div th:each="appointment : ${appointments}">
+        <div th:each="appointment, iterStat : ${appointments}" th:class="${iterStat.index < 2 ? '' : 'hidden'}">
             <div class="appointment"
                  th:if="${#temporals.format(appointment.dateTime.toLocalDate(), 'd') == #temporals.format(day, 'd')}">
                 <p th:text="${#temporals.format(appointment.dateTime, 'HH:mm')}"></p>
                 <p th:text="${appointment.reasonForVisit}"></p>
             </div>
         </div>
+        <div th:if="${appointments.size() > 2}">
+            <button class="see-more-button" onclick="showMore(this)">See More</button>
+            <div class="hidden-appointments hidden">
+                <div th:each="appointment, iterStat : ${appointments}"
+                     th:class="${iterStat.index >= 2 ? '' : 'hidden'}">
+                    <div class="appointment"
+                         th:if="${#temporals.format(appointment.dateTime.toLocalDate(), 'd') == #temporals.format(day, 'd')}">
+                        <p th:text="${#temporals.format(appointment.dateTime, 'HH:mm')}"></p>
+                        <p th:text="${appointment.reasonForVisit}"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
+
+<script>
+    function showMore(button) {
+        const hiddenAppointments = button.nextElementSibling;
+        hiddenAppointments.classList.toggle('hidden');
+        button.textContent = hiddenAppointments.classList.contains('hidden') ? 'See More' : 'See Less';
+    }
+
+</script>
+
 </body>
 </html>
