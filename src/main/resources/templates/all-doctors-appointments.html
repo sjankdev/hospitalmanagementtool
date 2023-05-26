@@ -27,18 +27,17 @@
                 <tr th:each="appointment, iterStat : ${entry.value}" th:if="${iterStat.index} &lt; 2">
                     <td th:text="${appointment.doctor.firstName} + ' ' + ${appointment.doctor.lastName}"></td>
                     <td th:text="${appointment.patient.firstName} + ' ' + ${appointment.patient.lastName}"></td>
-                    <td th:text="${appointment.reasonForVisit}"></td>
-                    <td th:text="${appointment.status}"></td>
+                    <td th:text="${appointment.notes}"></td>
                 </tr>
                 <tr th:if="${entry.value.size() > 2}">
                     <td colspan="4">
-                        <a href="#" onclick="showMoreAppointments(this); return false;">See more</a>
-                        <table class="hidden">
+                        <a href="#" onclick="showMoreAppointments(this, 'additionalAppointmentsTable'); return false;">See
+                            more</a>
+                        <table id="additionalAppointmentsTable" class="hidden">
                             <tr th:each="appointment, iterStat : ${entry.value}" th:if="${iterStat.index} &gt;= 2">
                                 <td th:text="${appointment.doctor.firstName} + ' ' + ${appointment.doctor.lastName}"></td>
                                 <td th:text="${appointment.patient.firstName} + ' ' + ${appointment.patient.lastName}"></td>
-                                <td th:text="${appointment.reasonForVisit}"></td>
-                                <td th:text="${appointment.status}"></td>
+                                <td th:text="${appointment.notes}"></td>
                             </tr>
                         </table>
                     </td>
@@ -50,11 +49,15 @@
 </table>
 
 <script>
-        function showMoreAppointments(link) {
-            var table = link.parentNode.querySelector("table.hidden");
-            table.classList.toggle("hidden");
-            link.textContent = (table.classList.contains("hidden")) ? "See more" : "Hide";
-        }
+function showMoreAppointments(link, tableId, date) {
+    var table = document.getElementById(tableId);
+    table.classList.toggle("hidden");
+    link.textContent = (table.classList.contains("hidden")) ? "See more" : "Hide";
+    link.dataset.date = date; // Store the date as a data attribute on the link
+}
+
+
+
 
 
 
