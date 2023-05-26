@@ -1,93 +1,47 @@
-body {
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    background: #1b98e0;
-}
+ body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+        }
 
-.header-center {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 20px;
-    color: white;
-    font-weight: bold;
-}
+        h1 {
+            color: #333;
+            text-align: center;
+        }
 
-.calendar {
-    max-width: 600px;
-    width: 100%;
-    background: #13293d;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border: 1px solid #555;
-}
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
 
-.calendar-header {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    text-align: center;
-    background-color: #13293d;
-    width: 100%;
-    color: white;
-    margin-top:20px;
-}
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
 
-.calendar-day {
-    padding: 5px;
-    height: 80px;
-    display: grid;
-    grid-template-rows: auto 1fr;
-    background: #13293d;
-    color: white;
-    font-size: 14px;
-    font-family: "Your Cool Font", sans-serif;
-}
+        th {
+            background-color: #333;
+            color: #fff;
+        }
 
+        tbody tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
 
-.calendar-day .day-number {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 21px;
-    font-weight: bold;
-    font-family: "Your Cool Font", sans-serif;
-}
+        tbody tr:hover {
+            background-color: #e6e6e6;
+        }
 
+        a {
+            color: #337ab7;
+            text-decoration: none;
+        }
 
-.calendar-day:hover {
-    background-color: #118ab2;
-    cursor: pointer;
-}
+        .hidden {
+            display: none;
+        }
 
-.button-container {
-    display: flex;
-    gap: 10px;
-
-}
-
-.btn {
-    display: inline-block;
-    padding: 10px 20px;
-    border-radius: 5px;
-    font-weight: bold;
-    text-decoration: none;
-    color: #fff;
-    transition: background-color 0.3s ease;
-}
-
-.btn-previous {
-    background-color: #3498db;
-}
-
-.btn-next {
-    background-color: #2ecc71;
-}
-
-.btn:hover {
-    background-color: #555;
-}
+        /* Align patient names with the patient header */
+        td.patient {
+            vertical-align: middle;
+        }

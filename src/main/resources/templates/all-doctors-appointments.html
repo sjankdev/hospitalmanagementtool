@@ -2,41 +2,52 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Doctor Appointments</title>
+    <title>All Events</title>
     <link rel="stylesheet" type="text/css" href="/css/all-doctors-appointments.css">
 </head>
-
 <body>
-<div class="header-center">
-    <h2 th:text="${monthYear}"></h2>
-    <div class="button-container">
-        <a class="btn btn-previous"
-           th:href="@{/doctorAppointments/doctor-appointment-calendar(year=__${previousYear}__, month=__${previousMonth}__)}">Previous
-            Month</a>
-        <a class="btn btn-next"
-           th:href="@{/doctorAppointments/doctor-appointment-calendar(year=__${nextYear}__, month=__${nextMonth}__)}">Next
-            Month</a>
-    </div>
-</div>
-<div class="calendar">
-    <div class="calendar-header">
-        <div th:each="dayName : ${dayNames}">
-            <div th:text="${dayName}"></div>
-        </div>
-        <div th:each="week : ${calendarDays}" th:with="weekDates=${week}">
-            <div th:each="day : ${weekDates}" class="calendar-day">
-                <div class="day-number" th:text="${day.getDayOfMonth()}"></div>
-                <div th:each="entry : ${doctorAppointmentsMap}"
-                     th:with="doctor=${entry.key}, appointments=${entry.value}">
-                    <div th:each="appointment : ${appointments}" th:block
-                         th:if="${appointment.dateTime.toLocalDate() == day}">
-                        <div th:text="${doctor.firstName}"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-</body>
+<h1>All Events</h1>
 
+<table>
+    <thead>
+    <tr>
+        <th>Date</th>
+        <th>Doctor</th>
+        <th>Patient</th>
+        <th>Reason for Visit</th>
+        <th>Status</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="entry : ${appointmentsByDate}">
+        <td th:text="${entry.key}"></td>
+        <td>
+            <table>
+                <tr th:each="appointment, iterStat : ${entry.value}" th:if="${iterStat.index} &lt; 2">
+                    <td th:text="${appointment.doctor.firstName} + ' ' + ${appointment.doctor.lastName}"></td>
+                    <td th:text="${appointment.patient.firstName} + ' ' + ${appointment.patient.lastName}"></td>
+                    <td th:text="${appointment.notes}"></td>
+                </tr>
+                <tr th:if="${entry.value.size() > 2}">
+                    <td colspan="4">
+                        <a href="#" th:data-date="${entry.key}" onclick="showMoreAppointments(this); return false;">See
+                            more</a>
+
+                        <table class="hidden">
+                            <tr th:each="additionalAppointment, iterStat : ${entry.value}"
+                                th:if="${iterStat.index} &gt;= 2">
+                                <td th:text="${additionalAppointment.doctor.firstName} + ' ' + ${additionalAppointment.doctor.lastName}"></td>
+                                <td th:text="${additionalAppointment.patient.firstName} + ' ' + ${additionalAppointment.patient.lastName}"></td>
+                                <td th:text="${additionalAppointment.notes}"></td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<script type="text/javascript" th:src="@{/js/allAppointments.js}"></script>
+</body>
 </html>
