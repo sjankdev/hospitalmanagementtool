@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <title>All Events</title>
     <link rel="stylesheet" type="text/css" href="/css/all-doctors-appointments.css">
-
 </head>
 <body>
 <h1>All Events</h1>
@@ -31,13 +30,15 @@
                 </tr>
                 <tr th:if="${entry.value.size() > 2}">
                     <td colspan="4">
-                        <a href="#" onclick="showMoreAppointments(this, 'additionalAppointmentsTable'); return false;">See
+                        <a href="#" th:data-date="${entry.key}" onclick="showMoreAppointments(this); return false;">See
                             more</a>
-                        <table id="additionalAppointmentsTable" class="hidden">
-                            <tr th:each="appointment, iterStat : ${entry.value}" th:if="${iterStat.index} &gt;= 2">
-                                <td th:text="${appointment.doctor.firstName} + ' ' + ${appointment.doctor.lastName}"></td>
-                                <td th:text="${appointment.patient.firstName} + ' ' + ${appointment.patient.lastName}"></td>
-                                <td th:text="${appointment.notes}"></td>
+
+                        <table class="hidden">
+                            <tr th:each="additionalAppointment, iterStat : ${entry.value}"
+                                th:if="${iterStat.index} &gt;= 2">
+                                <td th:text="${additionalAppointment.doctor.firstName} + ' ' + ${additionalAppointment.doctor.lastName}"></td>
+                                <td th:text="${additionalAppointment.patient.firstName} + ' ' + ${additionalAppointment.patient.lastName}"></td>
+                                <td th:text="${additionalAppointment.notes}"></td>
                             </tr>
                         </table>
                     </td>
@@ -49,17 +50,11 @@
 </table>
 
 <script>
-function showMoreAppointments(link, tableId, date) {
-    var table = document.getElementById(tableId);
+function showMoreAppointments(link) {
+    var table = link.nextElementSibling;
     table.classList.toggle("hidden");
     link.textContent = (table.classList.contains("hidden")) ? "See more" : "Hide";
-    link.dataset.date = date; // Store the date as a data attribute on the link
 }
-
-
-
-
-
 
 </script>
 </body>

@@ -65,14 +65,14 @@ public class DoctorAppointmentController {
         List<Appointment> appointments = appointmentRepository.findAll();
 
         // Create a map to hold appointments grouped by date
-        Map<LocalDate, List<Appointment>> appointmentsByDate = new HashMap<>();
+        Map<String, List<Appointment>> appointmentsByDate = new LinkedHashMap<>();
 
         // Group appointments by date
         for (Appointment appointment : appointments) {
             LocalDate appointmentDate = appointment.getDateTime().toLocalDate();
-            List<Appointment> dateAppointments = appointmentsByDate.getOrDefault(appointmentDate, new ArrayList<>());
+            String dateStr = appointmentDate.toString();
+            List<Appointment> dateAppointments = appointmentsByDate.computeIfAbsent(dateStr, k -> new ArrayList<>());
             dateAppointments.add(appointment);
-            appointmentsByDate.put(appointmentDate, dateAppointments);
         }
 
         model.addAttribute("appointmentsByDate", appointmentsByDate);
