@@ -2,6 +2,7 @@ package com.demo.hospitalmanagementtool.controllers;
 
 import com.demo.hospitalmanagementtool.entities.Appointment;
 import com.demo.hospitalmanagementtool.entities.Doctor;
+import com.demo.hospitalmanagementtool.repository.AppointmentRepository;
 import com.demo.hospitalmanagementtool.repository.DoctorRepository;
 import com.demo.hospitalmanagementtool.service.DoctorAppointmentCalendarService;
 import org.springframework.stereotype.Controller;
@@ -23,10 +24,12 @@ import java.util.*;
 public class DoctorAppointmentController {
     private final DoctorAppointmentCalendarService calendarService;
     private final DoctorRepository doctorRepository;
+    private final AppointmentRepository appointmentRepository;
 
-    public DoctorAppointmentController(DoctorAppointmentCalendarService calendarService, DoctorRepository doctorRepository) {
+    public DoctorAppointmentController(DoctorAppointmentCalendarService calendarService, DoctorRepository doctorRepository, AppointmentRepository appointmentRepository) {
         this.calendarService = calendarService;
         this.doctorRepository = doctorRepository;
+        this.appointmentRepository = appointmentRepository;
     }
 
     @GetMapping("/doctor-appointment-calendar/{doctorId}")
@@ -56,47 +59,26 @@ public class DoctorAppointmentController {
         return "doctor-appointment-calendar";
     }
 
-    @GetMapping("/doctor-appointment-calendar")
-    public String getAllDoctorAppointments(@RequestParam(value = "year", required = false, defaultValue = "2023") int year, @RequestParam(value = "month", required = false, defaultValue = "1") int month, Model model) {
-        List<Doctor> doctors = doctorRepository.findAll();
-        Map<Doctor, List<Appointment>> doctorAppointmentsMap = new HashMap<>();
+    @GetMapping("/events")
+    public String getAllEvents(Model model) {
+        // Fetch all appointments
+        List<Appointment> appointments = appointmentRepository.findAll();
 
-        for (Doctor doctor : doctors) {
-            List<Appointment> doctorAppointments = calendarService.getDoctorAppointmentDatesByDoctorId(doctor.getId(), year, month);
-            doctorAppointmentsMap.put(doctor, doctorAppointments);
+        // Create a map to hold appointments grouped by date
+        Map<LocalDate, List<Appointment>> appointmentsByDate = new HashMap<>();
+
+        // Group appointments by date
+        for (Appointment appointment : appointments) {
+            LocalDate appointmentDate = appointment.getDateTime().toLocalDate();
+            List<Appointment> dateAppointments = appointmentsByDate.getOrDefault(appointmentDate, new ArrayList<>());
+            dateAppointments.add(appointment);
+            appointmentsByDate.put(appointmentDate, dateAppointments);
         }
 
-        List<LocalDate> calendarDays = calendarService.getCalendarDays(year, month);
-
-        LocalDate firstDayOfMonth = LocalDate.of(year, month, 1);
-        DayOfWeek firstDayOfWeek = firstDayOfMonth.getDayOfWeek();
-
-        List<String> dayNames = new ArrayList<>();
-        DayOfWeek currentDay = firstDayOfWeek;
-        Locale locale = Locale.getDefault();
-        for (int i = 0; i < 7; i++) {
-            String dayName = currentDay.getDisplayName(TextStyle.SHORT, locale);
-            dayNames.add(dayName);
-            currentDay = currentDay.plus(1);
-        }
-
-        model.addAttribute("doctorAppointmentsMap", doctorAppointmentsMap);
-        model.addAttribute("calendarDays", calendarDays);
-        model.addAttribute("monthYear", YearMonth.of(year, month).format(DateTimeFormatter.ofPattern("MMMM yyyy")));
-        model.addAttribute("firstDayOfWeek", firstDayOfWeek.getValue());
-        model.addAttribute("dayNames", dayNames);
-
-        YearMonth currentMonth = YearMonth.of(year, month);
-        YearMonth previousMonth = currentMonth.minusMonths(1);
-        YearMonth nextMonth = currentMonth.plusMonths(1);
-
-        model.addAttribute("previousYear", previousMonth.getYear());
-        model.addAttribute("previousMonth", previousMonth.getMonthValue());
-        model.addAttribute("nextYear", nextMonth.getYear());
-        model.addAttribute("nextMonth", nextMonth.getMonthValue());
-
+        model.addAttribute("appointmentsByDate", appointmentsByDate);
         return "all-doctors-appointments";
     }
+
 
 }
 
