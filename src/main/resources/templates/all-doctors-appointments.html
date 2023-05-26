@@ -48,14 +48,6 @@
     </tr>
     </tbody>
 </table>
-
-<script>
-function showMoreAppointments(link) {
-    var table = link.nextElementSibling;
-    table.classList.toggle("hidden");
-    link.textContent = (table.classList.contains("hidden")) ? "See more" : "Hide";
-}
-
-</script>
+<script type="text/javascript" th:src="@{/js/allAppointments.js}"></script>
 </body>
 </html>
