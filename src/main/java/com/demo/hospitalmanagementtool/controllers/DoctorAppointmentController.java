@@ -4,7 +4,9 @@ import com.demo.hospitalmanagementtool.entities.Appointment;
 import com.demo.hospitalmanagementtool.entities.Doctor;
 import com.demo.hospitalmanagementtool.repository.AppointmentRepository;
 import com.demo.hospitalmanagementtool.repository.DoctorRepository;
+import com.demo.hospitalmanagementtool.service.AppointmentService;
 import com.demo.hospitalmanagementtool.service.DoctorAppointmentCalendarService;
+import com.demo.hospitalmanagementtool.service.DoctorService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,14 +28,18 @@ public class DoctorAppointmentController {
     private final DoctorAppointmentCalendarService calendarService;
     private final DoctorRepository doctorRepository;
     private final AppointmentRepository appointmentRepository;
+    private final AppointmentService appointmentService;
+    private final DoctorService doctorService;
 
-    public DoctorAppointmentController(DoctorAppointmentCalendarService calendarService, DoctorRepository doctorRepository, AppointmentRepository appointmentRepository) {
+    public DoctorAppointmentController(DoctorAppointmentCalendarService calendarService, DoctorRepository doctorRepository, AppointmentRepository appointmentRepository, AppointmentService appointmentService, DoctorService doctorService) {
         this.calendarService = calendarService;
         this.doctorRepository = doctorRepository;
         this.appointmentRepository = appointmentRepository;
+        this.appointmentService = appointmentService;
+        this.doctorService = doctorService;
     }
 
-    @GetMapping("/doctor-appointment-calendar/{doctorId}")
+  /* @GetMapping("/doctor-appointment-calendar/{doctorId}")
     public String getDoctorAppointmentCalendar(@PathVariable("doctorId") Long doctorId, @RequestParam(value = "year", required = false, defaultValue = "2023") int year, @RequestParam(value = "month", required = false, defaultValue = "1") int month, Model model) {
         List<Appointment> doctorAppointments = calendarService.getDoctorAppointmentDatesByDoctorId(doctorId, year, month);
 
@@ -56,6 +62,18 @@ public class DoctorAppointmentController {
         model.addAttribute("previousMonth", previousMonth.getMonthValue());
         model.addAttribute("nextYear", nextMonth.getYear());
         model.addAttribute("nextMonth", nextMonth.getMonthValue());
+
+        return "doctor-appointment-calendar";
+    }*/
+
+    @GetMapping("/doctor/{doctorId}/appointments")
+    public String getDoctorAppointments(@PathVariable Long doctorId, Model model) {
+        Doctor doctor = doctorService.getDoctorById(doctorId);
+        List<Appointment> appointments = appointmentService.getAppointmentsByDoctor(doctor);
+
+        Map<String, List<Appointment>> groupedAppointments = appointmentService.groupAppointmentsByDate(appointments);
+        model.addAttribute("doctor", doctor);
+        model.addAttribute("groupedAppointments", groupedAppointments);
 
         return "doctor-appointment-calendar";
     }
