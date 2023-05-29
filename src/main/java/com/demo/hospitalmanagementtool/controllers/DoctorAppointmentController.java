@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.time.format.TextStyle;
@@ -59,15 +60,22 @@ public class DoctorAppointmentController {
         return "doctor-appointment-calendar";
     }
 
-    @GetMapping("/events")
-    public String getAllEvents(Model model) {
-        // Fetch all appointments
-        List<Appointment> appointments = appointmentRepository.findAll();
+    @GetMapping("/allEvents")
+    public String getAllEvents(
+            @RequestParam(value = "year", required = false, defaultValue = "2023") int year,
+            @RequestParam(value = "month", required = false, defaultValue = "1") int month,
+            Model model
+    ) {
+        LocalDate firstDayOfMonth = LocalDate.of(year, month, 1);
+        LocalDate lastDayOfMonth = firstDayOfMonth.withDayOfMonth(firstDayOfMonth.lengthOfMonth());
 
-        // Create a map to hold appointments grouped by date
+        List<Appointment> appointments = appointmentRepository.findByDateTimeBetween(
+                firstDayOfMonth.atStartOfDay(),
+                lastDayOfMonth.atTime(LocalTime.MAX)
+        );
+
         Map<String, List<Appointment>> appointmentsByDate = new LinkedHashMap<>();
 
-        // Group appointments by date
         for (Appointment appointment : appointments) {
             LocalDate appointmentDate = appointment.getDateTime().toLocalDate();
             String dateStr = appointmentDate.toString();
@@ -75,7 +83,13 @@ public class DoctorAppointmentController {
             dateAppointments.add(appointment);
         }
 
+        model.addAttribute("monthYear", YearMonth.of(year, month).format(DateTimeFormatter.ofPattern("MMMM yyyy")));
+        model.addAttribute("previousYear", YearMonth.of(year, month).minusMonths(1).getYear());
+        model.addAttribute("previousMonth", YearMonth.of(year, month).minusMonths(1).getMonthValue());
+        model.addAttribute("nextYear", YearMonth.of(year, month).plusMonths(1).getYear());
+        model.addAttribute("nextMonth", YearMonth.of(year, month).plusMonths(1).getMonthValue());
         model.addAttribute("appointmentsByDate", appointmentsByDate);
+
         return "all-doctors-appointments";
     }
 
