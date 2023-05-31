@@ -36,55 +36,29 @@ public class DoctorAppointmentController {
     }
 
     @GetMapping("/doctor/{doctorId}/appointments")
-    public String getDoctorAppointments(@PathVariable Long doctorId, @RequestParam(value = "year", required = false, defaultValue = "2023") int year,
-                                        @RequestParam(value = "month", required = false, defaultValue = "1") int month, Model model) {
+    public String getDoctorAppointments(@PathVariable Long doctorId, @RequestParam(value = "year", required = false, defaultValue = "2023") int year, @RequestParam(value = "month", required = false, defaultValue = "1") int month, Model model) {
         Doctor doctor = doctorService.getDoctorById(doctorId);
         List<Appointment> appointments = calendarService.getAppointmentsByDoctor(doctor);
 
         LocalDate firstDayOfMonth = LocalDate.of(year, month, 1);
         LocalDate lastDayOfMonth = firstDayOfMonth.withDayOfMonth(firstDayOfMonth.lengthOfMonth());
 
-        List<Appointment> appointmentsForMonth = new ArrayList<>();
-        for (Appointment appointment : appointments) {
-            LocalDate appointmentDate = appointment.getDateTime().toLocalDate();
-            if (appointmentDate.isAfter(firstDayOfMonth.minusDays(1)) && appointmentDate.isBefore(lastDayOfMonth.plusDays(1))) {
-                appointmentsForMonth.add(appointment);
-            }
-        }
+        List<Appointment> appointmentsForMonth = calendarService.getAppointmentsForMonth(appointments, firstDayOfMonth, lastDayOfMonth);
 
-        Map<String, List<Appointment>> appointmentsByDate = new LinkedHashMap<>();
-        for (Appointment appointment : appointmentsForMonth) {
-            LocalDate appointmentDate = appointment.getDateTime().toLocalDate();
-            String dateStr = appointmentDate.toString();
-            List<Appointment> dateAppointments = appointmentsByDate.computeIfAbsent(dateStr, k -> new ArrayList<>());
-            dateAppointments.add(appointment);
-        }
+        Map<String, List<Appointment>> appointmentsByDate = calendarService.groupAppointmentsByDate(appointmentsForMonth);
 
-        model.addAttribute("doctor", doctor);
-        model.addAttribute("groupedAppointments", appointmentsByDate);
-        model.addAttribute("monthYear", YearMonth.of(year, month).format(DateTimeFormatter.ofPattern("MMMM yyyy")));
-        model.addAttribute("previousYear", YearMonth.of(year, month).minusMonths(1).getYear());
-        model.addAttribute("previousMonth", YearMonth.of(year, month).minusMonths(1).getMonthValue());
-        model.addAttribute("nextYear", YearMonth.of(year, month).plusMonths(1).getYear());
-        model.addAttribute("nextMonth", YearMonth.of(year, month).plusMonths(1).getMonthValue());
-        model.addAttribute("appointmentsByDate", appointmentsByDate);
+        calendarService.setModelAttributes(model, doctor, appointmentsByDate, year, month);
+
         return "doctor-appointment-calendar";
     }
 
 
     @GetMapping("/allEvents")
-    public String getAllEvents(
-            @RequestParam(value = "year", required = false, defaultValue = "2023") int year,
-            @RequestParam(value = "month", required = false, defaultValue = "1") int month,
-            Model model
-    ) {
+    public String getAllEvents(@RequestParam(value = "year", required = false, defaultValue = "2023") int year, @RequestParam(value = "month", required = false, defaultValue = "1") int month, Model model) {
         LocalDate firstDayOfMonth = LocalDate.of(year, month, 1);
         LocalDate lastDayOfMonth = firstDayOfMonth.withDayOfMonth(firstDayOfMonth.lengthOfMonth());
 
-        List<Appointment> appointments = appointmentRepository.findByDateTimeBetween(
-                firstDayOfMonth.atStartOfDay(),
-                lastDayOfMonth.atTime(LocalTime.MAX)
-        );
+        List<Appointment> appointments = appointmentRepository.findByDateTimeBetween(firstDayOfMonth.atStartOfDay(), lastDayOfMonth.atTime(LocalTime.MAX));
 
         Map<String, List<Appointment>> appointmentsByDate = new LinkedHashMap<>();
 

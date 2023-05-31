@@ -1,10 +1,8 @@
 package com.demo.hospitalmanagementtool.service;
 
 import com.demo.hospitalmanagementtool.entities.Appointment;
-import com.demo.hospitalmanagementtool.entities.Doctor;
 
 import java.util.List;
-import java.util.Map;
 
 public interface AppointmentService {
 

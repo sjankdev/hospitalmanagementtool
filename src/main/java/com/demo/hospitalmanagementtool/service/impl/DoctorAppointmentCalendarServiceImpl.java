@@ -6,13 +6,13 @@ import com.demo.hospitalmanagementtool.repository.AppointmentRepository;
 import com.demo.hospitalmanagementtool.repository.DoctorRepository;
 import com.demo.hospitalmanagementtool.service.DoctorAppointmentCalendarService;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.TemporalAdjusters;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class DoctorAppointmentCalendarServiceImpl implements DoctorAppointmentCalendarService {
@@ -29,28 +29,6 @@ public class DoctorAppointmentCalendarServiceImpl implements DoctorAppointmentCa
         this.doctorRepository = doctorRepository;
     }
 
-    @Override
-    public List<Appointment> getDoctorAppointmentDatesByDoctorId(Long doctorId, int year, int month) {
-        Optional<Doctor> doctorOptional = doctorRepository.findById(doctorId);
-        Doctor doctor = doctorOptional.orElseThrow(() -> new IllegalArgumentException("Doctor not found."));
-
-        LocalDate startOfMonth = LocalDate.of(year, month, 1);
-        LocalDate endOfMonth = startOfMonth.with(TemporalAdjusters.lastDayOfMonth());
-
-        return appointmentRepository.findByDoctorAndDateTimeBetween(doctor, startOfMonth.atStartOfDay(), endOfMonth.atTime(LocalTime.MAX));
-    }
-
-    @Override
-    public List<LocalDate> getCalendarDays(int year, int month) {
-        YearMonth yearMonth = YearMonth.of(year, month);
-        int daysInMonth = yearMonth.lengthOfMonth();
-
-        List<LocalDate> calendarDays = new ArrayList<>();
-        for (int day = 1; day <= daysInMonth; day++) {
-            calendarDays.add(yearMonth.atDay(day));
-        }
-        return calendarDays;
-    }
 
     @Override
     public List<Appointment> getAppointmentsByDoctor(Doctor doctor) {
@@ -69,6 +47,30 @@ public class DoctorAppointmentCalendarServiceImpl implements DoctorAppointmentCa
         }
 
         return groupedAppointments;
+    }
+
+    @Override
+    public List<Appointment> getAppointmentsForMonth(List<Appointment> appointments, LocalDate firstDayOfMonth, LocalDate lastDayOfMonth) {
+        return appointments.stream()
+                .filter(appointment -> {
+                    LocalDate appointmentDate = appointment.getDateTime().toLocalDate();
+                    return appointmentDate.isAfter(firstDayOfMonth.minusDays(1)) && appointmentDate.isBefore(lastDayOfMonth.plusDays(1));
+                })
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public void setModelAttributes(Model model, Doctor doctor, Map<String, List<Appointment>> appointmentsByDate, int year, int month) {
+        YearMonth currentMonthYear = YearMonth.of(year, month);
+
+        model.addAttribute("doctor", doctor);
+        model.addAttribute("groupedAppointments", appointmentsByDate);
+        model.addAttribute("monthYear", currentMonthYear.format(DateTimeFormatter.ofPattern("MMMM yyyy")));
+        model.addAttribute("previousYear", currentMonthYear.minusMonths(1).getYear());
+        model.addAttribute("previousMonth", currentMonthYear.minusMonths(1).getMonthValue());
+        model.addAttribute("nextYear", currentMonthYear.plusMonths(1).getYear());
+        model.addAttribute("nextMonth", currentMonthYear.plusMonths(1).getMonthValue());
+        model.addAttribute("appointmentsByDate", appointmentsByDate);
     }
 }
 
