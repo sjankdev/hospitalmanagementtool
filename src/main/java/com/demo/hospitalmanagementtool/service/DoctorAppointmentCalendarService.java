@@ -16,6 +16,8 @@ public interface DoctorAppointmentCalendarService {
 
     List<Appointment> getAppointmentsForMonth(List<Appointment> appointments, LocalDate firstDayOfMonth, LocalDate lastDayOfMonth);
 
-    void setModelAttributes(Model model, Doctor doctor, Map<String, List<Appointment>> appointmentsByDate, int year, int month);
+    void setModelAttributesDoctor(Model model, Doctor doctor, Map<String, List<Appointment>> appointmentsByDate, int year, int month);
+
+    void setModelAttributesAllDoctors(Model model, Map<String, List<Appointment>> appointmentsByDate, int year, int month);
 
 }

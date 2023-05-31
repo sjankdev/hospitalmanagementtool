@@ -51,16 +51,14 @@ public class DoctorAppointmentCalendarServiceImpl implements DoctorAppointmentCa
 
     @Override
     public List<Appointment> getAppointmentsForMonth(List<Appointment> appointments, LocalDate firstDayOfMonth, LocalDate lastDayOfMonth) {
-        return appointments.stream()
-                .filter(appointment -> {
-                    LocalDate appointmentDate = appointment.getDateTime().toLocalDate();
-                    return appointmentDate.isAfter(firstDayOfMonth.minusDays(1)) && appointmentDate.isBefore(lastDayOfMonth.plusDays(1));
-                })
-                .collect(Collectors.toList());
+        return appointments.stream().filter(appointment -> {
+            LocalDate appointmentDate = appointment.getDateTime().toLocalDate();
+            return appointmentDate.isAfter(firstDayOfMonth.minusDays(1)) && appointmentDate.isBefore(lastDayOfMonth.plusDays(1));
+        }).collect(Collectors.toList());
     }
 
     @Override
-    public void setModelAttributes(Model model, Doctor doctor, Map<String, List<Appointment>> appointmentsByDate, int year, int month) {
+    public void setModelAttributesDoctor(Model model, Doctor doctor, Map<String, List<Appointment>> appointmentsByDate, int year, int month) {
         YearMonth currentMonthYear = YearMonth.of(year, month);
 
         model.addAttribute("doctor", doctor);
@@ -70,6 +68,17 @@ public class DoctorAppointmentCalendarServiceImpl implements DoctorAppointmentCa
         model.addAttribute("previousMonth", currentMonthYear.minusMonths(1).getMonthValue());
         model.addAttribute("nextYear", currentMonthYear.plusMonths(1).getYear());
         model.addAttribute("nextMonth", currentMonthYear.plusMonths(1).getMonthValue());
+        model.addAttribute("appointmentsByDate", appointmentsByDate);
+    }
+
+    @Override
+    public void setModelAttributesAllDoctors(Model model, Map<String, List<Appointment>> appointmentsByDate, int year, int month) {
+        YearMonth monthYear = YearMonth.of(year, month);
+        model.addAttribute("monthYear", monthYear.format(DateTimeFormatter.ofPattern("MMMM yyyy")));
+        model.addAttribute("previousYear", monthYear.minusMonths(1).getYear());
+        model.addAttribute("previousMonth", monthYear.minusMonths(1).getMonthValue());
+        model.addAttribute("nextYear", monthYear.plusMonths(1).getYear());
+        model.addAttribute("nextMonth", monthYear.plusMonths(1).getMonthValue());
         model.addAttribute("appointmentsByDate", appointmentsByDate);
     }
 }
