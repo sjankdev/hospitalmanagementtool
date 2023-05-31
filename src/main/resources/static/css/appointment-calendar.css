@@ -1,79 +1,57 @@
-body {
-    font-family: Arial, sans-serif;
-    margin: 20px;
-}
+  /* Main Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f2f2f2;
+        }
 
-.calendar {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 5px;
-}
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
 
-.day {
-    border: 1px solid #ccc;
-    padding: 10px;
-    text-align: center;
-    font-weight: bold;
-    background-color: #f5f5f5;
-}
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
 
-.appointment {
-    background-color: #023047;
-    border: 1px solid #ccc;
-    padding: 10px;
-    margin-bottom: 10px;
-    color: #fefae0;
-}
+        h3 {
+            margin-top: 30px;
+        }
+
+        ul {
+            margin: 0;
+            padding: 0;
+            list-style-type: none;
+        }
+
+        li {
+            padding: 10px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            margin-bottom: 10px;
+        }
+
         .hidden {
             display: none;
         }
-.appointment p {
-    margin: 0;
-    color: #fefae0;
-}
 
-.appointment p:first-child {
-    font-weight: bold;
-}
+        .toggle-button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 10px;
+        }
 
-.appointment p:last-child {
-    margin-top: 5px;
-    color: #fefae0;
-}
+        /* Additional Styles */
+        .hidden li {
+            display: none;
+        }
 
-
-h1, h2 {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-h4 {
-    margin: 0;
-}
-
-
-.center-container {
-    text-align: center;
-}
-.center-container a {
-    display: inline-block;
-    padding: 5px 10px;
-    background-color: #f0f0f0;
-    color: #333;
-    text-decoration: none;
-    border: none;
-    border-radius: 3px;
-}
-
-.center-container a:hover {
-    background-color: #ccc;
-}
-
-/* Remove blue underline from links */
-.center-container a {
-    text-decoration: none;
-}
-
-.center-container a:hover {
-    text-decoration: none;
-}
+        .toggle-button:hover {
+            background-color: #0056b3;
+        }

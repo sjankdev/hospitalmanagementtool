@@ -1,6 +1,8 @@
 package com.demo.hospitalmanagementtool.service;
 
 import com.demo.hospitalmanagementtool.entities.Appointment;
+import com.demo.hospitalmanagementtool.entities.Doctor;
+import org.springframework.ui.Model;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -8,9 +10,14 @@ import java.util.Map;
 
 public interface DoctorAppointmentCalendarService {
 
+    List<Appointment> getAppointmentsByDoctor(Doctor doctor);
 
-    List<Appointment> getDoctorAppointmentDatesByDoctorId(Long doctorId, int year, int month);
-    List<LocalDate> getCalendarDays(int year, int month);
+    Map<String, List<Appointment>> groupAppointmentsByDate(List<Appointment> appointments);
 
+    List<Appointment> getAppointmentsForMonth(List<Appointment> appointments, LocalDate firstDayOfMonth, LocalDate lastDayOfMonth);
+
+    void setModelAttributesDoctor(Model model, Doctor doctor, Map<String, List<Appointment>> appointmentsByDate, int year, int month);
+
+    void setModelAttributesAllDoctors(Model model, Map<String, List<Appointment>> appointmentsByDate, int year, int month);
 
 }
