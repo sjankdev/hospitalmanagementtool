@@ -18,9 +18,5 @@ public interface AppointmentService {
 
     void deleteAppointment(Long id);
 
-
-    List<Appointment> getAppointmentsByDoctor(Doctor doctor);
-
-    Map<String, List<Appointment>> groupAppointmentsByDate(List<Appointment> appointments);
 }
 

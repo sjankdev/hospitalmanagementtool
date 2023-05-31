@@ -26,25 +26,20 @@ import java.util.*;
 @RequestMapping("/doctorAppointments")
 public class DoctorAppointmentController {
     private final DoctorAppointmentCalendarService calendarService;
-    private final DoctorRepository doctorRepository;
     private final AppointmentRepository appointmentRepository;
-    private final AppointmentService appointmentService;
     private final DoctorService doctorService;
 
-    public DoctorAppointmentController(DoctorAppointmentCalendarService calendarService, DoctorRepository doctorRepository, AppointmentRepository appointmentRepository, AppointmentService appointmentService, DoctorService doctorService) {
+    public DoctorAppointmentController(DoctorAppointmentCalendarService calendarService, AppointmentRepository appointmentRepository, DoctorService doctorService) {
         this.calendarService = calendarService;
-        this.doctorRepository = doctorRepository;
         this.appointmentRepository = appointmentRepository;
-        this.appointmentService = appointmentService;
         this.doctorService = doctorService;
     }
-
 
     @GetMapping("/doctor/{doctorId}/appointments")
     public String getDoctorAppointments(@PathVariable Long doctorId, @RequestParam(value = "year", required = false, defaultValue = "2023") int year,
                                         @RequestParam(value = "month", required = false, defaultValue = "1") int month, Model model) {
         Doctor doctor = doctorService.getDoctorById(doctorId);
-        List<Appointment> appointments = appointmentService.getAppointmentsByDoctor(doctor);
+        List<Appointment> appointments = calendarService.getAppointmentsByDoctor(doctor);
 
         LocalDate firstDayOfMonth = LocalDate.of(year, month, 1);
         LocalDate lastDayOfMonth = firstDayOfMonth.withDayOfMonth(firstDayOfMonth.lengthOfMonth());

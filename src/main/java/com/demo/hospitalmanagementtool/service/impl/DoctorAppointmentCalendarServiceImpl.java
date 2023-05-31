@@ -21,6 +21,9 @@ public class DoctorAppointmentCalendarServiceImpl implements DoctorAppointmentCa
     private final AppointmentRepository appointmentRepository;
     private final DoctorRepository doctorRepository;
 
+    private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+
     public DoctorAppointmentCalendarServiceImpl(AppointmentRepository appointmentRepository, DoctorRepository doctorRepository) {
         this.appointmentRepository = appointmentRepository;
         this.doctorRepository = doctorRepository;
@@ -37,7 +40,6 @@ public class DoctorAppointmentCalendarServiceImpl implements DoctorAppointmentCa
         return appointmentRepository.findByDoctorAndDateTimeBetween(doctor, startOfMonth.atStartOfDay(), endOfMonth.atTime(LocalTime.MAX));
     }
 
-
     @Override
     public List<LocalDate> getCalendarDays(int year, int month) {
         YearMonth yearMonth = YearMonth.of(year, month);
@@ -50,7 +52,24 @@ public class DoctorAppointmentCalendarServiceImpl implements DoctorAppointmentCa
         return calendarDays;
     }
 
+    @Override
+    public List<Appointment> getAppointmentsByDoctor(Doctor doctor) {
+        return appointmentRepository.findByDoctor(Optional.ofNullable(doctor));
+    }
 
+    @Override
+    public Map<String, List<Appointment>> groupAppointmentsByDate(List<Appointment> appointments) {
+        Map<String, List<Appointment>> groupedAppointments = new HashMap<>();
+
+        for (Appointment appointment : appointments) {
+            String formattedDate = appointment.getDateTime().toLocalDate().format(dateFormatter);
+            List<Appointment> appointmentsByDate = groupedAppointments.getOrDefault(formattedDate, new ArrayList<>());
+            appointmentsByDate.add(appointment);
+            groupedAppointments.put(formattedDate, appointmentsByDate);
+        }
+
+        return groupedAppointments;
+    }
 }
 
 

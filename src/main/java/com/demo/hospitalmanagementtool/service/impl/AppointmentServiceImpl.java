@@ -17,7 +17,6 @@ public class AppointmentServiceImpl implements AppointmentService {
     @Autowired
     AppointmentRepository appointmentRepository;
 
-    private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
     @Override
     public List<Appointment> getAllAppointments() {
@@ -28,26 +27,6 @@ public class AppointmentServiceImpl implements AppointmentService {
     public Appointment getAppointmentById(Long id) {
         return appointmentRepository.findById(id).orElseThrow(() -> new NotFoundException("Appointment with ID " + id + " not found."));
     }
-
-    @Override
-    public List<Appointment> getAppointmentsByDoctor(Doctor doctor) {
-        return appointmentRepository.findByDoctor(Optional.ofNullable(doctor));
-    }
-
-    @Override
-    public Map<String, List<Appointment>> groupAppointmentsByDate(List<Appointment> appointments) {
-        Map<String, List<Appointment>> groupedAppointments = new HashMap<>();
-
-        for (Appointment appointment : appointments) {
-            String formattedDate = appointment.getDateTime().toLocalDate().format(dateFormatter);
-            List<Appointment> appointmentsByDate = groupedAppointments.getOrDefault(formattedDate, new ArrayList<>());
-            appointmentsByDate.add(appointment);
-            groupedAppointments.put(formattedDate, appointmentsByDate);
-        }
-
-        return groupedAppointments;
-    }
-
 
     @Override
     public void saveAppointment(Appointment appointment) {
