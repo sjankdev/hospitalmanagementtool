@@ -7,7 +7,15 @@
 <body>
 <h1>Doctor Appointments</h1>
 <h2 th:text="${doctor.firstName} + ' ' + ${doctor.lastName}"></h2>
-
+<div class="center-container">
+    <h3>Current Month: <span th:text="${monthYear}"></span></h3>
+    <a th:href="@{/doctorAppointments/doctor/{doctorId}/appointments(doctorId=${doctorId},year=${previousYear}, month=${previousMonth})}">Previous
+        Month</a>
+    Month</a>
+    <a th:href="@{/doctorAppointments/doctor/{doctorId}/appointments(doctorId=${doctorId}, year=${nextYear}, month=${nextMonth})}">Next
+        Month</a>
+    Month</a>
+</div>
 <div th:each="entry : ${groupedAppointments}">
     <h3 th:text="${entry.key}"></h3>
     <ul>

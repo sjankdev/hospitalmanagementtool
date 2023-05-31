@@ -39,44 +39,43 @@ public class DoctorAppointmentController {
         this.doctorService = doctorService;
     }
 
-  /* @GetMapping("/doctor-appointment-calendar/{doctorId}")
-    public String getDoctorAppointmentCalendar(@PathVariable("doctorId") Long doctorId, @RequestParam(value = "year", required = false, defaultValue = "2023") int year, @RequestParam(value = "month", required = false, defaultValue = "1") int month, Model model) {
-        List<Appointment> doctorAppointments = calendarService.getDoctorAppointmentDatesByDoctorId(doctorId, year, month);
-
-        List<LocalDate> calendarDays = calendarService.getCalendarDays(year, month);
-
-        Optional<Doctor> doctorOptional = doctorRepository.findById(doctorId);
-        Doctor doctor = doctorOptional.orElseThrow(() -> new IllegalArgumentException("Doctor not found."));
-
-        model.addAttribute("doctorId", doctorId);
-        model.addAttribute("doctor", doctor);
-        model.addAttribute("calendarDays", calendarDays);
-        model.addAttribute("appointments", doctorAppointments);
-        model.addAttribute("monthYear", YearMonth.of(year, month).format(DateTimeFormatter.ofPattern("MMMM yyyy")));
-
-        YearMonth currentMonth = YearMonth.of(year, month);
-        YearMonth previousMonth = currentMonth.minusMonths(1);
-        YearMonth nextMonth = currentMonth.plusMonths(1);
-
-        model.addAttribute("previousYear", previousMonth.getYear());
-        model.addAttribute("previousMonth", previousMonth.getMonthValue());
-        model.addAttribute("nextYear", nextMonth.getYear());
-        model.addAttribute("nextMonth", nextMonth.getMonthValue());
-
-        return "doctor-appointment-calendar";
-    }*/
 
     @GetMapping("/doctor/{doctorId}/appointments")
-    public String getDoctorAppointments(@PathVariable Long doctorId, Model model) {
+    public String getDoctorAppointments(@PathVariable Long doctorId, @RequestParam(value = "year", required = false, defaultValue = "2023") int year,
+                                        @RequestParam(value = "month", required = false, defaultValue = "1") int month, Model model) {
         Doctor doctor = doctorService.getDoctorById(doctorId);
         List<Appointment> appointments = appointmentService.getAppointmentsByDoctor(doctor);
 
-        Map<String, List<Appointment>> groupedAppointments = appointmentService.groupAppointmentsByDate(appointments);
-        model.addAttribute("doctor", doctor);
-        model.addAttribute("groupedAppointments", groupedAppointments);
+        LocalDate firstDayOfMonth = LocalDate.of(year, month, 1);
+        LocalDate lastDayOfMonth = firstDayOfMonth.withDayOfMonth(firstDayOfMonth.lengthOfMonth());
 
+        List<Appointment> appointmentsForMonth = new ArrayList<>();
+        for (Appointment appointment : appointments) {
+            LocalDate appointmentDate = appointment.getDateTime().toLocalDate();
+            if (appointmentDate.isAfter(firstDayOfMonth.minusDays(1)) && appointmentDate.isBefore(lastDayOfMonth.plusDays(1))) {
+                appointmentsForMonth.add(appointment);
+            }
+        }
+
+        Map<String, List<Appointment>> appointmentsByDate = new LinkedHashMap<>();
+        for (Appointment appointment : appointmentsForMonth) {
+            LocalDate appointmentDate = appointment.getDateTime().toLocalDate();
+            String dateStr = appointmentDate.toString();
+            List<Appointment> dateAppointments = appointmentsByDate.computeIfAbsent(dateStr, k -> new ArrayList<>());
+            dateAppointments.add(appointment);
+        }
+
+        model.addAttribute("doctor", doctor);
+        model.addAttribute("groupedAppointments", appointmentsByDate);
+        model.addAttribute("monthYear", YearMonth.of(year, month).format(DateTimeFormatter.ofPattern("MMMM yyyy")));
+        model.addAttribute("previousYear", YearMonth.of(year, month).minusMonths(1).getYear());
+        model.addAttribute("previousMonth", YearMonth.of(year, month).minusMonths(1).getMonthValue());
+        model.addAttribute("nextYear", YearMonth.of(year, month).plusMonths(1).getYear());
+        model.addAttribute("nextMonth", YearMonth.of(year, month).plusMonths(1).getMonthValue());
+        model.addAttribute("appointmentsByDate", appointmentsByDate);
         return "doctor-appointment-calendar";
     }
+
 
     @GetMapping("/allEvents")
     public String getAllEvents(
