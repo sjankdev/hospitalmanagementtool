@@ -35,6 +35,7 @@
         <td th:text="${doctor.specialty}"></td>
         <td style="display: flex; align-items: center;">
             <a th:href="@{/doctors/{id}/details(id=${doctor.id})}" class="btn">View</a>
+            <a th:href="@{/doctorAppointments/doctor/{doctorId}/appointments(doctorId=${doctor.id})}" class="btn">Appointments</a>
             <a th:href="@{/doctors/__${doctor.id}__/edit}" class="btn">Edit</a>
             <form th:action="@{/doctors/{id}/delete(id=${doctor.id})}" method="post">
                 <input type="hidden" name="_method" value="delete"/>

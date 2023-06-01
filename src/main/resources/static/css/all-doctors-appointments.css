@@ -45,3 +45,29 @@
         td.patient {
             vertical-align: middle;
         }
+         .logout-button {
+             position: fixed;
+             top: 10px;
+             right: 10px;
+             z-index: 9999;
+        }
+         .buttons-switch{
+             display: flex;
+             -items: center;
+             justify-content: center;
+        }
+        .btn {
+             display: inline-block;
+             padding: 8px 12px;
+             margin-right: 10px;
+             border: none;
+             background-color: #4CAF50;
+             color: white;
+             text-decoration: none;
+             font-size: 14px;
+             border-radius: 4px;
+             margin-left: 10px;
+        }
+         .btn:hover {
+             background-color: #0069d9;
+        }
