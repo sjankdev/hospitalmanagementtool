@@ -1,6 +1,8 @@
 package com.demo.hospitalmanagementtool.controllers;
 
+import com.demo.hospitalmanagementtool.entities.Appointment;
 import com.demo.hospitalmanagementtool.entities.Patient;
+import com.demo.hospitalmanagementtool.exceptions.NotFoundException;
 import com.demo.hospitalmanagementtool.service.DoctorService;
 import com.demo.hospitalmanagementtool.service.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,9 +52,16 @@ public class PatientController {
 
     @GetMapping("/{id}/edit")
     public String editPatient(@PathVariable Long id, Model model) {
-        Patient patient = patientService.getPatientById(id);
-        model.addAttribute("patient", patient);
-        return "patient/edit";
+        try {
+            Patient patient = patientService.getPatientById(id);
+            model.addAttribute("patient", patient);
+            model.addAttribute("doctors", doctorService.getAllDoctors());
+            return "patient/edit";
+        } catch (NotFoundException ex) {
+            model.addAttribute("errorMessage", ex.getMessage());
+            return "error";
+        }
+
     }
 
     @PostMapping("/{id}/update")
