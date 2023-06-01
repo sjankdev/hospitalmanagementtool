@@ -55,6 +55,8 @@ public class WebSecurityConfig {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests()
                 .requestMatchers("/appointments/list", "/appointments/{id}/details").hasAnyRole("MODERATOR", "ADMIN")
+                .requestMatchers("/index").hasAnyRole("MODERATOR", "ADMIN","USER")
+                .requestMatchers("/doctorAppointments/allEvents", "/doctorAppointments/doctor/{doctorId}/appointments").hasAnyRole("MODERATOR", "ADMIN")
                 .requestMatchers("/appointments/**").hasRole("ADMIN")
                 .requestMatchers("/billing/list", "/billing/{id}/details").hasAnyRole("MODERATOR", "ADMIN")
                 .requestMatchers("/billing/**").hasRole("ADMIN")
