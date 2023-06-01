@@ -19,6 +19,7 @@
         <th>Phone Number</th>
         <th>Email</th>
         <th>Specialty</th>
+        <th>Patients</th>
         <th>Action</th>
     </tr>
     </thead>
@@ -33,6 +34,13 @@
         <td th:text="${doctor.phoneNumber}"></td>
         <td th:text="${doctor.email}"></td>
         <td th:text="${doctor.specialty}"></td>
+        <td>
+            <ul>
+                <li th:each="patient : ${doctor.patients}">
+                    <span th:text="${patient.firstName}"></span>
+                </li>
+            </ul>
+        </td>
         <td style="display: flex; align-items: center;">
             <a th:href="@{/doctors/{id}/details(id=${doctor.id})}" class="btn">View</a>
             <a th:href="@{/doctorAppointments/doctor/{doctorId}/appointments(doctorId=${doctor.id})}" class="btn">Appointments</a>
