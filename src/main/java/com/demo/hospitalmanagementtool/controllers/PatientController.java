@@ -1,6 +1,7 @@
 package com.demo.hospitalmanagementtool.controllers;
 
 import com.demo.hospitalmanagementtool.entities.Patient;
+import com.demo.hospitalmanagementtool.service.DoctorService;
 import com.demo.hospitalmanagementtool.service.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,6 +16,9 @@ public class PatientController {
 
     @Autowired
     private PatientService patientService;
+
+    @Autowired
+    private DoctorService doctorService;
 
     @GetMapping("/list")
     public String getAllPatients(Model model) {
@@ -33,6 +37,8 @@ public class PatientController {
     @GetMapping("/create")
     public String newPatient(Model model) {
         model.addAttribute("patient", new Patient());
+        model.addAttribute("doctors", doctorService.getAllDoctors());
+
         return "patient/create";
     }
 
