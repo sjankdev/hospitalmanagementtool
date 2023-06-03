@@ -20,6 +20,17 @@
     <label>Last Name: </label>
     <input type="text" th:field="*{lastName}"/>
     <br/>
+    <div>
+        <label for="doctor">Doctor:</label>
+        <select th:field="*{doctor.id}" id="doctor">
+            <option value="">Select a doctor...</option>
+            <option th:each="doctor : ${doctors}"
+                    th:value="${doctor.id}"
+                    th:text="${doctor.firstName} + ' ' + ${doctor.lastName}"
+                    th:selected="${doctor.id == patient.doctor.id}">
+            </option>
+        </select>
+    </div>
 
     <label>Date of Birth: </label>
     <input type="date" th:field="*{dateOfBirth}"/>

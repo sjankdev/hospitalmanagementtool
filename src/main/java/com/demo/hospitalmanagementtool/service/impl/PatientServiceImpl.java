@@ -40,6 +40,7 @@ public class PatientServiceImpl implements PatientService {
         existingPatient.setAddress(patient.getAddress());
         existingPatient.setPhoneNumber(patient.getPhoneNumber());
         existingPatient.setEmail(patient.getEmail());
+        existingPatient.setDoctor(patient.getDoctor());
         patientRepository.save(existingPatient);
     }
 

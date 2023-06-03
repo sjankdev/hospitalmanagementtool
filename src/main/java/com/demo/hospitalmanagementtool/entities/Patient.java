@@ -50,6 +50,10 @@ public class Patient {
     @Column(name = "emergency_contact_phone_number", nullable = false)
     private String emergencyContactPhoneNumber;
 
+    @ManyToOne
+    @JoinColumn(name = "doctor_id")
+    private Doctor doctor;
+
     @OneToMany(mappedBy = "patient")
     private List<MedicalRecord> medicalRecords;
 

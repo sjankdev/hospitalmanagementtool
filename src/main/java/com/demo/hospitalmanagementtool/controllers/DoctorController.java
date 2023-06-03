@@ -9,6 +9,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/doctors")
 public class DoctorController {
@@ -18,7 +20,8 @@ public class DoctorController {
 
     @GetMapping("/list")
     public String getAllDoctors(Model model) {
-        model.addAttribute("doctors", doctorService.getAllDoctors());
+        List<Doctor> doctors = doctorService.getAllDoctors();
+        model.addAttribute("doctors", doctors);
         return "doctor/list";
     }
 
