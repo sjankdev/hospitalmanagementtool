@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Doctor Selection</title>
+</head>
+<body>
+<h2>Select a Doctor</h2>
+
+<form th:action="@{/patients/{patientId}/save-select-doctor(patientId=${patient.id})}" method="post">
+    <select name="doctorId">
+        <option value="">-- Select a Doctor --</option>
+        <option th:each="doctor : ${doctors}" th:value="${doctor.id}" th:text="${doctor.firstName}"></option>
+    </select>
+    <br><br>
+    <input type="submit" value="Submit">
+</form>
+</body>
+</html>

@@ -47,13 +47,13 @@ public class AuthController {
     @Transactional
     public String login(@Valid @ModelAttribute("login") LoginRequest loginRequest, BindingResult result, HttpServletResponse response, Model model) {
 
-        Optional<User> admin = userRepository.findByUsername(loginRequest.getUsername());
+        Optional<User> user = userRepository.findByUsername(loginRequest.getUsername());
 
-        if (admin.isEmpty()) {
-            admin = Optional.of(new User());
+        if (user.isEmpty()) {
+            user = Optional.of(new User());
             result.rejectValue("username", "error.adminUserModel", "Username doesn't exist.");
         }
-        if (!encoder.matches(loginRequest.getPassword(), admin.get().getPassword())) {
+        if (!encoder.matches(loginRequest.getPassword(), user.get().getPassword())) {
             result.rejectValue("password", "error.adminUserModel", "Wrong password, try again.");
         }
 
@@ -62,8 +62,8 @@ public class AuthController {
         } else {
             Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
             SecurityContextHolder.getContext().setAuthentication(authentication);
-            UserDetailsImpl user = (UserDetailsImpl) authentication.getPrincipal();
-            ResponseCookie jwtCookie = jwtUtils.generateJwtCookie(user);
+            UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+            ResponseCookie jwtCookie = jwtUtils.generateJwtCookie(userDetails);
             response.addHeader(HttpHeaders.SET_COOKIE, jwtCookie.toString());
         }
 
