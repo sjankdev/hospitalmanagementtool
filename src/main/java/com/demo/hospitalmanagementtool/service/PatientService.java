@@ -20,4 +20,6 @@ public interface PatientService {
 
     void deletePatient(Long id);
 
+    void assignDoctorToPatient(Long patientId, Long doctorId);
+
 }

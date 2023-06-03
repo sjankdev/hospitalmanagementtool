@@ -1,10 +1,13 @@
 package com.demo.hospitalmanagementtool.service.impl;
 
+import com.demo.hospitalmanagementtool.entities.Doctor;
 import com.demo.hospitalmanagementtool.entities.Patient;
 import com.demo.hospitalmanagementtool.exceptions.NotFoundException;
+import com.demo.hospitalmanagementtool.repository.DoctorRepository;
 import com.demo.hospitalmanagementtool.repository.PatientRepository;
 import com.demo.hospitalmanagementtool.security.models.User;
 import com.demo.hospitalmanagementtool.service.PatientService;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +19,9 @@ public class PatientServiceImpl implements PatientService {
 
     @Autowired
     PatientRepository patientRepository;
+
+    @Autowired
+    DoctorRepository doctorRepository;
 
     @Override
     public Optional<Patient> findByUsername(String username) {
@@ -54,6 +60,16 @@ public class PatientServiceImpl implements PatientService {
     @Override
     public void deletePatient(Long id) {
         patientRepository.deleteById(id);
+    }
+
+    @Override
+    public void assignDoctorToPatient(Long patientId, Long doctorId) {
+        Patient patient = patientRepository.findById(patientId).orElseThrow(() -> new EntityNotFoundException("Patient not found"));
+        Doctor doctor = doctorRepository.findById(doctorId).orElseThrow(() -> new EntityNotFoundException("Doctor not found"));
+
+        patient.assignDoctor(doctor);
+
+        patientRepository.save(patient);
     }
 }
 

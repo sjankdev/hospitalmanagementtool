@@ -93,4 +93,11 @@ public class Patient {
         this.emergencyContactName = emergencyContactName;
         this.emergencyContactPhoneNumber = emergencyContactPhoneNumber;
     }
+
+    public void assignDoctor(Doctor doctor) {
+        if (this.doctor == null) {
+            this.doctor = doctor;
+            doctor.getPatients().add(this);
+        }
+    }
 }
