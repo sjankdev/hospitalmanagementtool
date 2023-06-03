@@ -4,15 +4,13 @@ import com.demo.hospitalmanagementtool.entities.Patient;
 import com.demo.hospitalmanagementtool.repository.PatientRepository;
 import com.demo.hospitalmanagementtool.security.models.ERole;
 import com.demo.hospitalmanagementtool.security.models.Role;
-import com.demo.hospitalmanagementtool.security.models.User;
 import com.demo.hospitalmanagementtool.security.payload.request.LoginRequest;
 import com.demo.hospitalmanagementtool.security.payload.request.PatientLoginRequest;
 import com.demo.hospitalmanagementtool.security.payload.request.PatientSignupRequest;
-import com.demo.hospitalmanagementtool.security.payload.request.SignupRequest;
 import com.demo.hospitalmanagementtool.security.repository.RoleRepository;
-import com.demo.hospitalmanagementtool.security.repository.UserRepository;
 import com.demo.hospitalmanagementtool.security.token.jwt.JwtUtils;
 import com.demo.hospitalmanagementtool.security.token.services.UserDetailsImpl;
+import com.demo.hospitalmanagementtool.service.PatientService;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
@@ -45,7 +43,7 @@ public class PatientAuthController {
     PatientRepository patientRepository;
 
     @Autowired
-    RoleRepository roleRepository;
+    PatientService patientService;
 
     @Autowired
     PasswordEncoder encoder;
@@ -57,13 +55,13 @@ public class PatientAuthController {
     @Transactional
     public String login(@Valid @ModelAttribute("login") PatientLoginRequest patientLoginRequest, BindingResult result, HttpServletResponse response, Model model) {
 
-        Optional<Patient> admin = patientRepository.findByUsername(patientLoginRequest.getUsername());
+        Optional<Patient> patient = patientRepository.findByUsername(patientLoginRequest.getUsername());
 
-        if (admin.isEmpty()) {
-            admin = Optional.of(new Patient());
+        if (patient.isEmpty()) {
+            patient = Optional.of(new Patient());
             result.rejectValue("username", "error.adminUserModel", "Username doesn't exist.");
         }
-        if (!encoder.matches(patientLoginRequest.getPassword(), admin.get().getPassword())) {
+        if (!encoder.matches(patientLoginRequest.getPassword(), patient.get().getPassword())) {
             result.rejectValue("password", "error.adminUserModel", "Wrong password, try again.");
         }
 
@@ -83,9 +81,7 @@ public class PatientAuthController {
         model.addAttribute("login", patientLoginRequest);
 
 
-        return (admin.get().getDoctor() != null)
-                ? "redirect:/patients/index"
-                : "redirect:/patients/" + userId + "/select-doctor";
+        return (patient.get().getDoctor() != null) ? "redirect:/patients/index" : "redirect:/patients/" + userId + "/select-doctor";
     }
 
     @PostMapping("/signup")
@@ -98,21 +94,21 @@ public class PatientAuthController {
             return "security/register_form_patient";
         }
 
-        Optional<Patient> userUsername = patientRepository.findByUsername(patientSignupRequest.getUsername());
-        Boolean userEmail = patientRepository.existsByEmail(patientSignupRequest.getEmail());
+        Optional<Patient> patientUsername = patientRepository.findByUsername(patientSignupRequest.getUsername());
+        Boolean patientEmail = patientRepository.existsByEmail(patientSignupRequest.getEmail());
 
-        if (userUsername.isPresent()) {
-            userUsername = Optional.of(new Patient());
+        if (patientUsername.isPresent()) {
+            patientUsername = Optional.of(new Patient());
             result.rejectValue("username", "error.adminUserModel", "Username already exist.");
         }
-        if (userEmail) {
+        if (patientEmail) {
             result.rejectValue("email", "error.adminUserModel", "Email already exist.");
         }
         if (result.hasErrors()) {
             return "security/register_form_patient";
         }
         Patient patient = new Patient(patientSignupRequest.getUsername(), patientSignupRequest.getFirstName(), patientSignupRequest.getLastName(), patientSignupRequest.getEmail(), encoder.encode(patientSignupRequest.getPassword()), patientSignupRequest.getDateOfBirth(), patientSignupRequest.getGender(), patientSignupRequest.getAddress(), patientSignupRequest.getPhoneNumber(), patientSignupRequest.getEmergencyContactName(), patientSignupRequest.getEmergencyContactPhoneNumber());
-        assignUserRole(patient);
+        patientService.assignUserRole(patient);
 
         model.addAttribute("signup", patientSignupRequest);
         patientRepository.save(patient);
@@ -143,8 +139,5 @@ public class PatientAuthController {
         return "security/login_form_patient";
     }
 
-    private void assignUserRole(Patient patient) {
-        Role userRole = roleRepository.findByName(ERole.ROLE_PATIENT).orElseThrow(() -> new RuntimeException("User role not found"));
-        patient.getRoles().add(userRole);
-    }
+
 }

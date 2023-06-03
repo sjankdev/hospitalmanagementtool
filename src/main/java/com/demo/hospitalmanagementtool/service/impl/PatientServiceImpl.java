@@ -5,14 +5,15 @@ import com.demo.hospitalmanagementtool.entities.Patient;
 import com.demo.hospitalmanagementtool.exceptions.NotFoundException;
 import com.demo.hospitalmanagementtool.repository.DoctorRepository;
 import com.demo.hospitalmanagementtool.repository.PatientRepository;
-import com.demo.hospitalmanagementtool.security.models.User;
+import com.demo.hospitalmanagementtool.security.models.ERole;
+import com.demo.hospitalmanagementtool.security.models.Role;
+import com.demo.hospitalmanagementtool.security.repository.RoleRepository;
 import com.demo.hospitalmanagementtool.service.PatientService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class PatientServiceImpl implements PatientService {
@@ -23,10 +24,8 @@ public class PatientServiceImpl implements PatientService {
     @Autowired
     DoctorRepository doctorRepository;
 
-    @Override
-    public Optional<Patient> findByUsername(String username) {
-        return patientRepository.findByUsername(username);
-    }
+    @Autowired
+    RoleRepository roleRepository;
 
     @Override
     public List<Patient> getAllPatients() {
@@ -70,6 +69,12 @@ public class PatientServiceImpl implements PatientService {
         patient.assignDoctor(doctor);
 
         patientRepository.save(patient);
+    }
+
+    @Override
+    public void assignUserRole(Patient patient) {
+        Role userRole = roleRepository.findByName(ERole.ROLE_PATIENT).orElseThrow(() -> new RuntimeException("User role not found"));
+        patient.getRoles().add(userRole);
     }
 }
 
