@@ -56,7 +56,7 @@ public class WebSecurityConfig {
                 .authorizeRequests()
                 .requestMatchers("/appointments/list", "/appointments/{id}/details").hasAnyRole("MODERATOR", "ADMIN")
                 .requestMatchers("/index").hasAnyRole("MODERATOR", "ADMIN", "USER")
-                .requestMatchers("/patients/{patientId}/select-doctor", "/patients/{patientId}/save-select-doctor").authenticated()
+                .requestMatchers("/patients/{patientId}/select-doctor", "/patients/{patientId}/save-select-doctor", "/patients/index").authenticated()
                 .requestMatchers("/doctorAppointments/allEvents", "/doctorAppointments/doctor/{doctorId}/appointments").hasAnyRole("MODERATOR", "ADMIN")
                 .requestMatchers("/appointments/**").hasRole("ADMIN")
                 .requestMatchers("/billing/list", "/billing/{id}/details").hasAnyRole("MODERATOR", "ADMIN")

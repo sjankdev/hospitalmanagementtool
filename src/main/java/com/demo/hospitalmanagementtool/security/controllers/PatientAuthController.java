@@ -83,8 +83,9 @@ public class PatientAuthController {
         model.addAttribute("login", patientLoginRequest);
 
 
-        return "redirect:/patients/" + userId + "/select-doctor";
-
+        return (admin.get().getDoctor() != null)
+                ? "redirect:/patients/index"
+                : "redirect:/patients/" + userId + "/select-doctor";
     }
 
     @PostMapping("/signup")

@@ -89,7 +89,7 @@ public class PatientController {
         model.addAttribute("patient", patient);
         model.addAttribute("doctors", availableDoctors);
 
-        return "patient/index";
+        return "patient/firstLogin";
     }
 
     @PostMapping("/{patientId}/save-select-doctor")
@@ -97,5 +97,10 @@ public class PatientController {
         patientService.assignDoctorToPatient(patientId, doctorId);
 
         return "redirect:/patients/{patientId}/details";
+    }
+
+    @GetMapping("/index")
+    public String index() {
+        return "patient/index";
     }
 }
