@@ -2,11 +2,14 @@ package com.demo.hospitalmanagementtool.security.controllers;
 
 import com.demo.hospitalmanagementtool.entities.Patient;
 import com.demo.hospitalmanagementtool.repository.PatientRepository;
+import com.demo.hospitalmanagementtool.security.models.ERole;
+import com.demo.hospitalmanagementtool.security.models.Role;
 import com.demo.hospitalmanagementtool.security.models.User;
 import com.demo.hospitalmanagementtool.security.payload.request.LoginRequest;
 import com.demo.hospitalmanagementtool.security.payload.request.PatientLoginRequest;
 import com.demo.hospitalmanagementtool.security.payload.request.PatientSignupRequest;
 import com.demo.hospitalmanagementtool.security.payload.request.SignupRequest;
+import com.demo.hospitalmanagementtool.security.repository.RoleRepository;
 import com.demo.hospitalmanagementtool.security.repository.UserRepository;
 import com.demo.hospitalmanagementtool.security.token.jwt.JwtUtils;
 import com.demo.hospitalmanagementtool.security.token.services.UserDetailsImpl;
@@ -37,11 +40,12 @@ public class PatientAuthController {
     @Autowired
     AuthenticationManager authenticationManager;
 
-    @Autowired
-    UserRepository userRepository;
 
     @Autowired
     PatientRepository patientRepository;
+
+    @Autowired
+    RoleRepository roleRepository;
 
     @Autowired
     PasswordEncoder encoder;
@@ -104,6 +108,7 @@ public class PatientAuthController {
             return "security/register_form_patient";
         }
         Patient patient = new Patient(patientSignupRequest.getUsername(), patientSignupRequest.getFirstName(), patientSignupRequest.getLastName(), patientSignupRequest.getEmail(), encoder.encode(patientSignupRequest.getPassword()), patientSignupRequest.getDateOfBirth(), patientSignupRequest.getGender(), patientSignupRequest.getAddress(), patientSignupRequest.getPhoneNumber(), patientSignupRequest.getEmergencyContactName(), patientSignupRequest.getEmergencyContactPhoneNumber());
+        assignUserRole(patient);
 
         model.addAttribute("signup", patientSignupRequest);
         patientRepository.save(patient);
@@ -132,5 +137,10 @@ public class PatientAuthController {
         LoginRequest loginRequest = new LoginRequest();
         model.addAttribute("login", loginRequest);
         return "security/login_form_patient";
+    }
+
+    private void assignUserRole(Patient patient) {
+        Role userRole = roleRepository.findByName(ERole.ROLE_PATIENT).orElseThrow(() -> new RuntimeException("User role not found"));
+        patient.getRoles().add(userRole);
     }
 }
