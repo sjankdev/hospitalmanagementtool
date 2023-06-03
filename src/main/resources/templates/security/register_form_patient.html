@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Spring Security Tutorial</title>
+    <meta name="viewport" content="width=device-width"/>
+    <script src="http://localhost:35729/livereload.js"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/registration.css}"/>
+</head>
+<body>
+<div class="main">
+    <input type="checkbox" id="chk" aria-hidden="true"/>
+    <div class="signup">
+        <form method="post" role="form" th:action="@{/api/auth/patient/signup}" th:object="${signup}">
+            <label for="chk" aria-hidden="true">Register</label>
+            <input class="form-control" id="usernameSignUp" name="username" placeholder="Enter username"
+                   th:field="*{username}" type="text" required/>
+            <p th:errors="*{username}" class="text-danger" th:if="${#fields.hasErrors('username')}"></p>
+
+            <input class="form-control" id="firstName" name="firstName" placeholder="Enter first name"
+                   th:field="*{firstName}" type="text" required/>
+            <p th:errors="*{firstName}" class="text-danger" th:if="${#fields.hasErrors('firstName')}"></p>
+
+            <input class="form-control" id="lastName" name="lastName" placeholder="Enter last name"
+                   th:field="*{lastName}" type="text" required/>
+            <p th:errors="*{lastName}" class="text-danger" th:if="${#fields.hasErrors('lastName')}"></p>
+
+            <input class="form-control" id="email" name="email" placeholder="Enter email" th:field="*{email}"
+                   type="email" required/>
+            <p th:errors="*{email}" class="text-danger" th:if="${#fields.hasErrors('email')}"></p>
+
+            <input class="form-control" id="passwordSignUp" name="password" placeholder="Enter password"
+                   th:field="*{password}" type="password" required/>
+            <p th:errors="*{password}" class="text-danger" th:if="${#fields.hasErrors('password')}"></p>
+
+            <input class="form-control" id="dateOfBirth" name="dateOfBirth" placeholder="Enter dateOfBirth"
+                   th:field="*{dateOfBirth}" type="date" required/>
+            <p th:errors="*{dateOfBirth}" class="text-danger" th:if="${#fields.hasErrors('dateOfBirth')}"></p>
+
+            <input class="form-control" id="gender" name="gender" placeholder="Enter gender"
+                   th:field="*{gender}" type="text" required/>
+            <p th:errors="*{gender}" class="text-danger" th:if="${#fields.hasErrors('gender')}"></p>
+
+            <input class="form-control" id="address" name="address" placeholder="Enter address"
+                   th:field="*{address}" type="text" required/>
+            <p th:errors="*{address}" class="text-danger" th:if="${#fields.hasErrors('address')}"></p>
+
+            <input class="form-control" id="phoneNumber" name="phoneNumber" placeholder="Enter phoneNumber"
+                   th:field="*{phoneNumber}" type="text" required/>
+            <p th:errors="*{phoneNumber}" class="text-danger" th:if="${#fields.hasErrors('phoneNumber')}"></p>
+
+            <input class="form-control" id="emergencyContactName" name="emergencyContactName"
+                   placeholder="Enter emergencyContactName"
+                   th:field="*{emergencyContactName}" type="text" required/>
+            <p th:errors="*{emergencyContactName}" class="text-danger"
+               th:if="${#fields.hasErrors('emergencyContactName')}"></p>
+
+            <input class="form-control" id="emergencyContactPhoneNumber" name="emergencyContactPhoneNumber"
+                   placeholder="Enter emergencyContactPhoneNumber"
+                   th:field="*{emergencyContactPhoneNumber}" type="text" required/>
+            <p th:errors="*{emergencyContactPhoneNumber}" class="text-danger"
+               th:if="${#fields.hasErrors('emergencyContactPhoneNumber')}"></p>
+
+            <button>Register</button>
+        </form>
+
+        <div>
+            <form method="GET" role="form" th:action="@{/api/auth/loginForm}">
+                <button id="loginButton">Login</button>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

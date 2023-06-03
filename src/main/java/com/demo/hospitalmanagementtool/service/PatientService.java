@@ -1,10 +1,14 @@
 package com.demo.hospitalmanagementtool.service;
 
 import com.demo.hospitalmanagementtool.entities.Patient;
+import com.demo.hospitalmanagementtool.security.models.User;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface PatientService {
+
+    Optional<Patient> findByUsername(String username);
 
     List<Patient> getAllPatients();
 

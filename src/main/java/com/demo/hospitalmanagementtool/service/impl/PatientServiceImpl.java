@@ -3,17 +3,24 @@ package com.demo.hospitalmanagementtool.service.impl;
 import com.demo.hospitalmanagementtool.entities.Patient;
 import com.demo.hospitalmanagementtool.exceptions.NotFoundException;
 import com.demo.hospitalmanagementtool.repository.PatientRepository;
+import com.demo.hospitalmanagementtool.security.models.User;
 import com.demo.hospitalmanagementtool.service.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PatientServiceImpl implements PatientService {
 
     @Autowired
     PatientRepository patientRepository;
+
+    @Override
+    public Optional<Patient> findByUsername(String username) {
+        return patientRepository.findByUsername(username);
+    }
 
     @Override
     public List<Patient> getAllPatients() {

@@ -1,5 +1,6 @@
 package com.demo.hospitalmanagementtool.security.token.services;
 
+import com.demo.hospitalmanagementtool.entities.Patient;
 import com.demo.hospitalmanagementtool.security.models.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
@@ -49,6 +50,20 @@ public class UserDetailsImpl implements UserDetails {
                 user.getEmail(),
                 user.getFirstName(),
                 user.getPassword(),
+                authorities);
+    }
+
+    public static UserDetailsImpl buildFromPatient(Patient patient) {
+        List<GrantedAuthority> authorities = patient.getRoles().stream()
+                .map(role -> new SimpleGrantedAuthority(role.getName().name()))
+                .collect(Collectors.toList());
+
+        return new UserDetailsImpl(
+                patient.getId(),
+                patient.getUsername(),
+                patient.getEmail(),
+                patient.getFirstName(),
+                patient.getPassword(),
                 authorities);
     }
 
