@@ -24,7 +24,7 @@ public class Patient {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false, updatable = false)
+    @Column(name = "patient_id", nullable = false, updatable = false)
     private Long id;
 
     @Size(min = 3, max = 20)
@@ -60,10 +60,9 @@ public class Patient {
     @Column(name = "emergency_contact_phone_number", nullable = false)
     private String emergencyContactPhoneNumber;
 
-
     @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "user_roles",
-            joinColumns = @JoinColumn(name = "user_id"),
+    @JoinTable(name = "patient_roles",
+            joinColumns = @JoinColumn(name = "patient_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
 

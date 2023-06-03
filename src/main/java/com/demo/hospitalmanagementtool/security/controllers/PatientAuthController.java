@@ -67,12 +67,14 @@ public class PatientAuthController {
             result.rejectValue("password", "error.adminUserModel", "Wrong password, try again.");
         }
 
+        long userId;
         if (result.hasErrors()) {
             return "security/login_form_patient";
         } else {
             Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(patientLoginRequest.getUsername(), patientLoginRequest.getPassword()));
             SecurityContextHolder.getContext().setAuthentication(authentication);
             UserDetailsImpl user = (UserDetailsImpl) authentication.getPrincipal();
+            userId = user.getId();
             System.out.println(user.getAuthorities());
             ResponseCookie jwtCookie = jwtUtils.generateJwtCookie(user);
             response.addHeader(HttpHeaders.SET_COOKIE, jwtCookie.toString());
@@ -81,7 +83,8 @@ public class PatientAuthController {
         model.addAttribute("login", patientLoginRequest);
 
 
-        return "redirect:/patients/selectDoctor";
+        return "redirect:/patients/" + userId + "/select-doctor";
+
     }
 
     @PostMapping("/signup")
