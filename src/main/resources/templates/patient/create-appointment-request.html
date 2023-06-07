@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Create Appointment Request</title>
+    <link rel="stylesheet" type="text/css" href="/css/appointment-request.css">
+
+</head>
+<body>
+<h1>Create Appointment Request</h1>
+
+<form th:action="@{/appointment-request/{patientId}/create-request(patientId=${patient.id})}" method="post"
+      th:object="${appointmentRequest}">
+    <div>
+        <label>Selected Doctor:</label>
+        <input type="text" th:value="${doctor.firstName + ' ' + doctor.lastName}" readonly>
+    </div>
+
+    <div>
+        <label>Date and Time:</label>
+        <input type="datetime-local" th:field="*{dateTime}">
+    </div>
+    <div>
+        <button type="submit">Submit</button>
+    </div>
+</form>
+</body>
+</html>

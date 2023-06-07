@@ -5,6 +5,7 @@ import com.demo.hospitalmanagementtool.entities.Doctor;
 import com.demo.hospitalmanagementtool.entities.Patient;
 import com.demo.hospitalmanagementtool.exceptions.NotFoundException;
 import com.demo.hospitalmanagementtool.repository.DoctorRepository;
+import com.demo.hospitalmanagementtool.security.models.User;
 import com.demo.hospitalmanagementtool.service.DoctorService;
 import com.demo.hospitalmanagementtool.service.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/patients")
@@ -99,7 +102,19 @@ public class PatientController {
     }
 
     @GetMapping("/index")
-    public String index() {
-        return "patient/index";
+    public String index(Model model, Principal principal) {
+        String username = principal.getName();
+
+        Optional<Patient> optionalPatient = patientService.getPatientByUsername(username);
+
+        if (optionalPatient.isPresent()) {
+            Patient patient = optionalPatient.get();
+            model.addAttribute("patient", patient);
+            return "patient/index";
+        } else {
+            return "error";
+        }
     }
+
+
 }

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Appointment Requests</title>
+</head>
+<body>
+<h1>Appointment Requests</h1>
+
+<table>
+    <tr>
+        <th>Request ID</th>
+        <th>Patient</th>
+        <th>Date and Time</th>
+        <th>Approval Status</th>
+        <th>Actions</th>
+    </tr>
+    <tr th:each="appointmentRequest : ${appointmentRequests}">
+        <td th:text="${appointmentRequest.id}"></td>
+        <td th:text="${appointmentRequest.patient.firstName} + ' ' + ${appointmentRequest.patient.lastName}"></td>
+        <td th:text="${appointmentRequest.dateTime}"></td>
+        <td th:text="${appointmentRequest.appointmentRequestApprovalStatus}"></td>
+        <td>
+            <form th:action="@{/appointment-request/doctor/{doctorId}/requests/{requestId}/approve(doctorId=${doctor.id}, requestId=${appointmentRequest.id})}"
+                  method="post">
+                <button type="submit">Approve</button>
+            </form>
+            <form th:action="@{/appointment-request/doctor/{doctorId}/requests/{requestId}/reject(doctorId=${doctor.id}, requestId=${appointmentRequest.id})}"
+                  method="post">
+                <button type="submit">Reject</button>
+            </form>
+        </td>
+    </tr>
+</table>
+</body>
+</html>

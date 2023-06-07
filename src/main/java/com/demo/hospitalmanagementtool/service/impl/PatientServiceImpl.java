@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PatientServiceImpl implements PatientService {
@@ -35,6 +36,11 @@ public class PatientServiceImpl implements PatientService {
     @Override
     public Patient getPatientById(Long id) {
         return patientRepository.findById(id).orElseThrow(() -> new NotFoundException("Patient with ID " + id + " not found."));
+    }
+
+    @Override
+    public Optional<Patient> getPatientByUsername(String username) {
+        return patientRepository.findByUsername(username);
     }
 
     @Override

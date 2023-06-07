@@ -1,10 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="/css/patient-index.css">
+    <title>Welcome</title>
 </head>
 <body>
-<h1>sucess</h1>
+<h1>Welcome, <span th:text="${patient.username}"></span>!</h1>
+<a th:href="@{/appointment-request/{patientId}/create-request(patientId=${patient.id})}">Create Appointment Request</a>
 </body>
 </html>
