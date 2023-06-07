@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import jakarta.persistence.*;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -34,9 +35,9 @@ public class AppointmentRequest {
     private LocalDateTime dateTime;
 
 
-
     @Column(nullable = false)
-    private boolean approved;
+    @Enumerated(EnumType.STRING)
+    private AppointmentRequestApprovalStatus appointmentRequestApprovalStatus;
 
     public AppointmentRequest(Patient patient, Doctor doctor, LocalDate dateTime) {
         this.patient = patient;

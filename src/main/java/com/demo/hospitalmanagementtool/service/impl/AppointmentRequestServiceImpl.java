@@ -1,6 +1,7 @@
 package com.demo.hospitalmanagementtool.service.impl;
 
 import com.demo.hospitalmanagementtool.entities.AppointmentRequest;
+import com.demo.hospitalmanagementtool.entities.AppointmentRequestApprovalStatus;
 import com.demo.hospitalmanagementtool.entities.Doctor;
 import com.demo.hospitalmanagementtool.entities.Patient;
 import com.demo.hospitalmanagementtool.repository.AppointmentRequestRepository;
@@ -38,7 +39,7 @@ public class AppointmentRequestServiceImpl implements AppointmentRequestService 
 
         appointmentRequest.setPatient(patient);
         appointmentRequest.setDoctor(doctor);
-        appointmentRequest.setApproved(false);
+        appointmentRequest.setAppointmentRequestApprovalStatus(AppointmentRequestApprovalStatus.PENDING);
 
         appointmentRequestRepository.save(appointmentRequest);
     }
