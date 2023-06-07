@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 @Entity
@@ -30,18 +31,16 @@ public class AppointmentRequest {
     private Doctor doctor;
 
     @Column(nullable = false)
-    private LocalDate date;
+    private LocalDateTime dateTime;
 
-    @Column(nullable = false)
-    private LocalTime time;
+
 
     @Column(nullable = false)
     private boolean approved;
 
-    public AppointmentRequest(Patient patient, Doctor doctor, LocalDate date, LocalTime time) {
+    public AppointmentRequest(Patient patient, Doctor doctor, LocalDate dateTime) {
         this.patient = patient;
         this.doctor = doctor;
-        this.date = date;
-        this.time = time;
+        this.dateTime = dateTime.atStartOfDay();
     }
 }

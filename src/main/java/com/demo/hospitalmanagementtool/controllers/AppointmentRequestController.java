@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -30,14 +31,22 @@ public class AppointmentRequestController {
     }
 
     @GetMapping("/{patientId}/create-request")
-    public String showCreateRequestForm(@PathVariable Long patientId, Model model) {
-        Patient patient = patientService.getPatientById(patientId);
-        Doctor doctor = patient.getDoctor(); // Fetch the connected doctor
+    public String showCreateRequestForm(@PathVariable Long patientId, Model model, Principal principal) {
+        String username = principal.getName();
 
-        model.addAttribute("patient", patient);
-        model.addAttribute("doctor", doctor);
-        model.addAttribute("appointmentRequest", new AppointmentRequest());
-        return "patient/create-appointment-request";
+        Patient patient = patientService.getPatientById(patientId);
+
+        if (patient != null && patient.getUsername().equals(username)) {
+            Doctor doctor = patient.getDoctor();
+
+            model.addAttribute("patient", patient);
+            model.addAttribute("doctor", doctor);
+            model.addAttribute("appointmentRequest", new AppointmentRequest());
+
+            return "patient/create-appointment-request";
+        } else {
+            return "error";
+        }
     }
 
 

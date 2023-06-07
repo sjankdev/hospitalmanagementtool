@@ -2,7 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Create Appointment Request</title>
-    <!-- Add necessary CSS and JS files -->
+    <link rel="stylesheet" type="text/css" href="/css/appointment-request.css">
+
 </head>
 <body>
 <h1>Create Appointment Request</h1>
@@ -15,12 +16,8 @@
     </div>
 
     <div>
-        <label>Date:</label>
-        <input type="date" th:field="*{date}">
-    </div>
-    <div>
-        <label>Time:</label>
-        <input type="time" th:field="*{time}">
+        <label>Date and Time:</label>
+        <input type="datetime-local" th:field="*{dateTime}">
     </div>
     <div>
         <button type="submit">Submit</button>
