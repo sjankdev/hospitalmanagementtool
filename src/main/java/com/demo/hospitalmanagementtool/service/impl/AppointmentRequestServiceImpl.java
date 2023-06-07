@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 
 @Service
 public class AppointmentRequestServiceImpl implements AppointmentRequestService {
@@ -44,4 +45,14 @@ public class AppointmentRequestServiceImpl implements AppointmentRequestService 
         appointmentRequestRepository.save(appointmentRequest);
     }
 
+    @Override
+    public List<AppointmentRequest> getAppointmentRequestsForDoctor(Doctor doctor) {
+        return appointmentRequestRepository.findByDoctor(doctor);
+    }
+
+    @Override
+    public AppointmentRequest getAppointmentRequestById(Long id) {
+        return appointmentRequestRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid appointment request ID: " + id));
+    }
 }

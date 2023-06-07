@@ -4,6 +4,7 @@ package com.demo.hospitalmanagementtool.controllers;
 import com.demo.hospitalmanagementtool.entities.AppointmentRequest;
 import com.demo.hospitalmanagementtool.entities.Doctor;
 import com.demo.hospitalmanagementtool.entities.Patient;
+import com.demo.hospitalmanagementtool.service.AppointmentRequestApprovalService;
 import com.demo.hospitalmanagementtool.service.AppointmentRequestService;
 import com.demo.hospitalmanagementtool.service.DoctorService;
 import com.demo.hospitalmanagementtool.service.PatientService;
@@ -21,13 +22,13 @@ public class AppointmentRequestController {
     private final AppointmentRequestService appointmentRequestService;
     private final PatientService patientService;
     private final DoctorService doctorService;
+    private final AppointmentRequestApprovalService appointmentRequestApprovalService;
 
-    public AppointmentRequestController(AppointmentRequestService appointmentRequestService,
-                                        PatientService patientService,
-                                        DoctorService doctorService) {
+    public AppointmentRequestController(AppointmentRequestService appointmentRequestService, PatientService patientService, DoctorService doctorService, AppointmentRequestApprovalService appointmentRequestApprovalService) {
         this.appointmentRequestService = appointmentRequestService;
         this.patientService = patientService;
         this.doctorService = doctorService;
+        this.appointmentRequestApprovalService = appointmentRequestApprovalService;
     }
 
     @GetMapping("/{patientId}/create-request")
@@ -63,5 +64,44 @@ public class AppointmentRequestController {
         return "redirect:/patients/index";
     }
 
+    @GetMapping("/doctor/{doctorId}/requests")
+    public String viewAppointmentRequests(@PathVariable Long doctorId, Model model) {
+        Doctor doctor = doctorService.getDoctorById(doctorId);
 
+        if (doctor != null) {
+            model.addAttribute("doctor", doctor);
+            model.addAttribute("appointmentRequests", appointmentRequestService.getAppointmentRequestsForDoctor(doctor));
+            return "doctor/appointment-requests";
+        } else {
+            return "error";
+        }
+    }
+
+    @PostMapping("/doctor/{doctorId}/requests/{requestId}/approve")
+    public String approveAppointmentRequest(@PathVariable Long doctorId, @PathVariable Long requestId) {
+        Doctor doctor = doctorService.getDoctorById(doctorId);
+        AppointmentRequest appointmentRequest = appointmentRequestService.getAppointmentRequestById(requestId);
+
+        if (appointmentRequest != null && appointmentRequest.getDoctor().equals(doctor)) {
+            appointmentRequestApprovalService.approveAppointmentRequest(appointmentRequest);
+            return "redirect:/appointment-request/doctor/" + doctorId + "/requests";
+        } else {
+            return "error";
+        }
+    }
+
+    @PostMapping("/doctor/{doctorId}/requests/{requestId}/reject")
+    public String rejectAppointmentRequest(@PathVariable Long doctorId, @PathVariable Long requestId) {
+        Doctor doctor = doctorService.getDoctorById(doctorId);
+        AppointmentRequest appointmentRequest = appointmentRequestService.getAppointmentRequestById(requestId);
+
+        if (appointmentRequest != null && appointmentRequest.getDoctor().equals(doctor)) {
+            appointmentRequestApprovalService.rejectAppointmentRequest(appointmentRequest);
+            return "redirect:/appointment-request/doctor/" + doctorId + "/requests";
+        } else {
+            return "error";
+        }
+    }
 }
+
+
