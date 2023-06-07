@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Create Appointment Request</title>
+    <!-- Add necessary CSS and JS files -->
+</head>
+<body>
+<h1>Create Appointment Request</h1>
+
+<form th:action="@{/appointment-request/{patientId}/create-request(patientId=${patient.id})}" method="post"
+      th:object="${appointmentRequest}">
+    <div>
+        <label>Select Doctor:</label>
+        <select th:field="*{doctor}">
+            <option th:each="doctor : ${doctors}" th:value="${doctor.id}"
+                    th:text="${doctor.firstName} + ' ' + ${doctor.lastName}"></option>
+        </select>
+    </div>
+    <div>
+        <label>Date:</label>
+        <input type="date" th:field="*{date}">
+    </div>
+    <div>
+        <label>Time:</label>
+        <input type="time" th:field="*{time}">
+    </div>
+    <div>
+        <button type="submit">Submit</button>
+    </div>
+</form>
+</body>
+</html>
