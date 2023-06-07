@@ -3,6 +3,7 @@ package com.demo.hospitalmanagementtool.controllers;
 
 import com.demo.hospitalmanagementtool.entities.AppointmentRequest;
 import com.demo.hospitalmanagementtool.entities.Doctor;
+import com.demo.hospitalmanagementtool.entities.Patient;
 import com.demo.hospitalmanagementtool.service.AppointmentRequestService;
 import com.demo.hospitalmanagementtool.service.DoctorService;
 import com.demo.hospitalmanagementtool.service.PatientService;
@@ -30,17 +31,28 @@ public class AppointmentRequestController {
 
     @GetMapping("/{patientId}/create-request")
     public String showCreateRequestForm(@PathVariable Long patientId, Model model) {
-        model.addAttribute("patient", patientService.getPatientById(patientId));
-        model.addAttribute("doctors", doctorService.getAllDoctors());
+        Patient patient = patientService.getPatientById(patientId);
+        Doctor doctor = patient.getDoctor(); // Fetch the connected doctor
+
+        model.addAttribute("patient", patient);
+        model.addAttribute("doctor", doctor);
         model.addAttribute("appointmentRequest", new AppointmentRequest());
         return "patient/create-appointment-request";
     }
 
+
     @PostMapping("/{patientId}/create-request")
     public String processCreateRequestForm(@PathVariable Long patientId,
-                                           @ModelAttribute AppointmentRequest appointmentRequest) {
-        appointmentRequestService.createAppointmentRequest(patientId, appointmentRequest.getDoctor().getId(),
-                appointmentRequest.getDate(), appointmentRequest.getTime());
+                                           @ModelAttribute("appointmentRequest") AppointmentRequest appointmentRequest) {
+        Patient patient = patientService.getPatientById(patientId);
+        Doctor doctor = patient.getDoctor();
+
+        appointmentRequest.setPatient(patient);
+        appointmentRequest.setDoctor(doctor);
+
+        appointmentRequestService.createAppointmentRequest(appointmentRequest);
         return "redirect:/patients/index";
     }
+
+
 }

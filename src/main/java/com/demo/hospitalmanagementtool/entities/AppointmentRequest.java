@@ -37,4 +37,11 @@ public class AppointmentRequest {
 
     @Column(nullable = false)
     private boolean approved;
+
+    public AppointmentRequest(Patient patient, Doctor doctor, LocalDate date, LocalTime time) {
+        this.patient = patient;
+        this.doctor = doctor;
+        this.date = date;
+        this.time = time;
+    }
 }

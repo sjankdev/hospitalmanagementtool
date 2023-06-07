@@ -10,12 +10,10 @@
 <form th:action="@{/appointment-request/{patientId}/create-request(patientId=${patient.id})}" method="post"
       th:object="${appointmentRequest}">
     <div>
-        <label>Select Doctor:</label>
-        <select th:field="*{doctor}">
-            <option th:each="doctor : ${doctors}" th:value="${doctor.id}"
-                    th:text="${doctor.firstName} + ' ' + ${doctor.lastName}"></option>
-        </select>
+        <label>Selected Doctor:</label>
+        <input type="text" th:value="${doctor.firstName + ' ' + doctor.lastName}" readonly>
     </div>
+
     <div>
         <label>Date:</label>
         <input type="date" th:field="*{date}">

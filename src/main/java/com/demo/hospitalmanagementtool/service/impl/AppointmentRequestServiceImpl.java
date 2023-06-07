@@ -4,6 +4,8 @@ import com.demo.hospitalmanagementtool.entities.AppointmentRequest;
 import com.demo.hospitalmanagementtool.entities.Doctor;
 import com.demo.hospitalmanagementtool.entities.Patient;
 import com.demo.hospitalmanagementtool.repository.AppointmentRequestRepository;
+import com.demo.hospitalmanagementtool.repository.DoctorRepository;
+import com.demo.hospitalmanagementtool.repository.PatientRepository;
 import com.demo.hospitalmanagementtool.service.AppointmentRequestService;
 import com.demo.hospitalmanagementtool.service.DoctorService;
 import com.demo.hospitalmanagementtool.service.PatientService;
@@ -16,29 +18,29 @@ import java.time.LocalTime;
 public class AppointmentRequestServiceImpl implements AppointmentRequestService {
 
     private final AppointmentRequestRepository appointmentRequestRepository;
-    private final PatientService patientService;
-    private final DoctorService doctorService;
+    private final PatientRepository patientRepository;
+    private final DoctorRepository doctorRepository;
 
-    public AppointmentRequestServiceImpl(AppointmentRequestRepository appointmentRequestRepository,
-                                         PatientService patientService,
-                                         DoctorService doctorService) {
+
+    public AppointmentRequestServiceImpl(AppointmentRequestRepository appointmentRequestRepository, PatientRepository patientRepository, DoctorRepository doctorRepository) {
         this.appointmentRequestRepository = appointmentRequestRepository;
-        this.patientService = patientService;
-        this.doctorService = doctorService;
+        this.patientRepository = patientRepository;
+        this.doctorRepository = doctorRepository;
     }
 
     @Override
-    public AppointmentRequest createAppointmentRequest(Long patientId, Long doctorId, LocalDate date, LocalTime time) {
-        Patient patient = patientService.getPatientById(patientId);
-        Doctor doctor = doctorService.getDoctorById(doctorId);
+    public void createAppointmentRequest(AppointmentRequest appointmentRequest) {
+        Patient patient = patientRepository.findById(appointmentRequest.getPatient().getId())
+                .orElseThrow(() -> new IllegalArgumentException("Invalid patient ID: " + appointmentRequest.getPatient().getId()));
 
-        AppointmentRequest appointmentRequest = new AppointmentRequest();
+        Doctor doctor = doctorRepository.findById(appointmentRequest.getDoctor().getId())
+                .orElseThrow(() -> new IllegalArgumentException("Invalid doctor ID: " + appointmentRequest.getDoctor().getId()));
+
         appointmentRequest.setPatient(patient);
         appointmentRequest.setDoctor(doctor);
-        appointmentRequest.setDate(date);
-        appointmentRequest.setTime(time);
         appointmentRequest.setApproved(false);
 
-        return appointmentRequestRepository.save(appointmentRequest);
+        appointmentRequestRepository.save(appointmentRequest);
     }
+
 }

@@ -6,5 +6,5 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 public interface AppointmentRequestService {
-    AppointmentRequest createAppointmentRequest(Long patientId, Long doctorId, LocalDate date, LocalTime time);
+    public void createAppointmentRequest(AppointmentRequest appointmentRequest);
 }
