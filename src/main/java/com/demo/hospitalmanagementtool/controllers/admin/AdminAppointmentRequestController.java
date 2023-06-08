@@ -37,6 +37,7 @@ public class AdminAppointmentRequestController {
         }
     }
 
+
     @PostMapping("/doctor/{doctorId}/requests/{requestId}/approve")
     public String approveAppointmentRequest(@PathVariable Long doctorId, @PathVariable Long requestId) {
         Doctor doctor = doctorService.getDoctorById(doctorId);
