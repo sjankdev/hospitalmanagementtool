@@ -7,7 +7,7 @@
 </head>
 <body>
 <h1>New Billing</h1>
-<form th:action="@{/billing/save}" th:object="${bill}" method="post">
+<form th:action="@{/auth-billing/save}" th:object="${bill}" method="post">
     <label for="dateOfBill">Date of Bill:</label>
     <input type="datetime-local" id="dateOfBill" name="dateOfBill" th:field="*{dateOfBill}"/><br/>
 
@@ -61,8 +61,8 @@
 
 </form>
 <div class="buttons-switch">
-    <a th:href="@{/billing/list}" class="btn">Back to Billing list</a>
-    <a th:href="@{/index}" class="btn">Back to homepage</a>
+    <a th:href="@{/auth-billing/list}" class="btn">Back to Billing list</a>
+    <a th:href="@{/auth-index}" class="btn">Back to homepage</a>
 </div>
 
 <a href="javascript: document.logoutForm.submit()" class="logout-button" role="menuitem">Logout</a>

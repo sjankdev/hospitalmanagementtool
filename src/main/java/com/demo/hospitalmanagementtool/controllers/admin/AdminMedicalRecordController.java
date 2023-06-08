@@ -1,4 +1,4 @@
-package com.demo.hospitalmanagementtool.controllers;
+package com.demo.hospitalmanagementtool.controllers.admin;
 
 import com.demo.hospitalmanagementtool.entities.MedicalRecord;
 import com.demo.hospitalmanagementtool.service.AppointmentService;
@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@RequestMapping("/medicalrecords")
-public class MedicalRecordController {
+@RequestMapping("/auth-medicalrecords")
+public class AdminMedicalRecordController {
 
     @Autowired
     private MedicalRecordService medicalRecordService;

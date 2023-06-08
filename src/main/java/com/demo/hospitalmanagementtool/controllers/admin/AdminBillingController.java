@@ -1,4 +1,4 @@
-package com.demo.hospitalmanagementtool.controllers;
+package com.demo.hospitalmanagementtool.controllers.admin;
 
 import com.demo.hospitalmanagementtool.entities.Billing;
 import com.demo.hospitalmanagementtool.service.AppointmentService;
@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@RequestMapping("/billing")
-public class BillingController {
+@RequestMapping("/auth-billing")
+public class AdminBillingController {
 
     @Autowired
     private BillingService billingService;

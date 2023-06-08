@@ -20,11 +20,11 @@
         <td th:text="${appointmentRequest.dateTime}"></td>
         <td th:text="${appointmentRequest.appointmentRequestApprovalStatus}"></td>
         <td>
-            <form th:action="@{/appointment-request/doctor/{doctorId}/requests/{requestId}/approve(doctorId=${doctor.id}, requestId=${appointmentRequest.id})}"
+            <form th:action="@{/auth-appointment-request/doctor/{doctorId}/requests/{requestId}/approve(doctorId=${doctor.id}, requestId=${appointmentRequest.id})}"
                   method="post">
                 <button type="submit">Approve</button>
             </form>
-            <form th:action="@{/appointment-request/doctor/{doctorId}/requests/{requestId}/reject(doctorId=${doctor.id}, requestId=${appointmentRequest.id})}"
+            <form th:action="@{/auth-appointment-request/doctor/{doctorId}/requests/{requestId}/reject(doctorId=${doctor.id}, requestId=${appointmentRequest.id})}"
                   method="post">
                 <button type="submit">Reject</button>
             </form>

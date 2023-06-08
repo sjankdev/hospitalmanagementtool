@@ -1,68 +1,28 @@
-package com.demo.hospitalmanagementtool.controllers;
-
+package com.demo.hospitalmanagementtool.controllers.admin;
 
 import com.demo.hospitalmanagementtool.entities.AppointmentRequest;
 import com.demo.hospitalmanagementtool.entities.Doctor;
-import com.demo.hospitalmanagementtool.entities.Patient;
 import com.demo.hospitalmanagementtool.service.AppointmentRequestApprovalService;
 import com.demo.hospitalmanagementtool.service.AppointmentRequestService;
 import com.demo.hospitalmanagementtool.service.DoctorService;
-import com.demo.hospitalmanagementtool.service.PatientService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.Principal;
-import java.time.LocalDate;
-import java.time.LocalTime;
-
 @Controller
-@RequestMapping("/appointment-request")
-public class AppointmentRequestController {
-    private final AppointmentRequestService appointmentRequestService;
-    private final PatientService patientService;
-    private final DoctorService doctorService;
-    private final AppointmentRequestApprovalService appointmentRequestApprovalService;
+@RequestMapping("/auth-appointment-request")
+public class AdminAppointmentRequestController {
 
-    public AppointmentRequestController(AppointmentRequestService appointmentRequestService, PatientService patientService, DoctorService doctorService, AppointmentRequestApprovalService appointmentRequestApprovalService) {
-        this.appointmentRequestService = appointmentRequestService;
-        this.patientService = patientService;
-        this.doctorService = doctorService;
-        this.appointmentRequestApprovalService = appointmentRequestApprovalService;
-    }
+    @Autowired
+    private AppointmentRequestService appointmentRequestService;
 
-    @GetMapping("/{patientId}/create-request")
-    public String showCreateRequestForm(@PathVariable Long patientId, Model model, Principal principal) {
-        String username = principal.getName();
+    @Autowired
+    private DoctorService doctorService;
 
-        Patient patient = patientService.getPatientById(patientId);
+    @Autowired
+    private AppointmentRequestApprovalService appointmentRequestApprovalService;
 
-        if (patient != null && patient.getUsername().equals(username)) {
-            Doctor doctor = patient.getDoctor();
-
-            model.addAttribute("patient", patient);
-            model.addAttribute("doctor", doctor);
-            model.addAttribute("appointmentRequest", new AppointmentRequest());
-
-            return "patient/create-appointment-request";
-        } else {
-            return "error";
-        }
-    }
-
-
-    @PostMapping("/{patientId}/create-request")
-    public String processCreateRequestForm(@PathVariable Long patientId,
-                                           @ModelAttribute("appointmentRequest") AppointmentRequest appointmentRequest) {
-        Patient patient = patientService.getPatientById(patientId);
-        Doctor doctor = patient.getDoctor();
-
-        appointmentRequest.setPatient(patient);
-        appointmentRequest.setDoctor(doctor);
-
-        appointmentRequestService.createAppointmentRequest(appointmentRequest);
-        return "redirect:/patients/index";
-    }
 
     @GetMapping("/doctor/{doctorId}/requests")
     public String viewAppointmentRequests(@PathVariable Long doctorId, Model model) {
@@ -76,6 +36,7 @@ public class AppointmentRequestController {
             return "error";
         }
     }
+
 
     @PostMapping("/doctor/{doctorId}/requests/{requestId}/approve")
     public String approveAppointmentRequest(@PathVariable Long doctorId, @PathVariable Long requestId) {

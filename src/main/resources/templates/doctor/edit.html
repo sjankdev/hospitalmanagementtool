@@ -7,7 +7,7 @@
 </head>
 <body>
 <h1>Edit Doctor</h1>
-<form action="#" th:action="@{/doctors/{id}/update(id=${doctor.id})}" th:object="${doctor}" method="post">
+<form action="#" th:action="@{/auth-doctors/{id}/update(id=${doctor.id})}" th:object="${doctor}" method="post">
     <label for="firstName">First Name:</label>
     <input type="text" id="firstName" name="firstName" th:value="${doctor.firstName}" required>
     <br><br>
@@ -58,8 +58,8 @@
 </form>
 
 <div class="button-container">
-    <a th:href="@{/doctors/list}" class="btn">Back to Doctors List</a>
-    <a th:href="@{/index}" class="btn">Back to homepage</a>
+    <a th:href="@{/auth-doctors/list}" class="btn">Back to Doctors List</a>
+    <a th:href="@{/auth-index}" class="btn">Back to homepage</a>
 </div>
 
 <a href="javascript: document.logoutForm.submit()" class="logout-button" role="menuitem">Logout</a>

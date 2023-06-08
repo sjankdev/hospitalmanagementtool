@@ -7,6 +7,6 @@
 </head>
 <body>
 <h1>Welcome, <span th:text="${patient.username}"></span>!</h1>
-<a th:href="@{/appointment-request/{patientId}/create-request(patientId=${patient.id})}">Create Appointment Request</a>
+<a th:href="@{/patient/{patientId}/create-request(patientId=${patient.id})}">Create Appointment Request</a>
 </body>
 </html>

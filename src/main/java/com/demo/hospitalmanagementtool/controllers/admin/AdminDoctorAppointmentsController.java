@@ -1,10 +1,11 @@
-package com.demo.hospitalmanagementtool.controllers;
+package com.demo.hospitalmanagementtool.controllers.admin;
 
 import com.demo.hospitalmanagementtool.entities.Appointment;
 import com.demo.hospitalmanagementtool.entities.Doctor;
 import com.demo.hospitalmanagementtool.repository.AppointmentRepository;
 import com.demo.hospitalmanagementtool.service.DoctorAppointmentCalendarService;
 import com.demo.hospitalmanagementtool.service.DoctorService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,17 +18,18 @@ import java.time.LocalTime;
 import java.util.*;
 
 @Controller
-@RequestMapping("/doctorAppointments")
-public class DoctorAppointmentController {
-    private final DoctorAppointmentCalendarService calendarService;
-    private final AppointmentRepository appointmentRepository;
-    private final DoctorService doctorService;
+@RequestMapping("/auth-doctorAppointments")
+public class AdminDoctorAppointmentsController {
 
-    public DoctorAppointmentController(DoctorAppointmentCalendarService calendarService, AppointmentRepository appointmentRepository, DoctorService doctorService) {
-        this.calendarService = calendarService;
-        this.appointmentRepository = appointmentRepository;
-        this.doctorService = doctorService;
-    }
+    @Autowired
+    private DoctorAppointmentCalendarService calendarService;
+
+    @Autowired
+    private AppointmentRepository appointmentRepository;
+
+    @Autowired
+    private DoctorService doctorService;
+
 
     @GetMapping("/doctor/{doctorId}/appointments")
     public String getDoctorAppointments(@PathVariable Long doctorId, @RequestParam(value = "year", required = false, defaultValue = "2023") int year, @RequestParam(value = "month", required = false, defaultValue = "1") int month, Model model) {
@@ -48,17 +50,11 @@ public class DoctorAppointmentController {
 
 
     @GetMapping("/allEvents")
-    public String getAllEvents(
-            @RequestParam(value = "year", required = false, defaultValue = "2023") int year,
-            @RequestParam(value = "month", required = false, defaultValue = "1") int month,
-            Model model) {
+    public String getAllEvents(@RequestParam(value = "year", required = false, defaultValue = "2023") int year, @RequestParam(value = "month", required = false, defaultValue = "1") int month, Model model) {
 
         LocalDate firstDayOfMonth = LocalDate.of(year, month, 1);
         LocalDate lastDayOfMonth = firstDayOfMonth.withDayOfMonth(firstDayOfMonth.lengthOfMonth());
-        List<Appointment> appointments = appointmentRepository.findByDateTimeBetween(
-                firstDayOfMonth.atStartOfDay(),
-                lastDayOfMonth.atTime(LocalTime.MAX)
-        );
+        List<Appointment> appointments = appointmentRepository.findByDateTimeBetween(firstDayOfMonth.atStartOfDay(), lastDayOfMonth.atTime(LocalTime.MAX));
 
         Map<String, List<Appointment>> appointmentsByDate = calendarService.groupAppointmentsByDate(appointments);
 

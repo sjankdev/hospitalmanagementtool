@@ -26,9 +26,9 @@
         <td th:text="${appointment.dateTime}"></td>
         <td th:text="${appointment.status}"></td>
         <td style="display: flex; align-items: center;">
-            <a th:href="@{/appointments/{id}/details(id=${appointment.id})}" class="btn">View</a>
-            <a th:href="@{/appointments/{id}/edit(id=${appointment.id})}" class="btn">Edit</a>
-            <form th:action="@{/appointments/{id}/delete(id=${appointment.id})}" method="post">
+            <a th:href="@{/auth-appointments/{id}/details(id=${appointment.id})}" class="btn">View</a>
+            <a th:href="@{/auth-appointments/{id}/edit(id=${appointment.id})}" class="btn">Edit</a>
+            <form th:action="@{/auth-appointments/{id}/delete(id=${appointment.id})}" method="post">
                 <input type="hidden" name="_method" value="delete"/>
                 <button type="submit" class="btn delete-btn"
                         onclick="return confirm('Are you sure you want to delete this item?')">Delete
@@ -40,8 +40,8 @@
 </table>
 
 <div class="buttons-switch">
-    <a th:href="@{/appointments/create}" class="btn">New Appointment</a>
-    <a th:href="@{/index}" class="btn" style="margin-left: 10px;">Back to homepage</a>
+    <a th:href="@{/auth-appointments/create}" class="btn">New Appointment</a>
+    <a th:href="@{/auth-index}" class="btn" style="margin-left: 10px;">Back to homepage</a>
 </div>
 
 <a href="javascript: document.logoutForm.submit()" class="logout-button" role="menuitem">Logout</a>

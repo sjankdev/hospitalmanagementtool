@@ -7,7 +7,7 @@
 </head>
 <body>
 <h1>New Appointment</h1>
-<form th:action="@{/appointments/save}" method="post" th:object="${appointment}">
+<form th:action="@{/auth-appointments/save}" method="post" th:object="${appointment}">
     <div>
         <label for="patient">Patient:</label>
         <select th:field="*{patient.id}" id="patient">
@@ -70,8 +70,8 @@
 </form>
 
 <div class="buttons-switch">
-    <a th:href="@{/appointments/list}" class="btn">Back to Appointment list</a>
-    <a th:href="@{/index}" class="btn">Back to homepage</a>
+    <a th:href="@{/auth-appointments/list}" class="btn">Back to Appointment list</a>
+    <a th:href="@{/auth-index}" class="btn">Back to homepage</a>
 </div>
 
 <a href="javascript: document.logoutForm.submit()" class="logout-button" role="menuitem">Logout</a>

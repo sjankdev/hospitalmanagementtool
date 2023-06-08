@@ -7,7 +7,7 @@
 </head>
 <body>
 <h1>New Medical Record</h1>
-<form action="#" th:action="@{/medicalrecords/save}" th:object="${medicalRecord}" method="post">
+<form action="#" th:action="@{/auth-medicalrecords/save}" th:object="${medicalRecord}" method="post">
     <div>
         <label for="patient">Patient:</label>
         <select th:field="*{patient.id}" id="patient">
@@ -56,8 +56,8 @@
 </form>
 
 <div class="buttons-switch">
-    <a th:href="@{/medicalrecords/list}" class="btn">Back to Medical Records list</a>
-    <a th:href="@{/index}" class="btn">Back to homepage</a>
+    <a th:href="@{/auth-medicalrecords/list}" class="btn">Back to Medical Records list</a>
+    <a th:href="@{/auth-index}" class="btn">Back to homepage</a>
 </div>
 
 <a href="javascript: document.logoutForm.submit()" class="logout-button" role="menuitem">Logout</a>

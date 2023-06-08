@@ -13,53 +13,55 @@
         <ul>
             <li>
                 <div class="dropdown">
-                    <a href="/appointments/list">Appointments</a>
+                    <a href="/auth-appointments/list">Appointments</a>
                     <div class="dropdown-content">
-                        <a href="/appointments/create">Create Appointment</a>
-                        <a href="/appointments/list">All Appointments</a>
-                        <a href="/doctorAppointments/allEvents">Doctors events calendar</a>
+                        <a href="/auth-appointments/create">Create Appointment</a>
+                        <a href="/auth-appointments/list">All Appointments</a>
+                        <a th:href="@{/auth-appointment-request/doctor/{doctorId}/requests(doctorId=${doctorId})}">View Appointment Requests</a>
+
+                        <a href="/auth-doctorAppointments/allEvents">Doctors events calendar</a>
                     </div>
                 </div>
                 <div class="dropdown">
-                    <a href="/doctors/list">Doctor</a>
+                    <a href="/auth-doctors/list">Doctor</a>
                     <div class="dropdown-content">
-                        <a href="/doctors/create">Create Doctor</a>
-                        <a href="/doctors/list">All doctors</a>
+                        <a href="/auth-doctors/create">Create Doctor</a>
+                        <a href="/auth-doctors/list">All doctors</a>
                     </div>
                 </div>
                 <div class="dropdown">
-                    <a href="/patients/list">Patient</a>
+                    <a href="/auth-patients/list">Patient</a>
                     <div class="dropdown-content">
-                        <a href="/patients/create">Create Patient</a>
-                        <a href="/patients/list">All Patients</a>
+                        <a href="/auth-patients/create">Create Patient</a>
+                        <a href="/auth-patients/list">All Patients</a>
                     </div>
                 </div>
                 <div class="dropdown">
-                    <a href="/medicalrecords/list">Medical Record</a>
+                    <a href="/auth-medicalrecords/list">Medical Record</a>
                     <div class="dropdown-content">
-                        <a href="/medicalrecords/create">Create Medical Record</a>
-                        <a href="/medicalrecords/list">All Medical Records</a>
+                        <a href="/auth-medicalrecords/create">Create Medical Record</a>
+                        <a href="/auth-medicalrecords/list">All Medical Records</a>
                     </div>
                 </div>
                 <div class="dropdown">
-                    <a href="/billing/list">Billing</a>
+                    <a href="/auth-billing/list">Billing</a>
                     <div class="dropdown-content">
-                        <a href="/billing/create">Create Billing</a>
-                        <a href="/billing/list">All Billings</a>
+                        <a href="/auth-billing/create">Create Billing</a>
+                        <a href="/auth-billing/list">All Billings</a>
                     </div>
                 </div>
                 <div class="dropdown">
-                    <a href="/staff/list">Staff</a>
+                    <a href="/auth-staff/list">Staff</a>
                     <div class="dropdown-content">
-                        <a href="/staff/create">Create Staff</a>
-                        <a href="/staff/list">All Staffs</a>
+                        <a href="/auth-staff/create">Create Staff</a>
+                        <a href="/auth-staff/list">All Staffs</a>
                     </div>
                 </div>
                 <div class="dropdown">
-                    <a href="/inventory/list">Inventory</a>
+                    <a href="/auth-inventory/list">Inventory</a>
                     <div class="dropdown-content">
-                        <a href="/inventory/create">Create Inventory</a>
-                        <a href="/inventory/list">All Inventories</a>
+                        <a href="/auth-inventory/create">Create Inventory</a>
+                        <a href="/auth-inventory/list">All Inventories</a>
                     </div>
                 </div>
                 <div class="dropdown">

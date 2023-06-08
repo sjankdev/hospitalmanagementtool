@@ -7,7 +7,7 @@
 </head>
 <body>
 <h1>Create Inventory Item</h1>
-<form th:action="@{/inventory/save}" th:object="${inventory}" method="post">
+<form th:action="@{/auth-inventory/save}" th:object="${inventory}" method="post">
     <div>
         <label for="name">Name:</label>
         <input type="text" id="name" name="name" th:field="*{name}" required/>
@@ -32,8 +32,8 @@
 </form>
 
 <div class="buttons-switch">
-    <a th:href="@{/inventory/list}" class="btn">Back to Inventory list</a>
-    <a th:href="@{/index}" class="btn">Back to homepage</a>
+    <a th:href="@{/auth-inventory/list}" class="btn">Back to Inventory list</a>
+    <a th:href="@{/auth-index}" class="btn">Back to homepage</a>
 </div>
 
 <a href="javascript: document.logoutForm.submit()" class="logout-button" role="menuitem">Logout</a>

@@ -6,7 +6,7 @@
 </head>
 <body>
 <h1>Edit Inventory</h1>
-<form action="#" th:action="@{/inventory/{id}/update(id=${inventory.id})}" th:object="${inventory}" method="post">
+<form action="#" th:action="@{/auth-inventory/{id}/update(id=${inventory.id})}" th:object="${inventory}" method="post">
     <input type="hidden" th:field="*{id}"/>
     <div>
         <label for="name">Name:</label>
@@ -31,8 +31,8 @@
     <button type="submit">Save</button>
 </form>
 <div class="button-container">
-    <a th:href="@{/inventory/list}" class="btn">Back to Inventory List</a>
-    <a th:href="@{/index}" class="btn">Back to homepage</a>
+    <a th:href="@{/auth-inventory/list}" class="btn">Back to Inventory List</a>
+    <a th:href="@{/auth-index}" class="btn">Back to homepage</a>
 </div>
 
 <a href="javascript: document.logoutForm.submit()" class="logout-button" role="menuitem">Logout</a>

@@ -55,8 +55,8 @@
 </table>
 
 <div class="button-container">
-    <a th:href="@{/doctors/{id}/edit(id=${doctor.id})}" class="btn">Edit</a>
-    <form th:action="@{/doctors/{id}/delete(id=${doctor.id})}" method="post">
+    <a th:href="@{/auth-doctors/{id}/edit(id=${doctor.id})}" class="btn">Edit</a>
+    <form th:action="@{/auth-doctors/{id}/delete(id=${doctor.id})}" method="post">
         <input type="hidden" name="_method" value="delete"/>
         <button type="submit" class="btn delete-btn"
                 onclick="return confirm('Are you sure you want to delete this item?')">Delete
@@ -65,8 +65,8 @@
 </div>
 
 <div class="button-container">
-    <a th:href="@{/doctors/list}" class="btn">Back to Doctors List</a>
-    <a th:href="@{/index}" class="btn">Back to homepage</a>
+    <a th:href="@{/auth-doctors/list}" class="btn">Back to Doctors List</a>
+    <a th:href="@{/auth-index}" class="btn">Back to homepage</a>
 </div>
 
 <a href="javascript: document.logoutForm.submit()" class="logout-button" role="menuitem">Logout</a>

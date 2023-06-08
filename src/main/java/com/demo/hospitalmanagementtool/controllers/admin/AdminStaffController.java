@@ -1,4 +1,4 @@
-package com.demo.hospitalmanagementtool.controllers;
+package com.demo.hospitalmanagementtool.controllers.admin;
 
 import com.demo.hospitalmanagementtool.entities.Staff;
 import com.demo.hospitalmanagementtool.service.StaffService;
@@ -10,15 +10,15 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@RequestMapping("/staff")
-public class StaffController {
+@RequestMapping("/auth-staff")
+public class AdminStaffController {
 
     @Autowired
     StaffService staffService;
 
     @GetMapping("/list")
     public String getAllStaff(Model model) {
-        List < Staff > staffList = staffService.getAllStaff();
+        List<Staff> staffList = staffService.getAllStaff();
         model.addAttribute("staffList", staffList);
         return "staff/list";
     }
