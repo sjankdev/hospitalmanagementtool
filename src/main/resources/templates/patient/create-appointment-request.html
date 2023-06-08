@@ -8,7 +8,7 @@
 <body>
 <h1>Create Appointment Request</h1>
 
-<form th:action="@{/appointment-request/{patientId}/create-request(patientId=${patient.id})}" method="post"
+<form th:action="@{/patient/{patientId}/create-request(patientId=${patient.id})}" method="post"
       th:object="${appointmentRequest}">
     <div>
         <label>Selected Doctor:</label>

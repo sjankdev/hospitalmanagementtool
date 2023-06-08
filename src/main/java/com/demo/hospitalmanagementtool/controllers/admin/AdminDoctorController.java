@@ -1,4 +1,4 @@
-package com.demo.hospitalmanagementtool.controllers;
+package com.demo.hospitalmanagementtool.controllers.admin;
 
 import com.demo.hospitalmanagementtool.entities.Doctor;
 import com.demo.hospitalmanagementtool.service.DoctorService;
@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@RequestMapping("/doctors")
-public class DoctorController {
+@RequestMapping("/auth-doctors")
+public class AdminDoctorController {
 
     @Autowired
     private DoctorService doctorService;

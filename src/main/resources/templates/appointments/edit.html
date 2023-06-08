@@ -6,7 +6,7 @@
 </head>
 <body>
 <h1>Edit Appointment</h1>
-<form th:object="${appointment}" th:action="@{/appointments/{id}/update(id=${appointment.id})}" method="post">
+<form th:object="${appointment}" th:action="@{/auth-appointments/{id}/update(id=${appointment.id})}" method="post">
     <input type="hidden" th:field="*{id}"/>
 
     <div>
@@ -74,8 +74,8 @@
 </form>
 
 <div class="button-container">
-    <a th:href="@{/appointments/list}" class="btn">Back to Appointments List</a>
-    <a th:href="@{/index}" class="btn">Back to homepage</a>
+    <a th:href="@{/auth-appointments/list}" class="btn">Back to Appointments List</a>
+    <a th:href="@{/auth-index}" class="btn">Back to homepage</a>
 </div>
 
 <a href="javascript: document.logoutForm.submit()" class="logout-button" role="menuitem">Logout</a>

@@ -7,7 +7,7 @@
 </head>
 <body>
 <h1>Create Doctor</h1>
-<form action="#" th:action="@{/doctors/save}" th:object="${doctor}" method="post">
+<form action="#" th:action="@{/auth-doctors/save}" th:object="${doctor}" method="post">
     <div>
         <label for="firstName">First Name:</label>
         <input type="text" id="firstName" name="firstName" required th:field="*{firstName}"/>
@@ -67,8 +67,8 @@
     <button type="submit">Save</button>
 </form>
 <div class="buttons-switch">
-    <a th:href="@{/doctors/list}" class="btn">Back to Doctor list</a>
-    <a th:href="@{/index}" class="btn">Back to homepage</a>
+    <a th:href="@{/auth-doctors/list}" class="btn">Back to Doctor list</a>
+    <a th:href="@{/auth-index}" class="btn">Back to homepage</a>
 </div>
 
 <a href="javascript: document.logoutForm.submit()" class="logout-button" role="menuitem">Logout</a>

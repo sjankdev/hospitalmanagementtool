@@ -1,4 +1,4 @@
-package com.demo.hospitalmanagementtool.controllers;
+package com.demo.hospitalmanagementtool.controllers.admin;
 
 import com.demo.hospitalmanagementtool.entities.Inventory;
 import com.demo.hospitalmanagementtool.service.InventoryService;
@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@RequestMapping("/inventory")
-public class InventoryController {
+@RequestMapping("/auth-inventory")
+public class AdminInventoryController {
 
     @Autowired
     private InventoryService inventoryService;

@@ -10,7 +10,7 @@
 
 <body>
 <h1>Edit Patient</h1>
-<form th:action="@{/patients/{id}/update(id=${patient.id})}" th:object="${patient}" method="post">
+<form th:action="@{/auth-patients/{id}/update(id=${patient.id})}" th:object="${patient}" method="post">
     <input type="hidden" th:field="*{id}"/>
 
     <label>First Name: </label>
@@ -60,8 +60,8 @@
 </form>
 
 <div class="button-container">
-    <a th:href="@{/patients/list}" class="btn">Back to Patient List</a>
-    <a th:href="@{/index}" class="btn">Back to homepage</a>
+    <a th:href="@{/auth-patients/list}" class="btn">Back to Patient List</a>
+    <a th:href="@{/auth-index}" class="btn">Back to homepage</a>
 </div>
 
 <a href="javascript: document.logoutForm.submit()" class="logout-button" role="menuitem">Logout</a>

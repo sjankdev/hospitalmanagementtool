@@ -1,4 +1,4 @@
-package com.demo.hospitalmanagementtool.controllers;
+package com.demo.hospitalmanagementtool.controllers.admin;
 
 import com.demo.hospitalmanagementtool.entities.Appointment;
 import com.demo.hospitalmanagementtool.exceptions.NotFoundException;
@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@RequestMapping("/appointments")
-public class AppointmentController {
+@RequestMapping("/auth-appointments")
+public class AdminAppointmentController {
 
     @Autowired
     private AppointmentService appointmentService;
