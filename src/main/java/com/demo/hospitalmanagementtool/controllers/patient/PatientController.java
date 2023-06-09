@@ -58,7 +58,7 @@ public class PatientController {
     @PostMapping("/{patientId}/save-select-doctor")
     public String processDoctorSelection(@PathVariable Long patientId, @RequestParam("doctorId") Long doctorId) {
         patientService.assignDoctorToPatient(patientId, doctorId);
-        return "redirect:/patients/index";
+        return "redirect:/patient/index";
     }
 
 

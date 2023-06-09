@@ -1,5 +1,6 @@
 package com.demo.hospitalmanagementtool.security.token.services;
 
+import com.demo.hospitalmanagementtool.entities.Doctor;
 import com.demo.hospitalmanagementtool.entities.Patient;
 import com.demo.hospitalmanagementtool.security.models.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -29,8 +30,7 @@ public class UserDetailsImpl implements UserDetails {
 
     private Collection<? extends GrantedAuthority> authorities;
 
-    public UserDetailsImpl(Long id, String username, String email, String firstName, String password,
-                           Collection<? extends GrantedAuthority> authorities) {
+    public UserDetailsImpl(Long id, String username, String email, String firstName, String password, Collection<? extends GrantedAuthority> authorities) {
         this.id = id;
         this.username = username;
         this.email = email;
@@ -40,31 +40,21 @@ public class UserDetailsImpl implements UserDetails {
     }
 
     public static UserDetailsImpl build(User user) {
-        List<GrantedAuthority> authorities = user.getRoles().stream()
-                .map(role -> new SimpleGrantedAuthority(role.getName().name()))
-                .collect(Collectors.toList());
+        List<GrantedAuthority> authorities = user.getRoles().stream().map(role -> new SimpleGrantedAuthority(role.getName().name())).collect(Collectors.toList());
 
-        return new UserDetailsImpl(
-                user.getId(),
-                user.getUsername(),
-                user.getEmail(),
-                user.getFirstName(),
-                user.getPassword(),
-                authorities);
+        return new UserDetailsImpl(user.getId(), user.getUsername(), user.getEmail(), user.getFirstName(), user.getPassword(), authorities);
     }
 
     public static UserDetailsImpl buildFromPatient(Patient patient) {
-        List<GrantedAuthority> authorities = patient.getRoles().stream()
-                .map(role -> new SimpleGrantedAuthority(role.getName().name()))
-                .collect(Collectors.toList());
+        List<GrantedAuthority> authorities = patient.getRoles().stream().map(role -> new SimpleGrantedAuthority(role.getName().name())).collect(Collectors.toList());
 
-        return new UserDetailsImpl(
-                patient.getId(),
-                patient.getUsername(),
-                patient.getEmail(),
-                patient.getFirstName(),
-                patient.getPassword(),
-                authorities);
+        return new UserDetailsImpl(patient.getId(), patient.getUsername(), patient.getEmail(), patient.getFirstName(), patient.getPassword(), authorities);
+    }
+
+    public static UserDetailsImpl buildFromDoctor(Doctor doctor) {
+        List<GrantedAuthority> authorities = doctor.getRoles().stream().map(role -> new SimpleGrantedAuthority(role.getName().name())).collect(Collectors.toList());
+
+        return new UserDetailsImpl(doctor.getId(), doctor.getUsername(), doctor.getEmail(), doctor.getFirstName(), doctor.getPassword(), authorities);
     }
 
     @Override
@@ -116,10 +106,8 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o)
-            return true;
-        if (o == null || getClass() != o.getClass())
-            return false;
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
         UserDetailsImpl user = (UserDetailsImpl) o;
         return Objects.equals(id, user.id);
     }

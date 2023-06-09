@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta name="viewport" content="width=device-width"/>
+    <title>Spring Security Tutorial</title>
+    <script src="http://localhost:35729/livereload.js"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/login.css}"/>
+</head>
+<body>
+<div class="main">
+    <div class="login">
+        <form method="post" role="form" th:action="@{/api/auth/doctor/login}" th:object="${login}">
+            <input class="form-control" id="usernameLogin" name="username" placeholder="Enter username"
+                   th:field="*{username}" type="text" required/>
+            <p th:errors="*{username}" class="text-danger" th:if="${#fields.hasErrors('username')}"></p>
+            <input class="form-control" id="passwordLogin" name="password" placeholder="Enter password"
+                   th:field="*{password}" type="password" required/>
+            <p th:errors="*{password}" class="text-danger" th:if="${#fields.hasErrors('password')}"></p>
+            <button id="loginButton">Login</button>
+        </form>
+
+        <div>
+            <form method="GET" role="form" th:action="@{/api/auth/doctor/registerForm}">
+                <button id="registerButton">Register</button>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

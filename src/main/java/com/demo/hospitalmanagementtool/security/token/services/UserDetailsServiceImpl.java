@@ -1,6 +1,8 @@
 package com.demo.hospitalmanagementtool.security.token.services;
 
+import com.demo.hospitalmanagementtool.entities.Doctor;
 import com.demo.hospitalmanagementtool.entities.Patient;
+import com.demo.hospitalmanagementtool.repository.DoctorRepository;
 import com.demo.hospitalmanagementtool.repository.PatientRepository;
 import com.demo.hospitalmanagementtool.security.models.User;
 import com.demo.hospitalmanagementtool.security.repository.UserRepository;
@@ -22,6 +24,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Autowired
     PatientRepository patientRepository;
 
+    @Autowired
+    DoctorRepository doctorRepository;
+
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -35,6 +40,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         if (patientOptional.isPresent()) {
             Patient patient = patientOptional.get();
             return UserDetailsImpl.buildFromPatient(patient);
+        }
+
+        Optional<Doctor> doctorOptional = doctorRepository.findByUsername(username);
+        if (doctorOptional.isPresent()) {
+            Doctor doctor = doctorOptional.get();
+            return UserDetailsImpl.buildFromDoctor(doctor);
         }
 
         throw new UsernameNotFoundException("User or Patient Not Found with username: " + username);

@@ -8,7 +8,7 @@
 <body>
 <h2>Select a Doctor</h2>
 
-<form th:action="@{/patients/{patientId}/save-select-doctor(patientId=${patient.id})}" method="post">
+<form th:action="@{/patient/{patientId}/save-select-doctor(patientId=${patient.id})}" method="post">
     <select name="doctorId">
         <option value="">-- Select a Doctor --</option>
         <option th:each="doctor : ${doctors}" th:value="${doctor.id}" th:text="${doctor.firstName}"></option>
