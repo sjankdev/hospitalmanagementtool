@@ -1,8 +1,12 @@
 package com.demo.hospitalmanagementtool.service.impl;
 
 import com.demo.hospitalmanagementtool.entities.Doctor;
+import com.demo.hospitalmanagementtool.entities.Patient;
 import com.demo.hospitalmanagementtool.exceptions.NotFoundException;
 import com.demo.hospitalmanagementtool.repository.DoctorRepository;
+import com.demo.hospitalmanagementtool.security.models.ERole;
+import com.demo.hospitalmanagementtool.security.models.Role;
+import com.demo.hospitalmanagementtool.security.repository.RoleRepository;
 import com.demo.hospitalmanagementtool.service.DoctorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +19,9 @@ public class DoctorServiceImpl implements DoctorService {
 
     @Autowired
     DoctorRepository doctorRepository;
+
+    @Autowired
+    RoleRepository roleRepository;
 
     @Override
     public List<Doctor> getAllDoctors() {
@@ -56,6 +63,17 @@ public class DoctorServiceImpl implements DoctorService {
     @Override
     public void deleteDoctor(Long id) {
         doctorRepository.deleteById(id);
+    }
+
+    @Override
+    public void assignUserRole(Doctor doctor) {
+        Role userRole = roleRepository.findByName(ERole.ROLE_DOCTOR).orElseThrow(() -> new RuntimeException("User role not found"));
+        doctor.getRoles().add(userRole);
+    }
+
+    @Override
+    public Optional<Doctor> getDoctorByUsername(String username) {
+        return doctorRepository.findByUsername(username);
     }
 }
 

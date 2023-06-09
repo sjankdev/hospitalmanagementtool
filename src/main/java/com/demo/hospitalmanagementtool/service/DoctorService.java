@@ -1,8 +1,10 @@
 package com.demo.hospitalmanagementtool.service;
 
 import com.demo.hospitalmanagementtool.entities.Doctor;
+import com.demo.hospitalmanagementtool.entities.Patient;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface DoctorService {
 
@@ -15,6 +17,11 @@ public interface DoctorService {
     Doctor updateDoctor(Long id, Doctor updatedDoctor);
 
     void deleteDoctor(Long id);
+
+    void assignUserRole(Doctor doctor);
+
+    Optional<Doctor> getDoctorByUsername(String username);
+
 
 }
 
