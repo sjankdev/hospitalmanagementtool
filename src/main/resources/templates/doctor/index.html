@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="/css/doctorIndex.css">
 </head>
 <body>
-<h1>Hello DOCTOR!</h1>
-<a th:href="@{/doctor/} + ${doctorId} + '/requests'">View Appointment Requests</a>
+<h1>Welcome, <span th:text="${doctor.firstName}"></span>!</h1>
+<a class="button" th:href="@{/doctor/{doctorId}/requests(doctorId=${doctorId})}">View Appointment Requests</a>
 </body>
 </html>
