@@ -41,7 +41,7 @@ public class AdminInventoryController {
     @PostMapping("/save")
     public String saveInventory(@ModelAttribute("inventory") Inventory inventory) {
         inventoryService.saveInventory(inventory);
-        return "redirect:/inventory/list";
+        return "redirect:/auth-inventory/list";
     }
 
     @GetMapping("/{id}/edit")
@@ -56,12 +56,12 @@ public class AdminInventoryController {
             return "inventory/edit";
         }
         inventoryService.updateInventory(id, inventory);
-        return "redirect:/inventory/list";
+        return "redirect:/auth-inventory/list";
     }
 
     @PostMapping("/{id}/delete")
     public String deleteInventory(@PathVariable Long id) {
         inventoryService.deleteInventory(id);
-        return "redirect:/inventory/list";
+        return "redirect:/auth-inventory/list";
     }
 }

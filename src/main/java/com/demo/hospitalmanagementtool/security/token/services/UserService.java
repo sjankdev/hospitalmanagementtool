@@ -1,6 +1,7 @@
 package com.demo.hospitalmanagementtool.security.token.services;
 
 
+import com.demo.hospitalmanagementtool.entities.Doctor;
 import com.demo.hospitalmanagementtool.security.models.User;
 
 import java.util.Optional;
@@ -8,5 +9,8 @@ import java.util.Optional;
 public interface UserService {
 
     Optional<User> findByUsername(String username);
+
+
+    void assignUserRole(User user);
 
 }

@@ -7,6 +7,7 @@ import com.demo.hospitalmanagementtool.security.repository.UserRepository;
 import com.demo.hospitalmanagementtool.security.token.jwt.JwtUtils;
 import com.demo.hospitalmanagementtool.security.token.services.UserDetailsImpl;
 
+import com.demo.hospitalmanagementtool.security.token.services.UserService;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
@@ -42,6 +43,9 @@ public class AuthController {
 
     @Autowired
     JwtUtils jwtUtils;
+
+    @Autowired
+    UserService userService;
 
     @PostMapping("/login")
     @Transactional
@@ -97,6 +101,7 @@ public class AuthController {
             return "register_form";
         }
         User user = new User(signupRequest.getUsername(), signupRequest.getFirstName(), signupRequest.getLastName(), signupRequest.getEmail(), encoder.encode(signupRequest.getPassword()));
+        userService.assignUserRole(user);
 
         model.addAttribute("signup", signupRequest);
         userRepository.save(user);

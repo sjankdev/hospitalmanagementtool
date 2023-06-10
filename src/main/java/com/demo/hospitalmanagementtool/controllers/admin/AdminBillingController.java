@@ -75,12 +75,12 @@ public class AdminBillingController {
             return "billing/edit";
         }
         billingService.updateBill(id, billing);
-        return "redirect:/billing/list";
+        return "redirect:/auth-billing/list";
     }
 
     @PostMapping("/{id}/delete")
     public String deleteBill(@PathVariable Long id) {
         billingService.deleteBill(id);
-        return "redirect:/billing/list";
+        return "redirect:/auth-billing/list";
     }
 }

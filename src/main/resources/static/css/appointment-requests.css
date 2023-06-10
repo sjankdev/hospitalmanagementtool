@@ -1,0 +1,90 @@
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            color: #333;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        .approve-button {
+            background-color: #27ae60;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            font-size: 14px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .approve-button:hover {
+            background-color: #2ecc71;
+        }
+
+        .reject-button {
+            background-color: #c0392b;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            font-size: 14px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .reject-button:hover {
+            background-color: #e74c3c;
+        }
+
+ .buttons-switch{
+     display: flex;
+     -items: center;
+     justify-content: center;
+}
+.btn {
+     display: inline-block;
+     padding: 8px 12px;
+     margin-right: 10px;
+     border: none;
+     background-color: #4CAF50;
+     color: white;
+     text-decoration: none;
+     font-size: 14px;
+     border-radius: 4px;
+     margin-left: 10px;
+}
+ .btn:hover {
+     background-color: #0069d9;
+}

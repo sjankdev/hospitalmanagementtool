@@ -39,7 +39,7 @@ public class AdminStaffController {
     @PostMapping("/save")
     public String saveStaff(@ModelAttribute("staff") Staff staff) {
         staffService.saveStaff(staff);
-        return "redirect:/staff/list";
+        return "redirect:/auth-staff/list";
     }
 
     @GetMapping("/{id}/edit")
@@ -52,12 +52,12 @@ public class AdminStaffController {
     @PostMapping("/{id}/update")
     public String updateStaff(@PathVariable Long id, @ModelAttribute("staff") Staff staff) {
         staffService.updateStaff(id, staff);
-        return "redirect:/staff/list";
+        return "redirect:/auth-staff/list";
     }
 
     @PostMapping("/{id}/delete")
     public String deleteStaff(@PathVariable Long id) {
         staffService.deleteStaff(id);
-        return "redirect:/staff/list";
+        return "redirect:/auth-staff/list";
     }
 }
