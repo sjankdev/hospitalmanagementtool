@@ -83,12 +83,12 @@ public class AdminAppointmentController {
     @PostMapping("/{id}/update")
     public String updateAppointment(@PathVariable("id") Long id, @ModelAttribute("appointment") Appointment appointment) {
         appointmentService.updateAppointment(id, appointment);
-        return "redirect:/appointments/list";
+        return "redirect:/auth-appointments/list";
     }
 
     @PostMapping("/{id}/delete")
     public String deleteAppointment(@PathVariable("id") Long id) {
         appointmentService.deleteAppointment(id);
-        return "redirect:/appointments/list";
+        return "redirect:/auth-appointments/list";
     }
 }

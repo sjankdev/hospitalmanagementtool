@@ -43,7 +43,7 @@ public class AdminDoctorController {
             return "doctor/new";
         }
         doctorService.saveDoctor(doctor);
-        return "redirect:/doctors/list";
+        return "redirect:/auth-doctors/list";
     }
 
     @GetMapping("/{id}/edit")
@@ -58,7 +58,7 @@ public class AdminDoctorController {
             return "doctor/edit";
         }
         doctorService.updateDoctor(id, doctor);
-        return "redirect:/doctors/list";
+        return "redirect:/auth-doctors/list";
     }
 
     @PostMapping("/{id}/delete")
@@ -66,6 +66,6 @@ public class AdminDoctorController {
         if (method.equalsIgnoreCase("delete")) {
             doctorService.deleteDoctor(id);
         }
-        return "redirect:/doctors/list";
+        return "redirect:/auth-doctors/list";
     }
 }

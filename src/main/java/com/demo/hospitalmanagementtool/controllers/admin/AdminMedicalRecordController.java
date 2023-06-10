@@ -54,7 +54,7 @@ public class AdminMedicalRecordController {
     @PostMapping("/save")
     public String saveMedicalRecord(@ModelAttribute("medicalRecord") MedicalRecord medicalRecord) {
         medicalRecordService.saveMedicalRecord(medicalRecord);
-        return "redirect:/medicalrecords/list";
+        return "redirect:/auth-medicalrecords/list";
     }
 
     @GetMapping("/{id}/edit")
@@ -67,12 +67,12 @@ public class AdminMedicalRecordController {
     @PostMapping("/{id}/update")
     public String updateMedicalRecord(@PathVariable Long id, @ModelAttribute("medicalRecord") MedicalRecord medicalRecord) {
         medicalRecordService.updateMedicalRecord(id, medicalRecord);
-        return "redirect:/medicalrecords/list";
+        return "redirect:/auth-medicalrecords/list";
     }
 
     @PostMapping("/{id}/delete")
     public String deleteMedicalRecord(@PathVariable Long id) {
         medicalRecordService.deleteMedicalRecord(id);
-        return "redirect:/medicalrecords/list";
+        return "redirect:/auth-medicalrecords/list";
     }
 }

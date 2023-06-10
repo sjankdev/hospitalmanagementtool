@@ -47,7 +47,7 @@ public class AdminPatientController {
     @PostMapping("/save")
     public String savePatient(@ModelAttribute("patient") Patient patient) {
         patientService.savePatient(patient);
-        return "redirect:/patients/list";
+        return "redirect:/auth-patients/list";
     }
 
     @GetMapping("/{id}/edit")
@@ -67,13 +67,13 @@ public class AdminPatientController {
     @PostMapping("/{id}/update")
     public String updatePatient(@PathVariable Long id, @ModelAttribute("patient") Patient patient) {
         patientService.updatePatient(id, patient);
-        return "redirect:/patients/list";
+        return "redirect:/auth-patients/list";
     }
 
     @PostMapping("/{id}/delete")
     public String deletePatient(@PathVariable Long id) {
         patientService.deletePatient(id);
-        return "redirect:/patients/list";
+        return "redirect:/auth-patients/list";
     }
 
 }
