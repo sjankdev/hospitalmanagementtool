@@ -52,10 +52,12 @@ public class DoctorController {
 
 
     @GetMapping("/{doctorId}/requests")
-    public String viewAppointmentRequests(@PathVariable Long doctorId, Model model) {
+    public String viewAppointmentRequests(@PathVariable Long doctorId, Model model, Principal principal) {
+        String username = principal.getName();
+
         Doctor doctor = doctorService.getDoctorById(doctorId);
 
-        if (doctor != null) {
+        if (doctor != null && doctor.getUsername().equals(username)) {
             model.addAttribute("doctor", doctor);
             model.addAttribute("appointmentRequests", appointmentRequestService.getAppointmentRequestsForDoctor(doctor));
             return "doctor/appointment-requests";
