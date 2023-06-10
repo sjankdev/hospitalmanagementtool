@@ -39,7 +39,7 @@
 <div>
     <h3>Approved Appointments</h3>
     <ul>
-        <li th:each="appointment : ${approvedAppointments}">
+        <li th:each="appointment : ${approvedAppointmentsForMonth}">
             <div>
                 <p>Appointment ID: <span th:text="${appointment.id}"></span></p>
                 <p>Patient Name: <span th:text="${appointment.patient.firstName}"></span></p>
@@ -48,6 +48,7 @@
         </li>
     </ul>
 </div>
+
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript" th:src="@{/js/doctorAppointments.js}"></script>

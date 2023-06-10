@@ -118,6 +118,15 @@ public class DoctorController {
                     .map(Appointment::new)
                     .collect(Collectors.toList());
 
+            List<Appointment> approvedAppointmentsForMonth = approvedAppointments.stream()
+                    .filter(appointment -> {
+                        LocalDate appointmentDate = appointment.getDateTime().toLocalDate();
+                        return appointmentDate.getYear() == year && appointmentDate.getMonthValue() == month;
+                    })
+                    .collect(Collectors.toList());
+
+            model.addAttribute("approvedAppointmentsForMonth", approvedAppointmentsForMonth);
+
             calendarService.setModelAttributesDoctor(model, doctor, appointmentsByDate, year, month);
             model.addAttribute("approvedAppointments", approvedAppointments);
         }
