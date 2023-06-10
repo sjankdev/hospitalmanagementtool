@@ -16,6 +16,13 @@ import java.time.LocalDateTime;
 @Setter
 public class Appointment {
 
+    public Appointment(AppointmentRequest appointmentRequest) {
+        this.id = appointmentRequest.getId();
+        this.patient = appointmentRequest.getPatient();
+        this.doctor = appointmentRequest.getDoctor();
+        this.dateTime = appointmentRequest.getDateTime();
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

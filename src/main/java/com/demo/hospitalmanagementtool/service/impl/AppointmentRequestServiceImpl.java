@@ -8,12 +8,8 @@ import com.demo.hospitalmanagementtool.repository.AppointmentRequestRepository;
 import com.demo.hospitalmanagementtool.repository.DoctorRepository;
 import com.demo.hospitalmanagementtool.repository.PatientRepository;
 import com.demo.hospitalmanagementtool.service.AppointmentRequestService;
-import com.demo.hospitalmanagementtool.service.DoctorService;
-import com.demo.hospitalmanagementtool.service.PatientService;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.List;
 
 @Service

@@ -1,14 +1,12 @@
 package com.demo.hospitalmanagementtool.service.impl;
 
 import com.demo.hospitalmanagementtool.entities.Appointment;
-import com.demo.hospitalmanagementtool.entities.Doctor;
 import com.demo.hospitalmanagementtool.exceptions.NotFoundException;
 import com.demo.hospitalmanagementtool.repository.AppointmentRepository;
 import com.demo.hospitalmanagementtool.service.AppointmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @Service

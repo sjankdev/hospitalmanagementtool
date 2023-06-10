@@ -11,10 +11,8 @@
     <h3>Current Month: <span th:text="${monthYear}"></span></h3>
     <a th:href="@{/doctor/{doctorId}/appointments(doctorId=${doctorId},year=${previousYear}, month=${previousMonth})}">Previous
         Month</a>
-    Month</a>
     <a th:href="@{/doctor/{doctorId}/appointments(doctorId=${doctorId}, year=${nextYear}, month=${nextMonth})}">Next
         Month</a>
-    Month</a>
 </div>
 <div th:each="entry : ${groupedAppointments}">
     <h3 th:text="${entry.key}"></h3>
@@ -36,6 +34,21 @@
         </ul>
     </div>
 </div>
+
+<!-- Display Approved Appointments -->
+<div>
+    <h3>Approved Appointments</h3>
+    <ul>
+        <li th:each="appointment : ${approvedAppointmentsForMonth}">
+            <div>
+                <p>Appointment ID: <span th:text="${appointment.id}"></span></p>
+                <p>Patient Name: <span th:text="${appointment.patient.firstName}"></span></p>
+                <p>Appointment Date/Time: <span th:text="${appointment.dateTime}"></span></p>
+            </div>
+        </li>
+    </ul>
+</div>
+
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript" th:src="@{/js/doctorAppointments.js}"></script>
