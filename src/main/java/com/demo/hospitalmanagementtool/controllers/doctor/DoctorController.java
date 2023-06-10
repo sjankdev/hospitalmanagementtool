@@ -112,7 +112,6 @@ public class DoctorController {
             List<Appointment> appointmentsForMonth = calendarService.getAppointmentsForMonth(appointments, firstDayOfMonth, lastDayOfMonth);
             Map<String, List<Appointment>> appointmentsByDate = calendarService.groupAppointmentsByDate(appointmentsForMonth);
 
-            // Get approved appointments
             List<Appointment> approvedAppointments = appointmentRequestRepository.findByDoctorAndAppointmentRequestApprovalStatus(doctor, AppointmentRequestApprovalStatus.APPROVED)
                     .stream()
                     .map(Appointment::new)

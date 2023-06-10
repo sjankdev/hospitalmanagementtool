@@ -2,12 +2,9 @@ package com.demo.hospitalmanagementtool.security.controllers;
 
 import com.demo.hospitalmanagementtool.entities.Patient;
 import com.demo.hospitalmanagementtool.repository.PatientRepository;
-import com.demo.hospitalmanagementtool.security.models.ERole;
-import com.demo.hospitalmanagementtool.security.models.Role;
 import com.demo.hospitalmanagementtool.security.payload.request.LoginRequest;
 import com.demo.hospitalmanagementtool.security.payload.request.PatientLoginRequest;
 import com.demo.hospitalmanagementtool.security.payload.request.PatientSignupRequest;
-import com.demo.hospitalmanagementtool.security.repository.RoleRepository;
 import com.demo.hospitalmanagementtool.security.token.jwt.JwtUtils;
 import com.demo.hospitalmanagementtool.security.token.services.UserDetailsImpl;
 import com.demo.hospitalmanagementtool.service.PatientService;

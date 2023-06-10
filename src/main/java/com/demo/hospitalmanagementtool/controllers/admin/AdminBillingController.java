@@ -32,7 +32,7 @@ public class AdminBillingController {
 
     @GetMapping("/list")
     public String getAllBills(Model model) {
-        List < Billing > bills = billingService.getAllBills();
+        List<Billing> bills = billingService.getAllBills();
         model.addAttribute("bills", bills);
         return "billing/list";
     }
@@ -57,7 +57,7 @@ public class AdminBillingController {
     @PostMapping("/save")
     public String saveBill(@ModelAttribute("bill") Billing bill) {
         billingService.saveBill(bill);
-        return "redirect:/billing/list";
+        return "redirect:/auth-billing/list";
     }
 
     @GetMapping("/{id}/edit")

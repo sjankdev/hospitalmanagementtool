@@ -62,7 +62,7 @@ public class AdminAppointmentController {
     @PostMapping("/save")
     public String saveAppointment(@ModelAttribute("appointment") Appointment appointment) {
         appointmentService.saveAppointment(appointment);
-        return "redirect:/appointments/list";
+        return "redirect:/auth-appointments/list";
     }
 
     @GetMapping("/{id}/edit")
