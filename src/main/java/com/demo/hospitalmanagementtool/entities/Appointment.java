@@ -16,6 +16,15 @@ import java.time.LocalDateTime;
 @Setter
 public class Appointment {
 
+    public Appointment(AppointmentRequest appointmentRequest) {
+        // Convert relevant attributes from AppointmentRequest to Appointment
+        this.id = appointmentRequest.getId();
+        this.patient = appointmentRequest.getPatient();
+        this.doctor = appointmentRequest.getDoctor();
+        this.dateTime = appointmentRequest.getDateTime();
+        // Set other attributes as needed
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

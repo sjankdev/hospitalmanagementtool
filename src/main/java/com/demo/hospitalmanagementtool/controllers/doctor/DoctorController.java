@@ -1,9 +1,7 @@
 package com.demo.hospitalmanagementtool.controllers.doctor;
 
-import com.demo.hospitalmanagementtool.entities.Appointment;
-import com.demo.hospitalmanagementtool.entities.AppointmentRequest;
-import com.demo.hospitalmanagementtool.entities.Doctor;
-import com.demo.hospitalmanagementtool.entities.Patient;
+import com.demo.hospitalmanagementtool.entities.*;
+import com.demo.hospitalmanagementtool.repository.AppointmentRequestRepository;
 import com.demo.hospitalmanagementtool.service.AppointmentRequestApprovalService;
 import com.demo.hospitalmanagementtool.service.AppointmentRequestService;
 import com.demo.hospitalmanagementtool.service.DoctorAppointmentCalendarService;
@@ -18,6 +16,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/doctor")
@@ -34,6 +33,9 @@ public class DoctorController {
 
     @Autowired
     private DoctorAppointmentCalendarService calendarService;
+
+    @Autowired
+    AppointmentRequestRepository appointmentRequestRepository;
 
     @GetMapping("/index")
     public String index(Model model, Principal principal) {
@@ -94,27 +96,33 @@ public class DoctorController {
     }
 
     @GetMapping("/{doctorId}/appointments")
-    public String getDoctorAppointments(@PathVariable Long doctorId, @RequestParam(value = "year", required = false, defaultValue = "2023") int year, @RequestParam(value = "month", required = false, defaultValue = "1") int month, Model model, Principal principal) {
+    public String getDoctorAppointments(@PathVariable Long doctorId,
+                                        @RequestParam(value = "year", required = false, defaultValue = "2023") int year,
+                                        @RequestParam(value = "month", required = false, defaultValue = "1") int month,
+                                        Model model, Principal principal) {
 
         String username = principal.getName();
 
         Doctor doctor = doctorService.getDoctorById(doctorId);
 
         if (doctor != null && doctor.getUsername().equals(username)) {
-
             List<Appointment> appointments = calendarService.getAppointmentsByDoctor(doctor);
-
             LocalDate firstDayOfMonth = LocalDate.of(year, month, 1);
             LocalDate lastDayOfMonth = firstDayOfMonth.withDayOfMonth(firstDayOfMonth.lengthOfMonth());
-
             List<Appointment> appointmentsForMonth = calendarService.getAppointmentsForMonth(appointments, firstDayOfMonth, lastDayOfMonth);
-
             Map<String, List<Appointment>> appointmentsByDate = calendarService.groupAppointmentsByDate(appointmentsForMonth);
 
-            calendarService.setModelAttributesDoctor(model, doctor, appointmentsByDate, year, month);
+            // Get approved appointments
+            List<Appointment> approvedAppointments = appointmentRequestRepository.findByDoctorAndAppointmentRequestApprovalStatus(doctor, AppointmentRequestApprovalStatus.APPROVED)
+                    .stream()
+                    .map(Appointment::new)
+                    .collect(Collectors.toList());
 
+            calendarService.setModelAttributesDoctor(model, doctor, appointmentsByDate, year, month);
+            model.addAttribute("approvedAppointments", approvedAppointments);
         }
         return "doctor-appointment-calendar";
-
     }
+
+
 }
