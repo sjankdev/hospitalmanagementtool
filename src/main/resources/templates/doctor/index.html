@@ -8,5 +8,6 @@
 <body>
 <h1>Welcome, <span th:text="${doctor.firstName}"></span>!</h1>
 <a class="button" th:href="@{/doctor/{doctorId}/requests(doctorId=${doctorId})}">View Appointment Requests</a>
+<a class="button" th:href="@{/doctor/{doctorId}/appointments(doctorId=${doctor.id})}">Appointments</a>
 </body>
 </html>
