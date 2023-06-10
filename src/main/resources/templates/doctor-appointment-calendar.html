@@ -9,10 +9,10 @@
 <h2 th:text="${doctor.firstName} + ' ' + ${doctor.lastName}"></h2>
 <div class="center-container">
     <h3>Current Month: <span th:text="${monthYear}"></span></h3>
-    <a th:href="@{/doctorAppointments/doctor/{doctorId}/appointments(doctorId=${doctorId},year=${previousYear}, month=${previousMonth})}">Previous
+    <a th:href="@{/doctor/{doctorId}/appointments(doctorId=${doctorId},year=${previousYear}, month=${previousMonth})}">Previous
         Month</a>
     Month</a>
-    <a th:href="@{/doctorAppointments/doctor/{doctorId}/appointments(doctorId=${doctorId}, year=${nextYear}, month=${nextMonth})}">Next
+    <a th:href="@{/doctor/{doctorId}/appointments(doctorId=${doctorId}, year=${nextYear}, month=${nextMonth})}">Next
         Month</a>
     Month</a>
 </div>
