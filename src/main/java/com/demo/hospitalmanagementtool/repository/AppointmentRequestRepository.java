@@ -12,4 +12,6 @@ public interface AppointmentRequestRepository extends JpaRepository<AppointmentR
 
     List<AppointmentRequest> findByDoctorAndAppointmentRequestApprovalStatus(Doctor doctor, AppointmentRequestApprovalStatus status);
 
+    List<AppointmentRequest> findByAppointmentRequestApprovalStatus(AppointmentRequestApprovalStatus status);
+
 }

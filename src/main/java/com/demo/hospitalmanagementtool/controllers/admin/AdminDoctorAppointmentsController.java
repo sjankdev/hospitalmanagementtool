@@ -1,8 +1,11 @@
 package com.demo.hospitalmanagementtool.controllers.admin;
 
 import com.demo.hospitalmanagementtool.entities.Appointment;
+import com.demo.hospitalmanagementtool.entities.AppointmentRequest;
+import com.demo.hospitalmanagementtool.entities.AppointmentRequestApprovalStatus;
 import com.demo.hospitalmanagementtool.entities.Doctor;
 import com.demo.hospitalmanagementtool.repository.AppointmentRepository;
+import com.demo.hospitalmanagementtool.repository.AppointmentRequestRepository;
 import com.demo.hospitalmanagementtool.service.DoctorAppointmentCalendarService;
 import com.demo.hospitalmanagementtool.service.DoctorService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +18,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.Month;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/auth-doctorAppointments")
@@ -26,6 +31,9 @@ public class AdminDoctorAppointmentsController {
 
     @Autowired
     private AppointmentRepository appointmentRepository;
+
+    @Autowired
+    AppointmentRequestRepository appointmentRequestRepository;
 
     @Autowired
     private DoctorService doctorService;
@@ -50,18 +58,48 @@ public class AdminDoctorAppointmentsController {
 
 
     @GetMapping("/allEvents")
-    public String getAllEvents(@RequestParam(value = "year", required = false, defaultValue = "2023") int year, @RequestParam(value = "month", required = false, defaultValue = "1") int month, Model model) {
-
+    public String getAllEvents(
+            @RequestParam(value = "year", required = false, defaultValue = "2023") int year,
+            @RequestParam(value = "month", required = false, defaultValue = "1") int month,
+            Model model
+    ) {
         LocalDate firstDayOfMonth = LocalDate.of(year, month, 1);
         LocalDate lastDayOfMonth = firstDayOfMonth.withDayOfMonth(firstDayOfMonth.lengthOfMonth());
-        List<Appointment> appointments = appointmentRepository.findByDateTimeBetween(firstDayOfMonth.atStartOfDay(), lastDayOfMonth.atTime(LocalTime.MAX));
 
-        Map<String, List<Appointment>> appointmentsByDate = calendarService.groupAppointmentsByDate(appointments);
+        List<Appointment> appointments = appointmentRepository.findByDateTimeBetween(
+                firstDayOfMonth.atStartOfDay(),
+                lastDayOfMonth.atTime(LocalTime.MAX)
+        );
+
+        List<AppointmentRequest> approvedRequests = appointmentRequestRepository.findByAppointmentRequestApprovalStatus(AppointmentRequestApprovalStatus.APPROVED);
+        List<Appointment> approvedAppointments = approvedRequests.stream()
+                .map(approvedRequest -> new Appointment(
+                        approvedRequest.getDateTime(),
+                        approvedRequest.getPatient(),
+                        approvedRequest.getDoctor()
+                ))
+                .filter(approvedAppointment -> {
+                    LocalDate appointmentDate = approvedAppointment.getDateTime().toLocalDate();
+                    return appointmentDate.getYear() == year && appointmentDate.getMonth() == Month.of(month);
+                })
+
+                .collect(Collectors.toList());
+
+        List<Appointment> allAppointments = new ArrayList<>(appointments);
+        allAppointments.addAll(approvedAppointments);
+
+        Map<String, List<Appointment>> appointmentsByDate = calendarService.groupAppointmentsByDate(allAppointments);
 
         calendarService.setModelAttributesAllDoctors(model, appointmentsByDate, year, month);
 
+        model.addAttribute("appointmentsByDate", appointmentsByDate);
+
         return "all-doctors-appointments";
     }
+
+
+
+
 
 
 }

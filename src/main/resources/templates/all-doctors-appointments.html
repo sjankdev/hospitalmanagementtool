@@ -39,8 +39,7 @@
                             more</a>
 
                         <table class="hidden">
-                            <tr th:each="additionalAppointment, iterStat : ${entry.value}"
-                                th:if="${iterStat.index} &gt;= 2">
+                            <tr th:each="additionalAppointment, iterStat : ${entry.value}" th:if="${iterStat.index} &gt;= 2">
                                 <td th:text="${additionalAppointment.doctor.firstName} + ' ' + ${additionalAppointment.doctor.lastName}"></td>
                                 <td th:text="${additionalAppointment.patient.firstName} + ' ' + ${additionalAppointment.patient.lastName}"></td>
                                 <td th:text="${additionalAppointment.notes}"></td>
@@ -53,7 +52,6 @@
     </tr>
     </tbody>
 </table>
-
 
 <div class="buttons-switch">
     <a th:href="@{/auth-index}" class="btn">Back to homepage</a>
