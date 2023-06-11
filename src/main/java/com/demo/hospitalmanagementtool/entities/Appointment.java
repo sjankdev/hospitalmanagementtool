@@ -23,6 +23,8 @@ public class Appointment {
         this.dateTime = appointmentRequest.getDateTime();
     }
 
+
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -53,6 +55,12 @@ public class Appointment {
 
     @OneToOne(mappedBy = "appointment", cascade = CascadeType.ALL)
     private MedicalRecord medicalRecord;
+
+    public Appointment(LocalDateTime dateTime, Patient patient, Doctor doctor) {
+        this.dateTime = dateTime;
+        this.patient = patient;
+        this.doctor = doctor;
+    }
 
     public void setStaff(Staff staff) {
         if (this.staff != null) {

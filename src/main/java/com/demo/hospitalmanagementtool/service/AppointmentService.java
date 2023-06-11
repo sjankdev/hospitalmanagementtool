@@ -16,5 +16,8 @@ public interface AppointmentService {
 
     void deleteAppointment(Long id);
 
+    List<Appointment> getApprovedAppointments(int year, int month);
+
+
 }
 

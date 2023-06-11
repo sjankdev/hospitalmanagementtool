@@ -3,6 +3,7 @@ package com.demo.hospitalmanagementtool.controllers.admin;
 import com.demo.hospitalmanagementtool.entities.Appointment;
 import com.demo.hospitalmanagementtool.entities.Doctor;
 import com.demo.hospitalmanagementtool.repository.AppointmentRepository;
+import com.demo.hospitalmanagementtool.service.AppointmentService;
 import com.demo.hospitalmanagementtool.service.DoctorAppointmentCalendarService;
 import com.demo.hospitalmanagementtool.service.DoctorService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,9 @@ public class AdminDoctorAppointmentsController {
     private AppointmentRepository appointmentRepository;
 
     @Autowired
+    AppointmentService appointmentService;
+
+    @Autowired
     private DoctorService doctorService;
 
 
@@ -50,13 +54,25 @@ public class AdminDoctorAppointmentsController {
 
 
     @GetMapping("/allEvents")
-    public String getAllEvents(@RequestParam(value = "year", required = false, defaultValue = "2023") int year, @RequestParam(value = "month", required = false, defaultValue = "1") int month, Model model) {
-
+    public String getAllEvents(
+            @RequestParam(value = "year", required = false, defaultValue = "2023") int year,
+            @RequestParam(value = "month", required = false, defaultValue = "1") int month,
+            Model model
+    ) {
         LocalDate firstDayOfMonth = LocalDate.of(year, month, 1);
         LocalDate lastDayOfMonth = firstDayOfMonth.withDayOfMonth(firstDayOfMonth.lengthOfMonth());
-        List<Appointment> appointments = appointmentRepository.findByDateTimeBetween(firstDayOfMonth.atStartOfDay(), lastDayOfMonth.atTime(LocalTime.MAX));
 
-        Map<String, List<Appointment>> appointmentsByDate = calendarService.groupAppointmentsByDate(appointments);
+        List<Appointment> appointments = appointmentRepository.findByDateTimeBetween(
+                firstDayOfMonth.atStartOfDay(),
+                lastDayOfMonth.atTime(LocalTime.MAX)
+        );
+
+        List<Appointment> approvedAppointments = appointmentService.getApprovedAppointments(year, month);
+
+        List<Appointment> allAppointments = new ArrayList<>(appointments);
+        allAppointments.addAll(approvedAppointments);
+
+        Map<String, List<Appointment>> appointmentsByDate = calendarService.groupAppointmentsByDate(allAppointments);
 
         calendarService.setModelAttributesAllDoctors(model, appointmentsByDate, year, month);
 
