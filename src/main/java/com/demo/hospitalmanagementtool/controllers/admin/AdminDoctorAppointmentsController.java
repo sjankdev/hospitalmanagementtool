@@ -1,11 +1,8 @@
 package com.demo.hospitalmanagementtool.controllers.admin;
 
 import com.demo.hospitalmanagementtool.entities.Appointment;
-import com.demo.hospitalmanagementtool.entities.AppointmentRequest;
-import com.demo.hospitalmanagementtool.entities.AppointmentRequestApprovalStatus;
 import com.demo.hospitalmanagementtool.entities.Doctor;
 import com.demo.hospitalmanagementtool.repository.AppointmentRepository;
-import com.demo.hospitalmanagementtool.repository.AppointmentRequestRepository;
 import com.demo.hospitalmanagementtool.service.AppointmentService;
 import com.demo.hospitalmanagementtool.service.DoctorAppointmentCalendarService;
 import com.demo.hospitalmanagementtool.service.DoctorService;
@@ -19,9 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.Month;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/auth-doctorAppointments")
@@ -35,9 +30,6 @@ public class AdminDoctorAppointmentsController {
 
     @Autowired
     AppointmentService appointmentService;
-
-    @Autowired
-    AppointmentRequestRepository appointmentRequestRepository;
 
     @Autowired
     private DoctorService doctorService;
@@ -83,8 +75,6 @@ public class AdminDoctorAppointmentsController {
         Map<String, List<Appointment>> appointmentsByDate = calendarService.groupAppointmentsByDate(allAppointments);
 
         calendarService.setModelAttributesAllDoctors(model, appointmentsByDate, year, month);
-
-        model.addAttribute("appointmentsByDate", appointmentsByDate);
 
         return "all-doctors-appointments";
     }

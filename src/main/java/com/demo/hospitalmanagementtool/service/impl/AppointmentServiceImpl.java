@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.Month;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -60,19 +61,12 @@ public class AppointmentServiceImpl implements AppointmentService {
 
     @Override
     public List<Appointment> getApprovedAppointments(int year, int month) {
-        List<AppointmentRequest> approvedRequests = appointmentRequestRepository.findByAppointmentRequestApprovalStatus(AppointmentRequestApprovalStatus.APPROVED);
+        LocalDate firstDayOfMonth = LocalDate.of(year, month, 1);
+        LocalDate lastDayOfMonth = firstDayOfMonth.withDayOfMonth(firstDayOfMonth.lengthOfMonth());
 
-        return approvedRequests.stream()
-                .filter(approvedRequest -> {
-                    LocalDate appointmentDate = approvedRequest.getDateTime().toLocalDate();
-                    return appointmentDate.getYear() == year && appointmentDate.getMonth() == Month.of(month);
-                })
-                .map(approvedRequest -> new Appointment(
-                        approvedRequest.getDateTime(),
-                        approvedRequest.getPatient(),
-                        approvedRequest.getDoctor()
-                ))
-                .collect(Collectors.toList());
+        List<AppointmentRequest> approvedRequests = appointmentRequestRepository.findByAppointmentRequestApprovalStatusAndDateTimeBetween(AppointmentRequestApprovalStatus.APPROVED, firstDayOfMonth.atStartOfDay(), lastDayOfMonth.atTime(LocalTime.MAX));
+
+        return approvedRequests.stream().map(approvedRequest -> new Appointment(approvedRequest.getDateTime(), approvedRequest.getPatient(), approvedRequest.getDoctor())).collect(Collectors.toList());
     }
 
 }

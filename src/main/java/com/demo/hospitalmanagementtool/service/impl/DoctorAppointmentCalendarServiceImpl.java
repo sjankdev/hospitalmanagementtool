@@ -80,6 +80,8 @@ public class DoctorAppointmentCalendarServiceImpl implements DoctorAppointmentCa
         model.addAttribute("nextYear", monthYear.plusMonths(1).getYear());
         model.addAttribute("nextMonth", monthYear.plusMonths(1).getMonthValue());
         model.addAttribute("appointmentsByDate", appointmentsByDate);
+        model.addAttribute("appointmentsByDate", appointmentsByDate);
+
     }
 }
 
