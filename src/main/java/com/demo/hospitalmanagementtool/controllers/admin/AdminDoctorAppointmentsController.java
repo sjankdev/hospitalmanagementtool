@@ -6,6 +6,7 @@ import com.demo.hospitalmanagementtool.entities.AppointmentRequestApprovalStatus
 import com.demo.hospitalmanagementtool.entities.Doctor;
 import com.demo.hospitalmanagementtool.repository.AppointmentRepository;
 import com.demo.hospitalmanagementtool.repository.AppointmentRequestRepository;
+import com.demo.hospitalmanagementtool.service.AppointmentService;
 import com.demo.hospitalmanagementtool.service.DoctorAppointmentCalendarService;
 import com.demo.hospitalmanagementtool.service.DoctorService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,9 @@ public class AdminDoctorAppointmentsController {
 
     @Autowired
     private AppointmentRepository appointmentRepository;
+
+    @Autowired
+    AppointmentService appointmentService;
 
     @Autowired
     AppointmentRequestRepository appointmentRequestRepository;
@@ -71,19 +75,7 @@ public class AdminDoctorAppointmentsController {
                 lastDayOfMonth.atTime(LocalTime.MAX)
         );
 
-        List<AppointmentRequest> approvedRequests = appointmentRequestRepository.findByAppointmentRequestApprovalStatus(AppointmentRequestApprovalStatus.APPROVED);
-        List<Appointment> approvedAppointments = approvedRequests.stream()
-                .map(approvedRequest -> new Appointment(
-                        approvedRequest.getDateTime(),
-                        approvedRequest.getPatient(),
-                        approvedRequest.getDoctor()
-                ))
-                .filter(approvedAppointment -> {
-                    LocalDate appointmentDate = approvedAppointment.getDateTime().toLocalDate();
-                    return appointmentDate.getYear() == year && appointmentDate.getMonth() == Month.of(month);
-                })
-
-                .collect(Collectors.toList());
+        List<Appointment> approvedAppointments = appointmentService.getApprovedAppointments(year, month);
 
         List<Appointment> allAppointments = new ArrayList<>(appointments);
         allAppointments.addAll(approvedAppointments);
@@ -96,10 +88,6 @@ public class AdminDoctorAppointmentsController {
 
         return "all-doctors-appointments";
     }
-
-
-
-
 
 
 }
