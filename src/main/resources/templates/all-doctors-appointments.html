@@ -9,11 +9,10 @@
 <h1>All Events</h1>
 <div class="center-container">
     <h3>Current Month: <span th:text="${monthYear}"></span></h3>
-    <a th:href="@{/doctorAppointments/allEvents(year=${previousYear}, month=${previousMonth})}">Previous Month</a>
-    Month</a>
-    <a th:href="@{/doctorAppointments/allEvents(year=${nextYear}, month=${nextMonth})}">Next Month</a>
-    Month</a>
+    <a th:href="@{/auth-doctorAppointments/allEvents(year=${previousYear}, month=${previousMonth})}">Previous Month</a>
+    <a th:href="@{/auth-doctorAppointments/allEvents(year=${nextYear}, month=${nextMonth})}">Next Month</a>
 </div>
+
 <table>
     <thead>
     <tr>
@@ -57,7 +56,7 @@
 
 
 <div class="buttons-switch">
-    <a th:href="@{/index}" class="btn">Back to homepage</a>
+    <a th:href="@{/auth-index}" class="btn">Back to homepage</a>
 </div>
 
 <a href="javascript: document.logoutForm.submit()" class="logout-button" role="menuitem">Logout</a>
