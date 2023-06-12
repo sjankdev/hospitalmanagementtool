@@ -33,16 +33,12 @@ public class AdminAppointmentController {
     @GetMapping("/list")
     public String getAllAppointments(Model model) {
         List<Appointment> appointments = appointmentService.getAllAppointments();
+        List<AppointmentRequest> approvedAppointments = appointmentRequestService.getAllApprovedAppointments();
+        model.addAttribute("approvedAppointments", approvedAppointments);
         model.addAttribute("appointments", appointments);
         return "appointments/list";
     }
 
-    @GetMapping("/approved")
-    public String getAllApprovedAppointments(Model model) {
-        List<AppointmentRequest> approvedAppointments = appointmentRequestService.getAllApprovedAppointments();
-        model.addAttribute("appointments", approvedAppointments);
-        return "appointments/approved-appointments";
-    }
 
     @GetMapping("/{id}/details")
     public String getAppointmentById(@PathVariable("id") Long id, Model model) {

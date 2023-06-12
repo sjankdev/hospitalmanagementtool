@@ -36,6 +36,12 @@
             </form>
         </td>
     </tr>
+    <tr th:each="approvedAppointments : ${approvedAppointments}">
+        <td th:text="${approvedAppointments.id}"></td>
+        <td th:text="${approvedAppointments.patient.firstName}"></td>
+        <td th:text="${approvedAppointments.doctor.firstName}"></td>
+        <td th:text="${approvedAppointments.dateTime}"></td>
+    </tr>
     </tbody>
 </table>
 
