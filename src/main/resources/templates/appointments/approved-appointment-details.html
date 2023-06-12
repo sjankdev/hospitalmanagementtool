@@ -28,7 +28,7 @@
 
 <div class="button-container">
     <a th:href="@{/auth-appointments/{id}/edit(id=${appointmentRequest.id})}" class="btn">Edit</a>
-    <form th:action="@{/auth-appointments/{id}/delete(id=${appointmentRequest.id})}" method="post">
+    <form th:action="@{/auth-appointments/{id}/delete(id=${appointmentRequest .id})}" method="post">
         <input type="hidden" name="_method" value="delete"/>
         <button type="submit" class="btn delete-btn"
                 onclick="return confirm('Are you sure you want to delete this item?')">Delete
