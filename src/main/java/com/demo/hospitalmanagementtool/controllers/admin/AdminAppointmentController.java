@@ -131,4 +131,11 @@ public class AdminAppointmentController {
         appointmentRequestService.deleteRequestAppointment(id);
         return "redirect:/auth-appointments/list";
     }
+
+    @GetMapping("/appointment-requests")
+    public String getAllAppointmentRequests(Model model) {
+        List<AppointmentRequest> appointmentRequests = appointmentRequestService.getAllAppointmentRequests();
+        model.addAttribute("appointmentRequests", appointmentRequests);
+        return "appointments/appointment-requests";
+    }
 }

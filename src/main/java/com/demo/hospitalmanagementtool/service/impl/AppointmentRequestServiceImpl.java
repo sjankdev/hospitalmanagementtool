@@ -66,4 +66,8 @@ public class AppointmentRequestServiceImpl implements AppointmentRequestService 
         appointmentRequestRepository.deleteById(id);
     }
 
+    @Override
+    public List<AppointmentRequest> getAllAppointmentRequests() {
+        return appointmentRequestRepository.findAll();
+    }
 }
