@@ -52,6 +52,18 @@ public class AdminAppointmentController {
         }
     }
 
+    @GetMapping("/{id}/approved-appointment-details")
+    public String getApprovedAppointmentById(@PathVariable("id") Long id, Model model) {
+        try {
+            AppointmentRequest appointmentRequest = appointmentRequestService.getAppointmentRequestById(id);
+            model.addAttribute("appointmentRequest", appointmentRequest);
+            return "appointments/approved-appointment-details";
+        } catch (NotFoundException ex) {
+            model.addAttribute("errorMessage", ex.getMessage());
+            return "error";
+        }
+    }
+
     @GetMapping("/create")
     public String createAppointmentForm(Model model) {
         Appointment appointment = new Appointment();

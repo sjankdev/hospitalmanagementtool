@@ -41,8 +41,10 @@
         <td th:text="${approvedAppointment.patient.firstName}"></td>
         <td th:text="${approvedAppointment.doctor.firstName}"></td>
         <td th:text="${approvedAppointment.dateTime}"></td>
+        <td th:text="${approvedAppointment.appointmentRequestApprovalStatus}"></td>
         <td>
-            <a th:href="@{/auth-appointments/{id}/details(id=${approvedAppointment.id})}" class="btn">View</a>
+            <a th:href="@{/auth-appointments/{id}/approved-appointment-details(id=${approvedAppointment.id})}"
+               class="btn">View</a>
             <a th:href="@{/auth-appointments/{id}/edit(id=${approvedAppointment.id})}" class="btn">Edit</a>
             <form th:action="@{/auth-appointments/{id}/delete(id=${approvedAppointment.id})}" method="post">
                 <input type="hidden" name="_method" value="delete"/>
