@@ -5,6 +5,7 @@ import com.demo.hospitalmanagementtool.entities.Doctor;
 import com.demo.hospitalmanagementtool.repository.AppointmentRepository;
 import com.demo.hospitalmanagementtool.repository.DoctorRepository;
 import com.demo.hospitalmanagementtool.service.DoctorAppointmentCalendarService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
@@ -18,16 +19,10 @@ import java.util.stream.Collectors;
 public class DoctorAppointmentCalendarServiceImpl implements DoctorAppointmentCalendarService {
 
 
-    private final AppointmentRepository appointmentRepository;
-    private final DoctorRepository doctorRepository;
+    @Autowired
+    private AppointmentRepository appointmentRepository;
 
     private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-
-
-    public DoctorAppointmentCalendarServiceImpl(AppointmentRepository appointmentRepository, DoctorRepository doctorRepository) {
-        this.appointmentRepository = appointmentRepository;
-        this.doctorRepository = doctorRepository;
-    }
 
 
     @Override

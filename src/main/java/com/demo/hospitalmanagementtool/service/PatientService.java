@@ -7,7 +7,6 @@ import java.util.Optional;
 
 public interface PatientService {
 
-
     List<Patient> getAllPatients();
 
     Patient getPatientById(Long id);
@@ -22,6 +21,6 @@ public interface PatientService {
 
     void assignUserRole(Patient patient);
 
-    public Optional<Patient> getPatientByUsername(String username);
+    Optional<Patient> getPatientByUsername(String username);
 
 }

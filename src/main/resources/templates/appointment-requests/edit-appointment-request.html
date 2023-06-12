@@ -6,7 +6,8 @@
 </head>
 <body>
 <h1>Edit Appointment</h1>
-<form th:object="${appointmentRequest}" th:action="@{/auth-appointments/{id}/update-approved-request(id=${appointmentRequest.id})}"
+<form th:object="${appointmentRequest}"
+      th:action="@{/auth-appointments/{id}/update-appointment-request(id=${appointmentRequest.id})}"
       method="post">
     <input type="hidden" th:field="*{id}"/>
     <div>
@@ -17,7 +18,7 @@
 </form>
 
 <div class="button-container">
-    <a th:href="@{/auth-appointments/list}" class="btn">Back to Appointments List</a>
+    <a th:href="@{/auth-appointments/list-appointment-requests}" class="btn">Back to Appointments List</a>
     <a th:href="@{/auth-index}" class="btn">Back to homepage</a>
 </div>
 

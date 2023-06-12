@@ -1,7 +1,6 @@
 package com.demo.hospitalmanagementtool.service.impl;
 
 import com.demo.hospitalmanagementtool.entities.Doctor;
-import com.demo.hospitalmanagementtool.entities.Patient;
 import com.demo.hospitalmanagementtool.exceptions.NotFoundException;
 import com.demo.hospitalmanagementtool.repository.DoctorRepository;
 import com.demo.hospitalmanagementtool.security.models.ERole;

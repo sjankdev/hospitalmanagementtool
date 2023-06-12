@@ -23,8 +23,6 @@ public class Appointment {
         this.dateTime = appointmentRequest.getDateTime();
     }
 
-
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
