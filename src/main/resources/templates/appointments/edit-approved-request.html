@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Edit Appointment</title>
+    <link rel="stylesheet" type="text/css" href="/css/edit.css">
+</head>
+<body>
+<h1>Edit Appointment</h1>
+<form th:object="${appointmentRequest}" th:action="@{/auth-appointments/{id}/update-approved-request(id=${appointmentRequest.id})}"
+      method="post">
+    <input type="hidden" th:field="*{id}"/>
+    <div>
+        <label for="dateTime">Date and Time:</label>
+        <input type="datetime-local" id="dateTime" name="dateTime" th:field="*{dateTime}" required>
+    </div>
+    <button type="submit">Save</button>
+</form>
+
+<div class="button-container">
+    <a th:href="@{/auth-appointments/list}" class="btn">Back to Appointments List</a>
+    <a th:href="@{/auth-index}" class="btn">Back to homepage</a>
+</div>
+
+<a href="javascript: document.logoutForm.submit()" class="logout-button" role="menuitem">Logout</a>
+
+<form name="logoutForm" th:action="@{/api/auth/signout}" method="post" th:hidden="true">
+    <input hidden type="submit" value="Sign Out"/>
+</form>
+</body>
+</html>

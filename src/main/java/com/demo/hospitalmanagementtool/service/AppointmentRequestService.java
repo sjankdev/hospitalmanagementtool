@@ -15,4 +15,10 @@ public interface AppointmentRequestService {
 
     List<AppointmentRequest> getAllApprovedAppointments();
 
+    List<AppointmentRequest> getAllAppointmentRequests();
+
+    void updateRequestAppointment(Long id, AppointmentRequest appointmentRequest);
+
+    void deleteRequestAppointment(Long id);
+
 }

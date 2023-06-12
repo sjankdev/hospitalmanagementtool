@@ -1,9 +1,6 @@
 package com.demo.hospitalmanagementtool.service.impl;
 
-import com.demo.hospitalmanagementtool.entities.AppointmentRequest;
-import com.demo.hospitalmanagementtool.entities.AppointmentRequestApprovalStatus;
-import com.demo.hospitalmanagementtool.entities.Doctor;
-import com.demo.hospitalmanagementtool.entities.Patient;
+import com.demo.hospitalmanagementtool.entities.*;
 import com.demo.hospitalmanagementtool.repository.AppointmentRequestRepository;
 import com.demo.hospitalmanagementtool.repository.DoctorRepository;
 import com.demo.hospitalmanagementtool.repository.PatientRepository;
@@ -55,5 +52,22 @@ public class AppointmentRequestServiceImpl implements AppointmentRequestService 
     @Override
     public List<AppointmentRequest> getAllApprovedAppointments() {
         return appointmentRequestRepository.findByAppointmentRequestApprovalStatus(AppointmentRequestApprovalStatus.APPROVED);
+    }
+
+    @Override
+    public void updateRequestAppointment(Long id, AppointmentRequest appointmentRequest) {
+        AppointmentRequest existingRequestAppointment = getAppointmentRequestById(id);
+        existingRequestAppointment.setDateTime(appointmentRequest.getDateTime());
+        appointmentRequestRepository.save(existingRequestAppointment);
+    }
+
+    @Override
+    public void deleteRequestAppointment(Long id) {
+        appointmentRequestRepository.deleteById(id);
+    }
+
+    @Override
+    public List<AppointmentRequest> getAllAppointmentRequests() {
+        return appointmentRequestRepository.findAll();
     }
 }
