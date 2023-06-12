@@ -1,11 +1,9 @@
 package com.demo.hospitalmanagementtool.controllers.admin;
 
 import com.demo.hospitalmanagementtool.entities.Appointment;
+import com.demo.hospitalmanagementtool.entities.AppointmentRequest;
 import com.demo.hospitalmanagementtool.exceptions.NotFoundException;
-import com.demo.hospitalmanagementtool.service.AppointmentService;
-import com.demo.hospitalmanagementtool.service.DoctorService;
-import com.demo.hospitalmanagementtool.service.PatientService;
-import com.demo.hospitalmanagementtool.service.StaffService;
+import com.demo.hospitalmanagementtool.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,12 +27,18 @@ public class AdminAppointmentController {
     @Autowired
     private StaffService staffService;
 
+    @Autowired
+    AppointmentRequestService appointmentRequestService;
+
     @GetMapping("/list")
     public String getAllAppointments(Model model) {
         List<Appointment> appointments = appointmentService.getAllAppointments();
+        List<AppointmentRequest> approvedAppointments = appointmentRequestService.getAllApprovedAppointments();
+        model.addAttribute("approvedAppointments", approvedAppointments);
         model.addAttribute("appointments", appointments);
         return "appointments/list";
     }
+
 
     @GetMapping("/{id}/details")
     public String getAppointmentById(@PathVariable("id") Long id, Model model) {

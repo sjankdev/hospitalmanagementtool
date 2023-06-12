@@ -13,4 +13,6 @@ public interface AppointmentRequestService {
 
     AppointmentRequest getAppointmentRequestById(Long id);
 
+    List<AppointmentRequest> getAllApprovedAppointments();
+
 }

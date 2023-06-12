@@ -51,4 +51,9 @@ public class AppointmentRequestServiceImpl implements AppointmentRequestService 
         return appointmentRequestRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid appointment request ID: " + id));
     }
+
+    @Override
+    public List<AppointmentRequest> getAllApprovedAppointments() {
+        return appointmentRequestRepository.findByAppointmentRequestApprovalStatus(AppointmentRequestApprovalStatus.APPROVED);
+    }
 }
