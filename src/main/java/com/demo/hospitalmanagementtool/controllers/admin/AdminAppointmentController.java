@@ -96,15 +96,39 @@ public class AdminAppointmentController {
         }
     }
 
+    @GetMapping("/{id}/edit-approved-appointment")
+    public String editApprovedAppointmentForm(@PathVariable("id") Long id, Model model) {
+        try {
+            AppointmentRequest appointmentRequest = appointmentRequestService.getAppointmentRequestById(id);
+            model.addAttribute("appointmentRequest", appointmentRequest);
+            return "appointments/edit-approved-request";
+        } catch (NotFoundException ex) {
+            model.addAttribute("errorMessage", ex.getMessage());
+            return "error";
+        }
+    }
+
     @PostMapping("/{id}/update")
     public String updateAppointment(@PathVariable("id") Long id, @ModelAttribute("appointment") Appointment appointment) {
         appointmentService.updateAppointment(id, appointment);
         return "redirect:/auth-appointments/list";
     }
 
+    @PostMapping("/{id}/update-approved-request")
+    public String updateApprovedAppointment(@PathVariable("id") Long id, @ModelAttribute("appointmentRequest") AppointmentRequest appointmentRequest) {
+        appointmentRequestService.updateRequestAppointment(id, appointmentRequest);
+        return "redirect:/auth-appointments/list";
+    }
+
     @PostMapping("/{id}/delete")
     public String deleteAppointment(@PathVariable("id") Long id) {
         appointmentService.deleteAppointment(id);
+        return "redirect:/auth-appointments/list";
+    }
+
+    @PostMapping("/{id}/delete-approved-appointment")
+    public String deleteApprovedAppointment(@PathVariable("id") Long id) {
+        appointmentRequestService.deleteRequestAppointment(id);
         return "redirect:/auth-appointments/list";
     }
 }
