@@ -36,11 +36,21 @@
             </form>
         </td>
     </tr>
-    <tr th:each="approvedAppointments : ${approvedAppointments}">
-        <td th:text="${approvedAppointments.id}"></td>
-        <td th:text="${approvedAppointments.patient.firstName}"></td>
-        <td th:text="${approvedAppointments.doctor.firstName}"></td>
-        <td th:text="${approvedAppointments.dateTime}"></td>
+    <tr th:each="approvedAppointment : ${approvedAppointments}">
+        <td th:text="${approvedAppointment.id}"></td>
+        <td th:text="${approvedAppointment.patient.firstName}"></td>
+        <td th:text="${approvedAppointment.doctor.firstName}"></td>
+        <td th:text="${approvedAppointment.dateTime}"></td>
+        <td>
+            <a th:href="@{/auth-appointments/{id}/details(id=${approvedAppointment.id})}" class="btn">View</a>
+            <a th:href="@{/auth-appointments/{id}/edit(id=${approvedAppointment.id})}" class="btn">Edit</a>
+            <form th:action="@{/auth-appointments/{id}/delete(id=${approvedAppointment.id})}" method="post">
+                <input type="hidden" name="_method" value="delete"/>
+                <button type="submit" class="btn delete-btn"
+                        onclick="return confirm('Are you sure you want to delete this item?')">Delete
+                </button>
+            </form>
+        </td>
     </tr>
     </tbody>
 </table>
