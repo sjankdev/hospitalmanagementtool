@@ -34,8 +34,6 @@
         </ul>
     </div>
 </div>
-
-<!-- Display Approved Appointments -->
 <div>
     <h3>Approved Appointments</h3>
     <ul>
@@ -48,6 +46,16 @@
         </li>
     </ul>
 </div>
+
+<div class="buttons-switch">
+    <a th:href="@{/doctor/index}" class="btn">Back to homepage</a>
+</div>
+
+<a href="javascript: document.logoutForm.submit()" class="logout-button" role="menuitem">Logout</a>
+
+<form name="logoutForm" th:action="@{/api/auth/signout}" method="post" th:hidden="true">
+    <input hidden type="submit" value="Sign Out"/>
+</form>
 
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
