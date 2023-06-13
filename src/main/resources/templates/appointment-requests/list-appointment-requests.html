@@ -12,6 +12,9 @@
         <th>Request ID</th>
         <th>Patient</th>
         <th>Doctor</th>
+        <th>Reason</th>
+        <th>Symptoms</th>
+        <th>Additional notes</th>
         <th>Date and Time</th>
         <th>Status</th>
         <th>Actions</th>
@@ -22,6 +25,9 @@
         <td th:text="${request.id}"></td>
         <td th:text="${request.patient.firstName}"></td>
         <td th:text="${request.doctor.firstName}"></td>
+        <td th:text="${request.reason}"></td>
+        <td th:text="${request.symptoms}"></td>
+        <td th:text="${request.additionalNotes}"></td>
         <td th:text="${request.dateTime}"></td>
         <td th:text="${request.appointmentRequestApprovalStatus}"></td>
         <td>

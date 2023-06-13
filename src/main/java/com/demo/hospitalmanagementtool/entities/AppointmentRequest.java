@@ -33,6 +33,15 @@ public class AppointmentRequest {
     @Column(nullable = false)
     private LocalDateTime dateTime;
 
+    @Column(nullable = false)
+    private String reason;
+
+    @Column(nullable = false)
+    private String symptoms;
+
+    @Column(nullable = false)
+    private String additionalNotes;
+
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)

@@ -64,3 +64,43 @@ button[type="submit"] {
 button[type="submit"]:hover {
   background-color: #555;
 }
+ .btn {
+             display: inline-block;
+             padding: 8px 12px;
+             margin-right: 10px;
+             border: none;
+             background-color: #4CAF50;
+             color: white;
+             text-decoration: none;
+             font-size: 14px;
+             border-radius: 4px;
+             margin-left: 10px;
+        }
+         .btn:hover {
+             background-color: #0069d9;
+       }
+         a {
+             display: inline-block;
+             padding: 0.5rem 1rem;
+             border-radius: 0.25rem;
+             text-align: center;
+             text-decoration: none;
+             color: #fff;
+             background-color: #28a745;
+             transition: all 0.3s ease-in-out;
+             margin: 2rem 0;
+        }
+         a:hover {
+             background-color: #218838;
+        }
+         .logout-button {
+             position: fixed;
+             top: 10px;
+             right: 10px;
+             z-index: 9999;
+        }
+         .buttons-switch{
+             display: flex;
+             -items: center;
+             justify-content: center;
+        }

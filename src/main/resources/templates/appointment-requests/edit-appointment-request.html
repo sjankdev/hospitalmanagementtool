@@ -10,6 +10,19 @@
       th:action="@{/auth-appointments/{id}/update-appointment-request(id=${appointmentRequest.id})}"
       method="post">
     <input type="hidden" th:field="*{id}"/>
+
+    <div>
+        <label for="reason">Reason:</label>
+        <input type="text" id="reason" name="reason" th:field="*{reason}" required>
+    </div>
+    <div>
+        <label for="symptoms">Symptoms:</label>
+        <input type="text" id="symptoms" name="symptoms" th:field="*{symptoms}" required>
+    </div>
+    <div>
+        <label for="additionalNotes">additional notes:</label>
+        <input type="text" id="additionalNotes" name="additionalNotes" th:field="*{additionalNotes}" required>
+    </div>
     <div>
         <label for="dateTime">Date and Time:</label>
         <input type="datetime-local" id="dateTime" name="dateTime" th:field="*{dateTime}" required>

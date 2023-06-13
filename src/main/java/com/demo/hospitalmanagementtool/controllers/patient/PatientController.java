@@ -4,7 +4,10 @@ package com.demo.hospitalmanagementtool.controllers.patient;
 import com.demo.hospitalmanagementtool.entities.AppointmentRequest;
 import com.demo.hospitalmanagementtool.entities.Doctor;
 import com.demo.hospitalmanagementtool.entities.Patient;
+import com.demo.hospitalmanagementtool.repository.AppointmentRequestRepository;
 import com.demo.hospitalmanagementtool.repository.DoctorRepository;
+import com.demo.hospitalmanagementtool.repository.PatientRepository;
+import com.demo.hospitalmanagementtool.security.token.services.PatientSecurityService;
 import com.demo.hospitalmanagementtool.service.AppointmentRequestService;
 import com.demo.hospitalmanagementtool.service.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +32,15 @@ public class PatientController {
     @Autowired
     DoctorRepository doctorRepository;
 
+    @Autowired
+    PatientSecurityService patientSecurityService;
+
+    @Autowired
+    PatientRepository patientRepository;
+
+    @Autowired
+    AppointmentRequestRepository appointmentRequestRepository;
+
     @GetMapping("/index")
     public String index(Model model, Principal principal) {
         String username = principal.getName();
@@ -45,30 +57,35 @@ public class PatientController {
     }
 
     @GetMapping("/{patientId}/select-doctor")
-    public String showDoctorSelectionForm(@PathVariable Long patientId, Model model) {
-        Patient patient = patientService.getPatientById(patientId);
-        List<Doctor> availableDoctors = doctorRepository.findAll();
+    public String showDoctorSelectionForm(@PathVariable Long patientId, Model model, Principal principal) {
+        Patient patient = patientSecurityService.validatePatient(patientId, principal);
+        if (patient != null) {
+            List<Doctor> availableDoctors = doctorRepository.findAll();
 
-        model.addAttribute("patient", patient);
-        model.addAttribute("doctors", availableDoctors);
+            model.addAttribute("patient", patient);
+            model.addAttribute("doctors", availableDoctors);
 
-        return "patient/firstLogin";
+            return "patient/firstLogin";
+        } else {
+            return "error/unauthorized-access";
+        }
     }
 
     @PostMapping("/{patientId}/save-select-doctor")
-    public String processDoctorSelection(@PathVariable Long patientId, @RequestParam("doctorId") Long doctorId) {
-        patientService.assignDoctorToPatient(patientId, doctorId);
-        return "redirect:/patient/index";
+    public String processDoctorSelection(@PathVariable Long patientId, @RequestParam("doctorId") Long doctorId, Principal principal) {
+        Patient patient = patientSecurityService.validatePatient(patientId, principal);
+        if (patient != null) {
+            patientService.assignDoctorToPatient(patientId, doctorId);
+            return "redirect:/patient/index";
+        } else {
+            return "error/unauthorized-access";
+        }
     }
-
 
     @GetMapping("/{patientId}/create-request")
     public String showCreateRequestForm(@PathVariable Long patientId, Model model, Principal principal) {
-        String username = principal.getName();
-
-        Patient patient = patientService.getPatientById(patientId);
-
-        if (patient != null && patient.getUsername().equals(username)) {
+        Patient patient = patientSecurityService.validatePatient(patientId, principal);
+        if (patient != null) {
             Doctor doctor = patient.getDoctor();
 
             model.addAttribute("patient", patient);
@@ -77,22 +94,36 @@ public class PatientController {
 
             return "patient/create-appointment-request";
         } else {
-            return "error";
+            return "error/unauthorized-access";
         }
     }
 
-
     @PostMapping("/{patientId}/create-request")
-    public String processCreateRequestForm(@PathVariable Long patientId,
-                                           @ModelAttribute("appointmentRequest") AppointmentRequest appointmentRequest) {
-        Patient patient = patientService.getPatientById(patientId);
-        Doctor doctor = patient.getDoctor();
+    public String processCreateRequestForm(@PathVariable Long patientId, @ModelAttribute("appointmentRequest") AppointmentRequest appointmentRequest, Principal principal) {
+        Patient patient = patientSecurityService.validatePatient(patientId, principal);
+        if (patient != null) {
+            Doctor doctor = patient.getDoctor();
 
-        appointmentRequest.setPatient(patient);
-        appointmentRequest.setDoctor(doctor);
+            appointmentRequest.setPatient(patient);
+            appointmentRequest.setDoctor(doctor);
 
-        appointmentRequestService.createAppointmentRequest(appointmentRequest);
-        return "redirect:/patient/index";
+            appointmentRequestService.createAppointmentRequest(appointmentRequest);
+            return "redirect:/patient/index";
+        } else {
+            return "error/unauthorized-access";
+        }
     }
 
+    @GetMapping("/{patientId}/appointments")
+    public String listAppointmentsByPatientId(@PathVariable Long patientId, Model model, Principal principal) {
+        Patient patient = patientSecurityService.validatePatient(patientId, principal);
+        if (patient != null) {
+            List<AppointmentRequest> appointmentRequests = appointmentRequestRepository.findByPatient(patient);
+            model.addAttribute("appointmentRequests", appointmentRequests);
+
+            return "patient/appointments-list";
+        } else {
+            return "error/unauthorized-access";
+        }
+    }
 }

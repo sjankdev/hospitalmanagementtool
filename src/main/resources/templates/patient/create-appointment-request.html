@@ -15,6 +15,15 @@
         <input type="text" th:value="${doctor.firstName + ' ' + doctor.lastName}" readonly>
     </div>
 
+    <label for="reason">Reason:</label>
+    <input type="text" id="reason" th:field="*{reason}" required><br>
+
+    <label for="symptoms">Symptoms:</label>
+    <input type="text" id="symptoms" th:field="*{symptoms}" required><br>
+
+    <label for="additionalNotes">Additional notes:</label>
+    <input type="text" id="additionalNotes" th:field="*{additionalNotes}" required><br>
+
     <div>
         <label>Date and Time:</label>
         <input type="datetime-local" th:field="*{dateTime}">
@@ -22,6 +31,16 @@
     <div>
         <button type="submit">Submit</button>
     </div>
+</form>
+
+<div class="buttons-switch">
+    <a th:href="@{/patient/index}" class="btn" style="margin-left: 10px;">Back to homepage</a>
+</div>
+
+<a href="javascript: document.logoutForm.submit()" class="logout-button" role="menuitem">Logout</a>
+
+<form name="logoutForm" th:action="@{/api/auth/signout}" method="post" th:hidden="true">
+    <input hidden type="submit" value="Sign Out"/>
 </form>
 </body>
 </html>
