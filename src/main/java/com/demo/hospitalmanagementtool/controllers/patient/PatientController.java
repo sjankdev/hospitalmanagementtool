@@ -114,16 +114,16 @@ public class PatientController {
         }
     }
 
-    @GetMapping("/appointments/{patientId}")
-    public String listAppointmentsByPatientId(@PathVariable Long patientId, Model model) {
-        Patient patient = patientRepository.findById(patientId).orElse(null);
-        if (patient == null) {
-            return "error";
+    @GetMapping("/{patientId}/appointments")
+    public String listAppointmentsByPatientId(@PathVariable Long patientId, Model model, Principal principal) {
+        Patient patient = patientSecurityService.validatePatient(patientId, principal);
+        if (patient != null) {
+            List<AppointmentRequest> appointmentRequests = appointmentRequestRepository.findByPatient(patient);
+            model.addAttribute("appointmentRequests", appointmentRequests);
+
+            return "patient/appointments-list";
+        } else {
+            return "error/unauthorized-access";
         }
-
-        List<AppointmentRequest> appointmentRequests = appointmentRequestRepository.findByPatient(patient);
-        model.addAttribute("appointmentRequests", appointmentRequests);
-
-        return "patient/appointments-list";
     }
 }
