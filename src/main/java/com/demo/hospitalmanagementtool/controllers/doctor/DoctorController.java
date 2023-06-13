@@ -3,10 +3,7 @@ package com.demo.hospitalmanagementtool.controllers.doctor;
 import com.demo.hospitalmanagementtool.entities.*;
 import com.demo.hospitalmanagementtool.repository.AppointmentRequestRepository;
 import com.demo.hospitalmanagementtool.security.token.services.DoctorSecurityService;
-import com.demo.hospitalmanagementtool.service.AppointmentRequestApprovalService;
-import com.demo.hospitalmanagementtool.service.AppointmentRequestService;
-import com.demo.hospitalmanagementtool.service.DoctorAppointmentCalendarService;
-import com.demo.hospitalmanagementtool.service.DoctorService;
+import com.demo.hospitalmanagementtool.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -36,7 +33,7 @@ public class DoctorController {
     private DoctorAppointmentCalendarService calendarService;
 
     @Autowired
-    AppointmentRequestRepository appointmentRequestRepository;
+    AppointmentService appointmentService;
 
     @Autowired
     DoctorSecurityService doctorSecurityService;
@@ -105,14 +102,8 @@ public class DoctorController {
             List<Appointment> appointmentsForMonth = calendarService.getAppointmentsForMonth(appointments, firstDayOfMonth, lastDayOfMonth);
             Map<String, List<Appointment>> appointmentsByDate = calendarService.groupAppointmentsByDate(appointmentsForMonth);
 
-            List<Appointment> approvedAppointments = appointmentRequestRepository.findByDoctorAndAppointmentRequestApprovalStatus(doctor, AppointmentRequestApprovalStatus.APPROVED)
-                    .stream()
-                    .map(Appointment::new)
-                    .collect(Collectors.toList());
-
-            List<Appointment> approvedAppointmentsForMonth = approvedAppointments.stream()
-                    .filter(appointment -> appointment.getDateTime().toLocalDate().getYear() == year && appointment.getDateTime().toLocalDate().getMonthValue() == month)
-                    .collect(Collectors.toList());
+            List<Appointment> approvedAppointments = appointmentRequestService.getApprovedAppointmentsForDoctor(doctor);
+            List<Appointment> approvedAppointmentsForMonth = appointmentService.filterAppointmentsByMonth(approvedAppointments, year, month);
 
             model.addAttribute("approvedAppointmentsForMonth", approvedAppointmentsForMonth);
 

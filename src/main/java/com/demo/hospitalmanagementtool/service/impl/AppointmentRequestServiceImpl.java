@@ -8,6 +8,7 @@ import com.demo.hospitalmanagementtool.service.AppointmentRequestService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class AppointmentRequestServiceImpl implements AppointmentRequestService {
@@ -69,5 +70,13 @@ public class AppointmentRequestServiceImpl implements AppointmentRequestService 
     @Override
     public List<AppointmentRequest> getAllAppointmentRequests() {
         return appointmentRequestRepository.findAll();
+    }
+
+    @Override
+    public List<Appointment> getApprovedAppointmentsForDoctor(Doctor doctor) {
+        return appointmentRequestRepository.findByDoctorAndAppointmentRequestApprovalStatus(doctor, AppointmentRequestApprovalStatus.APPROVED)
+                .stream()
+                .map(Appointment::new)
+                .collect(Collectors.toList());
     }
 }

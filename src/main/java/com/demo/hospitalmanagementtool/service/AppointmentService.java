@@ -18,6 +18,8 @@ public interface AppointmentService {
 
     List<Appointment> getApprovedAppointments(int year, int month);
 
+    List<Appointment> filterAppointmentsByMonth(List<Appointment> appointments, int year, int month);
+
 
 }
 
