@@ -59,6 +59,9 @@ public class AppointmentRequestServiceImpl implements AppointmentRequestService 
     public void updateRequestAppointment(Long id, AppointmentRequest appointmentRequest) {
         AppointmentRequest existingRequestAppointment = getAppointmentRequestById(id);
         existingRequestAppointment.setDateTime(appointmentRequest.getDateTime());
+        existingRequestAppointment.setReason(appointmentRequest.getReason());
+        existingRequestAppointment.setSymptoms(appointmentRequest.getSymptoms());
+        existingRequestAppointment.setAdditionalNotes(appointmentRequest.getAdditionalNotes());
         appointmentRequestRepository.save(existingRequestAppointment);
     }
 

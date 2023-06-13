@@ -15,6 +15,15 @@
         <input type="text" th:value="${doctor.firstName + ' ' + doctor.lastName}" readonly>
     </div>
 
+    <label for="reason">Reason:</label>
+    <input type="text" id="reason" th:field="*{reason}" required><br>
+
+    <label for="symptoms">Symptoms:</label>
+    <input type="text" id="symptoms" th:field="*{symptoms}" required><br>
+
+    <label for="additionalNotes">Additional notes:</label>
+    <input type="text" id="additionalNotes" th:field="*{additionalNotes}" required><br>
+
     <div>
         <label>Date and Time:</label>
         <input type="datetime-local" th:field="*{dateTime}">
