@@ -2,6 +2,7 @@ package com.demo.hospitalmanagementtool.controllers.doctor;
 
 import com.demo.hospitalmanagementtool.entities.*;
 import com.demo.hospitalmanagementtool.repository.AppointmentRequestRepository;
+import com.demo.hospitalmanagementtool.security.token.services.DoctorSecurityService;
 import com.demo.hospitalmanagementtool.service.AppointmentRequestApprovalService;
 import com.demo.hospitalmanagementtool.service.AppointmentRequestService;
 import com.demo.hospitalmanagementtool.service.DoctorAppointmentCalendarService;
@@ -37,6 +38,9 @@ public class DoctorController {
     @Autowired
     AppointmentRequestRepository appointmentRequestRepository;
 
+    @Autowired
+    DoctorSecurityService doctorSecurityService;
+
     @GetMapping("/index")
     public String index(Model model, Principal principal) {
         String username = principal.getName();
@@ -52,13 +56,10 @@ public class DoctorController {
         }
     }
 
-
     @GetMapping("/{doctorId}/requests")
     public String viewAppointmentRequests(@PathVariable Long doctorId, Model model, Principal principal) {
-        String username = principal.getName();
-        Doctor doctor = doctorService.getDoctorById(doctorId);
-
-        if (doctor != null && doctor.getUsername().equals(username)) {
+        Doctor doctor = doctorSecurityService.validateDoctor(doctorId, principal);
+        if (doctor != null) {
             model.addAttribute("doctor", doctor);
             model.addAttribute("appointmentRequests", appointmentRequestService.getAppointmentRequestsForDoctor(doctor));
             return "doctor/appointment-requests";
@@ -67,14 +68,12 @@ public class DoctorController {
         }
     }
 
-
     @PostMapping("/{doctorId}/requests/{requestId}/approve")
     public String approveAppointmentRequest(@PathVariable Long doctorId, @PathVariable Long requestId, Principal principal) {
-        String username = principal.getName();
-        Doctor doctor = doctorService.getDoctorById(doctorId);
+        Doctor doctor = doctorSecurityService.validateDoctor(doctorId, principal);
         AppointmentRequest appointmentRequest = appointmentRequestService.getAppointmentRequestById(requestId);
 
-        if (appointmentRequest != null && appointmentRequest.getDoctor().equals(doctor) && doctor.getUsername().equals(username)) {
+        if (appointmentRequest != null && appointmentRequest.getDoctor().equals(doctor)) {
             appointmentRequestApprovalService.approveAppointmentRequest(appointmentRequest);
             return "redirect:/doctor/" + doctorId + "/requests";
         } else {
@@ -82,14 +81,12 @@ public class DoctorController {
         }
     }
 
-
     @PostMapping("/{doctorId}/requests/{requestId}/reject")
     public String rejectAppointmentRequest(@PathVariable Long doctorId, @PathVariable Long requestId, Principal principal) {
-        String username = principal.getName();
-        Doctor doctor = doctorService.getDoctorById(doctorId);
+        Doctor doctor = doctorSecurityService.validateDoctor(doctorId, principal);
         AppointmentRequest appointmentRequest = appointmentRequestService.getAppointmentRequestById(requestId);
 
-        if (appointmentRequest != null && appointmentRequest.getDoctor().equals(doctor) && doctor.getUsername().equals(username)) {
+        if (appointmentRequest != null && appointmentRequest.getDoctor().equals(doctor)) {
             appointmentRequestApprovalService.rejectAppointmentRequest(appointmentRequest);
             return "redirect:/doctor/" + doctorId + "/requests";
         } else {
@@ -97,28 +94,25 @@ public class DoctorController {
         }
     }
 
-
     @GetMapping("/{doctorId}/appointments")
     public String getDoctorAppointments(@PathVariable Long doctorId, @RequestParam(value = "year", required = false, defaultValue = "2023") int year, @RequestParam(value = "month", required = false, defaultValue = "1") int month, Model model, Principal principal) {
+        Doctor doctor = doctorSecurityService.validateDoctor(doctorId, principal);
 
-        String username = principal.getName();
-
-        Doctor doctor = doctorService.getDoctorById(doctorId);
-
-        if (doctor != null && doctor.getUsername().equals(username)) {
-
+        if (doctor != null) {
             List<Appointment> appointments = calendarService.getAppointmentsByDoctor(doctor);
             LocalDate firstDayOfMonth = LocalDate.of(year, month, 1);
             LocalDate lastDayOfMonth = firstDayOfMonth.withDayOfMonth(firstDayOfMonth.lengthOfMonth());
             List<Appointment> appointmentsForMonth = calendarService.getAppointmentsForMonth(appointments, firstDayOfMonth, lastDayOfMonth);
             Map<String, List<Appointment>> appointmentsByDate = calendarService.groupAppointmentsByDate(appointmentsForMonth);
 
-            List<Appointment> approvedAppointments = appointmentRequestRepository.findByDoctorAndAppointmentRequestApprovalStatus(doctor, AppointmentRequestApprovalStatus.APPROVED).stream().map(Appointment::new).collect(Collectors.toList());
+            List<Appointment> approvedAppointments = appointmentRequestRepository.findByDoctorAndAppointmentRequestApprovalStatus(doctor, AppointmentRequestApprovalStatus.APPROVED)
+                    .stream()
+                    .map(Appointment::new)
+                    .collect(Collectors.toList());
 
-            List<Appointment> approvedAppointmentsForMonth = approvedAppointments.stream().filter(appointment -> {
-                LocalDate appointmentDate = appointment.getDateTime().toLocalDate();
-                return appointmentDate.getYear() == year && appointmentDate.getMonthValue() == month;
-            }).collect(Collectors.toList());
+            List<Appointment> approvedAppointmentsForMonth = approvedAppointments.stream()
+                    .filter(appointment -> appointment.getDateTime().toLocalDate().getYear() == year && appointment.getDateTime().toLocalDate().getMonthValue() == month)
+                    .collect(Collectors.toList());
 
             model.addAttribute("approvedAppointmentsForMonth", approvedAppointmentsForMonth);
 
@@ -130,6 +124,4 @@ public class DoctorController {
             return "error/unauthorized-access";
         }
     }
-
-
 }
