@@ -68,5 +68,12 @@ public class AppointmentServiceImpl implements AppointmentService {
         return approvedRequests.stream().map(approvedRequest -> new Appointment(approvedRequest.getDateTime(), approvedRequest.getPatient(), approvedRequest.getDoctor())).collect(Collectors.toList());
     }
 
+    @Override
+    public List<Appointment> filterAppointmentsByMonth(List<Appointment> appointments, int year, int month) {
+        return appointments.stream()
+                .filter(appointment -> appointment.getDateTime().toLocalDate().getYear() == year && appointment.getDateTime().toLocalDate().getMonthValue() == month)
+                .collect(Collectors.toList());
+    }
+
 }
 

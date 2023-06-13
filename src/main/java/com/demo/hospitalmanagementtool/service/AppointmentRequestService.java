@@ -1,5 +1,6 @@
 package com.demo.hospitalmanagementtool.service;
 
+import com.demo.hospitalmanagementtool.entities.Appointment;
 import com.demo.hospitalmanagementtool.entities.AppointmentRequest;
 import com.demo.hospitalmanagementtool.entities.Doctor;
 
@@ -21,4 +22,8 @@ public interface AppointmentRequestService {
 
     void deleteRequestAppointment(Long id);
 
+    List<Appointment> getApprovedAppointmentsForDoctor(Doctor doctor);
 }
+
+
+
