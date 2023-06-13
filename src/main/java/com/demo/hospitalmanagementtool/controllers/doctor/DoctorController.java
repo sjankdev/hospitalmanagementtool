@@ -48,7 +48,7 @@ public class DoctorController {
             model.addAttribute("doctorId", doctor.getId());
             return "doctor/index";
         } else {
-            return "error";
+            return "error/unauthorized-access";
         }
     }
 
@@ -56,7 +56,6 @@ public class DoctorController {
     @GetMapping("/{doctorId}/requests")
     public String viewAppointmentRequests(@PathVariable Long doctorId, Model model, Principal principal) {
         String username = principal.getName();
-
         Doctor doctor = doctorService.getDoctorById(doctorId);
 
         if (doctor != null && doctor.getUsername().equals(username)) {
@@ -64,72 +63,72 @@ public class DoctorController {
             model.addAttribute("appointmentRequests", appointmentRequestService.getAppointmentRequestsForDoctor(doctor));
             return "doctor/appointment-requests";
         } else {
-            return "error";
+            return "error/unauthorized-access";
         }
     }
 
 
     @PostMapping("/{doctorId}/requests/{requestId}/approve")
-    public String approveAppointmentRequest(@PathVariable Long doctorId, @PathVariable Long requestId) {
+    public String approveAppointmentRequest(@PathVariable Long doctorId, @PathVariable Long requestId, Principal principal) {
+        String username = principal.getName();
         Doctor doctor = doctorService.getDoctorById(doctorId);
         AppointmentRequest appointmentRequest = appointmentRequestService.getAppointmentRequestById(requestId);
 
-        if (appointmentRequest != null && appointmentRequest.getDoctor().equals(doctor)) {
+        if (appointmentRequest != null && appointmentRequest.getDoctor().equals(doctor) && doctor.getUsername().equals(username)) {
             appointmentRequestApprovalService.approveAppointmentRequest(appointmentRequest);
             return "redirect:/doctor/" + doctorId + "/requests";
         } else {
-            return "error";
+            return "error/unauthorized-access";
         }
     }
 
+
     @PostMapping("/{doctorId}/requests/{requestId}/reject")
-    public String rejectAppointmentRequest(@PathVariable Long doctorId, @PathVariable Long requestId) {
+    public String rejectAppointmentRequest(@PathVariable Long doctorId, @PathVariable Long requestId, Principal principal) {
+        String username = principal.getName();
         Doctor doctor = doctorService.getDoctorById(doctorId);
         AppointmentRequest appointmentRequest = appointmentRequestService.getAppointmentRequestById(requestId);
 
-        if (appointmentRequest != null && appointmentRequest.getDoctor().equals(doctor)) {
+        if (appointmentRequest != null && appointmentRequest.getDoctor().equals(doctor) && doctor.getUsername().equals(username)) {
             appointmentRequestApprovalService.rejectAppointmentRequest(appointmentRequest);
             return "redirect:/doctor/" + doctorId + "/requests";
         } else {
-            return "error";
+            return "error/unauthorized-access";
         }
     }
 
+
     @GetMapping("/{doctorId}/appointments")
-    public String getDoctorAppointments(@PathVariable Long doctorId,
-                                        @RequestParam(value = "year", required = false, defaultValue = "2023") int year,
-                                        @RequestParam(value = "month", required = false, defaultValue = "1") int month,
-                                        Model model, Principal principal) {
+    public String getDoctorAppointments(@PathVariable Long doctorId, @RequestParam(value = "year", required = false, defaultValue = "2023") int year, @RequestParam(value = "month", required = false, defaultValue = "1") int month, Model model, Principal principal) {
 
         String username = principal.getName();
 
         Doctor doctor = doctorService.getDoctorById(doctorId);
 
         if (doctor != null && doctor.getUsername().equals(username)) {
+
             List<Appointment> appointments = calendarService.getAppointmentsByDoctor(doctor);
             LocalDate firstDayOfMonth = LocalDate.of(year, month, 1);
             LocalDate lastDayOfMonth = firstDayOfMonth.withDayOfMonth(firstDayOfMonth.lengthOfMonth());
             List<Appointment> appointmentsForMonth = calendarService.getAppointmentsForMonth(appointments, firstDayOfMonth, lastDayOfMonth);
             Map<String, List<Appointment>> appointmentsByDate = calendarService.groupAppointmentsByDate(appointmentsForMonth);
 
-            List<Appointment> approvedAppointments = appointmentRequestRepository.findByDoctorAndAppointmentRequestApprovalStatus(doctor, AppointmentRequestApprovalStatus.APPROVED)
-                    .stream()
-                    .map(Appointment::new)
-                    .collect(Collectors.toList());
+            List<Appointment> approvedAppointments = appointmentRequestRepository.findByDoctorAndAppointmentRequestApprovalStatus(doctor, AppointmentRequestApprovalStatus.APPROVED).stream().map(Appointment::new).collect(Collectors.toList());
 
-            List<Appointment> approvedAppointmentsForMonth = approvedAppointments.stream()
-                    .filter(appointment -> {
-                        LocalDate appointmentDate = appointment.getDateTime().toLocalDate();
-                        return appointmentDate.getYear() == year && appointmentDate.getMonthValue() == month;
-                    })
-                    .collect(Collectors.toList());
+            List<Appointment> approvedAppointmentsForMonth = approvedAppointments.stream().filter(appointment -> {
+                LocalDate appointmentDate = appointment.getDateTime().toLocalDate();
+                return appointmentDate.getYear() == year && appointmentDate.getMonthValue() == month;
+            }).collect(Collectors.toList());
 
             model.addAttribute("approvedAppointmentsForMonth", approvedAppointmentsForMonth);
 
             calendarService.setModelAttributesDoctor(model, doctor, appointmentsByDate, year, month);
             model.addAttribute("approvedAppointments", approvedAppointments);
+
+            return "doctor-appointment-calendar";
+        } else {
+            return "error/unauthorized-access";
         }
-        return "doctor-appointment-calendar";
     }
 
 
