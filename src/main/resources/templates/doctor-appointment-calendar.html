@@ -34,7 +34,29 @@
         </ul>
     </div>
 </div>
-<div>
+<div th:if="${approvedAppointmentsForMonth.size() > 2}">
+    <h3>Approved Appointments</h3>
+    <ul>
+        <li th:each="appointment, stat : ${approvedAppointmentsForMonth}" th:class="${stat.index < 2} ? '' : 'hidden'">
+            <div>
+                <p>Appointment ID: <span th:text="${appointment.id}"></span></p>
+                <p>Patient Name: <span th:text="${appointment.patient.firstName}"></span></p>
+                <p>Appointment Date/Time: <span th:text="${appointment.dateTime}"></span></p>
+            </div>
+        </li>
+    </ul>
+    <button class="toggle-button">See More</button>
+    <ul class="hidden">
+        <li th:each="appointment, stat : ${approvedAppointmentsForMonth}" th:class="${stat.index >= 2} ? '' : 'hidden'">
+            <div>
+                <p>Appointment ID: <span th:text="${appointment.id}"></span></p>
+                <p>Patient Name: <span th:text="${appointment.patient.firstName}"></span></p>
+                <p>Appointment Date/Time: <span th:text="${appointment.dateTime}"></span></p>
+            </div>
+        </li>
+    </ul>
+</div>
+<div th:unless="${approvedAppointmentsForMonth.size() > 2}">
     <h3>Approved Appointments</h3>
     <ul>
         <li th:each="appointment : ${approvedAppointmentsForMonth}">
@@ -46,6 +68,7 @@
         </li>
     </ul>
 </div>
+
 
 <div class="buttons-switch">
     <a th:href="@{/doctor/index}" class="btn">Back to homepage</a>
