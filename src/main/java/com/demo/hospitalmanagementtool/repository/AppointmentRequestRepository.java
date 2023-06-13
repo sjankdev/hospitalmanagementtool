@@ -3,8 +3,8 @@ package com.demo.hospitalmanagementtool.repository;
 import com.demo.hospitalmanagementtool.entities.AppointmentRequest;
 import com.demo.hospitalmanagementtool.entities.AppointmentRequestApprovalStatus;
 import com.demo.hospitalmanagementtool.entities.Doctor;
+import com.demo.hospitalmanagementtool.entities.Patient;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -21,6 +21,8 @@ public interface AppointmentRequestRepository extends JpaRepository<AppointmentR
     );
 
     List<AppointmentRequest> findByAppointmentRequestApprovalStatus(AppointmentRequestApprovalStatus approvalStatus);
+
+    List<AppointmentRequest> findByPatient(Patient patient);
 
 }
 

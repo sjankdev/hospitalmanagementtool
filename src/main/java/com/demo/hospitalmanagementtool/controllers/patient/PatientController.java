@@ -4,7 +4,9 @@ package com.demo.hospitalmanagementtool.controllers.patient;
 import com.demo.hospitalmanagementtool.entities.AppointmentRequest;
 import com.demo.hospitalmanagementtool.entities.Doctor;
 import com.demo.hospitalmanagementtool.entities.Patient;
+import com.demo.hospitalmanagementtool.repository.AppointmentRequestRepository;
 import com.demo.hospitalmanagementtool.repository.DoctorRepository;
+import com.demo.hospitalmanagementtool.repository.PatientRepository;
 import com.demo.hospitalmanagementtool.security.token.services.PatientSecurityService;
 import com.demo.hospitalmanagementtool.service.AppointmentRequestService;
 import com.demo.hospitalmanagementtool.service.PatientService;
@@ -32,6 +34,12 @@ public class PatientController {
 
     @Autowired
     PatientSecurityService patientSecurityService;
+
+    @Autowired
+    PatientRepository patientRepository;
+
+    @Autowired
+    AppointmentRequestRepository appointmentRequestRepository;
 
     @GetMapping("/index")
     public String index(Model model, Principal principal) {
@@ -104,5 +112,18 @@ public class PatientController {
         } else {
             return "error/unauthorized-access";
         }
+    }
+
+    @GetMapping("/appointments/{patientId}")
+    public String listAppointmentsByPatientId(@PathVariable Long patientId, Model model) {
+        Patient patient = patientRepository.findById(patientId).orElse(null);
+        if (patient == null) {
+            return "error";
+        }
+
+        List<AppointmentRequest> appointmentRequests = appointmentRequestRepository.findByPatient(patient);
+        model.addAttribute("appointmentRequests", appointmentRequests);
+
+        return "patient/appointments-list";
     }
 }
