@@ -4,9 +4,21 @@
     <meta charset="UTF-8">
     <title>Appointment List</title>
     <link rel="stylesheet" type="text/css" href="/css/list.css">
+
 </head>
 <body>
 <h1>Appointment List</h1>
+<div class="buttons-switch">
+    <a th:href="@{/auth-appointments/create}" class="btn">New Appointment</a>
+    <a th:href="@{/auth-index}" class="btn" style="margin-left: 10px;">Back to homepage</a>
+</div>
+<div class="filter-section">
+    <div class="filter-toggle">
+        <input type="checkbox" id="show-appointment-requests" onchange="toggleAppointmentRequests()"/>
+        <label for="show-appointment-requests"><span>Show Appointment Requests</span></label>
+    </div>
+</div>
+
 <table>
     <thead>
     <tr>
@@ -36,13 +48,13 @@
             </form>
         </td>
     </tr>
-    <tr th:each="approvedAppointment : ${approvedAppointments}">
+    <tr th:each="approvedAppointment : ${approvedAppointments}" class="appointment-request-row">
         <td th:text="${approvedAppointment.id}"></td>
         <td th:text="${approvedAppointment.patient.firstName}"></td>
         <td th:text="${approvedAppointment.doctor.firstName}"></td>
         <td th:text="${approvedAppointment.dateTime}"></td>
         <td th:text="${approvedAppointment.appointmentRequestApprovalStatus}"></td>
-        <td>
+        <td style="display: flex; align-items: center;">
             <a th:href="@{/auth-appointments/{id}/appointment-request-details(id=${approvedAppointment.id})}"
                class="btn">View</a>
             <a th:href="@{/auth-appointments/{id}/edit-appointment-request(id=${approvedAppointment.id})}" class="btn">Edit</a>
@@ -58,16 +70,13 @@
     </tbody>
 </table>
 
-<div class="buttons-switch">
-    <a th:href="@{/auth-appointments/create}" class="btn">New Appointment</a>
-    <a th:href="@{/auth-index}" class="btn" style="margin-left: 10px;">Back to homepage</a>
-</div>
 
 <a href="javascript: document.logoutForm.submit()" class="logout-button" role="menuitem">Logout</a>
 
 <form name="logoutForm" th:action="@{/api/auth/signout}" method="post" th:hidden="true">
     <input hidden type="submit" value="Sign Out"/>
 </form>
-</body>
 
+<script type="text/javascript" th:src="@{/js/toggleAppointmentRequests.js}"></script>
+</body>
 </html>
