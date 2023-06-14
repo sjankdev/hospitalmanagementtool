@@ -20,20 +20,20 @@ public class AdminStaffController {
     public String getAllStaff(Model model) {
         List<Staff> staffList = staffService.getAllStaff();
         model.addAttribute("staffList", staffList);
-        return "staff/list";
+        return "admin/staff/list";
     }
 
     @GetMapping("/{id}/details")
     public String getStaffById(@PathVariable Long id, Model model) {
         Staff staff = staffService.getStaffById(id);
         model.addAttribute("staff", staff);
-        return "staff/details";
+        return "admin/staff/details";
     }
 
     @GetMapping("/create")
     public String newStaff(Model model) {
         model.addAttribute("staff", new Staff());
-        return "staff/create";
+        return "admin/staff/create";
     }
 
     @PostMapping("/save")
@@ -46,7 +46,7 @@ public class AdminStaffController {
     public String editStaff(@PathVariable Long id, Model model) {
         Staff staff = staffService.getStaffById(id);
         model.addAttribute("staff", staff);
-        return "staff/edit";
+        return "admin/staff/edit";
     }
 
     @PostMapping("/{id}/update")

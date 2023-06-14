@@ -36,14 +36,14 @@ public class AdminAppointmentController {
         List<AppointmentRequest> approvedAppointments = appointmentRequestService.getAllApprovedAppointments();
         model.addAttribute("approvedAppointments", approvedAppointments);
         model.addAttribute("appointments", appointments);
-        return "appointments/list";
+        return "admin/appointments/list";
     }
 
     @GetMapping("/list-appointment-requests")
     public String getAllAppointmentRequests(Model model) {
         List<AppointmentRequest> appointmentRequests = appointmentRequestService.getAllAppointmentRequests();
         model.addAttribute("appointmentRequests", appointmentRequests);
-        return "appointment-requests/list-appointment-requests";
+        return "admin/appointment-requests/list-appointment-requests";
     }
 
 
@@ -52,7 +52,7 @@ public class AdminAppointmentController {
         try {
             Appointment appointment = appointmentService.getAppointmentById(id);
             model.addAttribute("appointment", appointment);
-            return "appointments/details";
+            return "admin/appointments/details";
         } catch (NotFoundException ex) {
             model.addAttribute("errorMessage", ex.getMessage());
             return "error";
@@ -64,7 +64,7 @@ public class AdminAppointmentController {
         try {
             AppointmentRequest appointmentRequest = appointmentRequestService.getAppointmentRequestById(id);
             model.addAttribute("appointmentRequest", appointmentRequest);
-            return "appointment-requests/appointment-request-details";
+            return "admin/appointment-requests/appointment-request-details";
         } catch (NotFoundException ex) {
             model.addAttribute("errorMessage", ex.getMessage());
             return "error";
@@ -79,7 +79,7 @@ public class AdminAppointmentController {
         model.addAttribute("patients", patientService.getAllPatients());
         model.addAttribute("staff", staffService.getAllStaff());
 
-        return "appointments/create";
+        return "admin/appointments/create";
     }
 
     @PostMapping("/save")
@@ -96,7 +96,7 @@ public class AdminAppointmentController {
             model.addAttribute("doctors", doctorService.getAllDoctors());
             model.addAttribute("patients", patientService.getAllPatients());
             model.addAttribute("staff", staffService.getAllStaff());
-            return "appointments/edit";
+            return "admin/appointments/edit";
         } catch (NotFoundException ex) {
             model.addAttribute("errorMessage", ex.getMessage());
             return "error";
@@ -108,7 +108,7 @@ public class AdminAppointmentController {
         try {
             AppointmentRequest appointmentRequest = appointmentRequestService.getAppointmentRequestById(id);
             model.addAttribute("appointmentRequest", appointmentRequest);
-            return "appointment-requests/edit-appointment-request";
+            return "admin/appointment-requests/edit-appointment-request";
         } catch (NotFoundException ex) {
             model.addAttribute("errorMessage", ex.getMessage());
             return "error";

@@ -32,14 +32,14 @@ public class AdminMedicalRecordController {
     public String getAllMedicalRecords(Model model) {
         List<MedicalRecord> medicalRecords = medicalRecordService.getAllMedicalRecords();
         model.addAttribute("medicalRecords", medicalRecords);
-        return "medicalRecord/list";
+        return "admin/medicalRecord/list";
     }
 
     @GetMapping("/{id}/details")
     public String getMedicalRecordById(@PathVariable Long id, Model model) {
         MedicalRecord medicalRecord = medicalRecordService.getMedicalRecordById(id);
         model.addAttribute("medicalRecord", medicalRecord);
-        return "medicalRecord/details";
+        return "admin/medicalRecord/details";
     }
 
     @GetMapping("/create")
@@ -48,7 +48,7 @@ public class AdminMedicalRecordController {
         model.addAttribute("doctors", doctorService.getAllDoctors());
         model.addAttribute("patients", patientService.getAllPatients());
         model.addAttribute("appointments", appointmentService.getAllAppointments());
-        return "medicalRecord/create";
+        return "admin/medicalRecord/create";
     }
 
     @PostMapping("/save")
@@ -61,7 +61,7 @@ public class AdminMedicalRecordController {
     public String editMedicalRecord(@PathVariable Long id, Model model) {
         MedicalRecord medicalRecord = medicalRecordService.getMedicalRecordById(id);
         model.addAttribute("medicalRecord", medicalRecord);
-        return "medicalRecord/edit";
+        return "admin/medicalRecord/edit";
     }
 
     @PostMapping("/{id}/update")

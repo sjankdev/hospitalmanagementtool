@@ -34,14 +34,14 @@ public class AdminBillingController {
     public String getAllBills(Model model) {
         List<Billing> bills = billingService.getAllBills();
         model.addAttribute("bills", bills);
-        return "billing/list";
+        return "admin/billing/list";
     }
 
     @GetMapping("/{id}/details")
     public String getBillById(@PathVariable Long id, Model model) {
         Billing bill = billingService.getBillById(id);
         model.addAttribute("bill", bill);
-        return "billing/details";
+        return "admin/billing/details";
     }
 
     @GetMapping("/create")
@@ -51,7 +51,7 @@ public class AdminBillingController {
         model.addAttribute("doctors", doctorService.getAllDoctors());
         model.addAttribute("patients", patientService.getAllPatients());
         model.addAttribute("appointments", appointmentService.getAllAppointments());
-        return "billing/create";
+        return "admin/billing/create";
     }
 
     @PostMapping("/save")
@@ -66,13 +66,13 @@ public class AdminBillingController {
         model.addAttribute("doctors", doctorService.getAllDoctors());
         model.addAttribute("patients", patientService.getAllPatients());
         model.addAttribute("appointment", appointmentService.getAllAppointments());
-        return "billing/edit";
+        return "admin/billing/edit";
     }
 
     @PostMapping("/{id}/update")
     public String updateBill(@PathVariable Long id, @Valid @ModelAttribute("billing") Billing billing, BindingResult result) {
         if (result.hasErrors()) {
-            return "billing/edit";
+            return "admin/billing/edit";
         }
         billingService.updateBill(id, billing);
         return "redirect:/auth-billing/list";

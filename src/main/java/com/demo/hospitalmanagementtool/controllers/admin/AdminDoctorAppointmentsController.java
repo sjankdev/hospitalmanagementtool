@@ -49,7 +49,7 @@ public class AdminDoctorAppointmentsController {
 
         calendarService.setModelAttributesDoctor(model, doctor, appointmentsByDate, year, month);
 
-        return "doctor-appointment-calendar";
+        return "admin/appointments/doctor-appointment-calendar";
     }
 
 
@@ -76,7 +76,7 @@ public class AdminDoctorAppointmentsController {
 
         calendarService.setModelAttributesAllDoctors(model, appointmentsByDate, year, month);
 
-        return "all-doctors-appointments";
+        return "admin/appointments/all-doctors-appointments";
     }
 
 

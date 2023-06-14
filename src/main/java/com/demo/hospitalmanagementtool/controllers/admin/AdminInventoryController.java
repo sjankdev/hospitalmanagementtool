@@ -22,20 +22,20 @@ public class AdminInventoryController {
     public String getAllInventory(Model model) {
         List<Inventory> inventoryList = inventoryService.getAllInventory();
         model.addAttribute("inventoryList", inventoryList);
-        return "inventory/list";
+        return "admin/inventory/list";
     }
 
     @GetMapping("/{id}/details")
     public String getInventoryById(@PathVariable Long id, Model model) {
         Inventory inventory = inventoryService.getInventoryById(id);
         model.addAttribute("inventory", inventory);
-        return "inventory/details";
+        return "admin/inventory/details";
     }
 
     @GetMapping("/create")
     public String newInventory(Model model) {
         model.addAttribute("inventory", new Inventory());
-        return "inventory/create";
+        return "admin/inventory/create";
     }
 
     @PostMapping("/save")
@@ -47,13 +47,13 @@ public class AdminInventoryController {
     @GetMapping("/{id}/edit")
     public String editInventory(@PathVariable Long id, Model model) {
         model.addAttribute("inventory", inventoryService.getInventoryById(id));
-        return "inventory/edit";
+        return "admin/inventory/edit";
     }
 
     @PostMapping("/{id}/update")
     public String updateInventory(@PathVariable Long id, @Valid @ModelAttribute("inventory") Inventory inventory, BindingResult result) {
         if (result.hasErrors()) {
-            return "inventory/edit";
+            return "admin/inventory/edit";
         }
         inventoryService.updateInventory(id, inventory);
         return "redirect:/auth-inventory/list";
