@@ -39,14 +39,6 @@ public class AdminAppointmentController {
         return "appointments/list";
     }
 
-    @GetMapping("/list-appointment-requests")
-    public String getAllAppointmentRequests(Model model) {
-        List<AppointmentRequest> appointmentRequests = appointmentRequestService.getAllAppointmentRequests();
-        model.addAttribute("appointmentRequests", appointmentRequests);
-        return "appointment-requests/list-appointment-requests";
-    }
-
-
     @GetMapping("/{id}/details")
     public String getAppointmentById(@PathVariable("id") Long id, Model model) {
         try {
