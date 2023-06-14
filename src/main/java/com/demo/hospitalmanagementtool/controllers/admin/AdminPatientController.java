@@ -26,14 +26,14 @@ public class AdminPatientController {
     public String getAllPatients(Model model) {
         List<Patient> patients = patientService.getAllPatients();
         model.addAttribute("patients", patients);
-        return "patient/list";
+        return "admin/patient/list";
     }
 
     @GetMapping("/{id}/details")
     public String getPatientById(@PathVariable Long id, Model model) {
         Patient patient = patientService.getPatientById(id);
         model.addAttribute("patient", patient);
-        return "patient/details";
+        return "admin/patient/details";
     }
 
     @GetMapping("/create")
@@ -41,7 +41,7 @@ public class AdminPatientController {
         model.addAttribute("patient", new Patient());
         model.addAttribute("doctors", doctorService.getAllDoctors());
 
-        return "patient/create";
+        return "admin/patient/create";
     }
 
     @PostMapping("/save")
@@ -56,7 +56,7 @@ public class AdminPatientController {
             Patient patient = patientService.getPatientById(id);
             model.addAttribute("patient", patient);
             model.addAttribute("doctors", doctorService.getAllDoctors());
-            return "patient/edit";
+            return "admin/patient/edit";
         } catch (NotFoundException ex) {
             model.addAttribute("errorMessage", ex.getMessage());
             return "error";

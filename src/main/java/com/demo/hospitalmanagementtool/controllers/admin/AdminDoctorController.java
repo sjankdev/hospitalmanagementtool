@@ -22,25 +22,25 @@ public class AdminDoctorController {
     public String getAllDoctors(Model model) {
         List<Doctor> doctors = doctorService.getAllDoctors();
         model.addAttribute("doctors", doctors);
-        return "doctor/list";
+        return "admin/doctor/list";
     }
 
     @GetMapping("/{id}/details")
     public String getDoctorById(@PathVariable Long id, Model model) {
         model.addAttribute("doctor", doctorService.getDoctorById(id));
-        return "doctor/details";
+        return "admin/doctor/details";
     }
 
     @GetMapping("/create")
     public String newDoctor(Model model) {
         model.addAttribute("doctor", new Doctor());
-        return "doctor/create";
+        return "admin/doctor/create";
     }
 
     @PostMapping("/save")
     public String addDoctor(@Valid @ModelAttribute("doctor") Doctor doctor, BindingResult result) {
         if (result.hasErrors()) {
-            return "doctor/new";
+            return "admin/doctor/create";
         }
         doctorService.saveDoctor(doctor);
         return "redirect:/auth-doctors/list";
@@ -49,13 +49,13 @@ public class AdminDoctorController {
     @GetMapping("/{id}/edit")
     public String editDoctor(@PathVariable Long id, Model model) {
         model.addAttribute("doctor", doctorService.getDoctorById(id));
-        return "doctor/edit";
+        return "admin/doctor/edit";
     }
 
     @PostMapping("/{id}/update")
     public String updateDoctor(@PathVariable Long id, @Valid @ModelAttribute("doctor") Doctor doctor, BindingResult result) {
         if (result.hasErrors()) {
-            return "doctor/edit";
+            return "admin/doctor/edit";
         }
         doctorService.updateDoctor(id, doctor);
         return "redirect:/auth-doctors/list";
