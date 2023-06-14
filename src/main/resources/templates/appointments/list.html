@@ -8,7 +8,10 @@
 </head>
 <body>
 <h1>Appointment List</h1>
-
+<div class="buttons-switch">
+    <a th:href="@{/auth-appointments/create}" class="btn">New Appointment</a>
+    <a th:href="@{/auth-index}" class="btn" style="margin-left: 10px;">Back to homepage</a>
+</div>
 <div class="filter-section">
     <div class="filter-toggle">
         <input type="checkbox" id="show-appointment-requests" onchange="toggleAppointmentRequests()"/>
@@ -67,10 +70,6 @@
     </tbody>
 </table>
 
-<div class="buttons-switch">
-    <a th:href="@{/auth-appointments/create}" class="btn">New Appointment</a>
-    <a th:href="@{/auth-index}" class="btn" style="margin-left: 10px;">Back to homepage</a>
-</div>
 
 <a href="javascript: document.logoutForm.submit()" class="logout-button" role="menuitem">Logout</a>
 
