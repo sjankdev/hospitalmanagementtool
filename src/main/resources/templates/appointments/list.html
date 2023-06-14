@@ -54,7 +54,7 @@
         <td th:text="${approvedAppointment.doctor.firstName}"></td>
         <td th:text="${approvedAppointment.dateTime}"></td>
         <td th:text="${approvedAppointment.appointmentRequestApprovalStatus}"></td>
-        <td>
+        <td style="display: flex; align-items: center;">
             <a th:href="@{/auth-appointments/{id}/appointment-request-details(id=${approvedAppointment.id})}"
                class="btn">View</a>
             <a th:href="@{/auth-appointments/{id}/edit-appointment-request(id=${approvedAppointment.id})}" class="btn">Edit</a>
