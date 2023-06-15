@@ -4,9 +4,11 @@ import com.demo.hospitalmanagementtool.entities.Appointment;
 import com.demo.hospitalmanagementtool.entities.AppointmentRequest;
 import com.demo.hospitalmanagementtool.exceptions.NotFoundException;
 import com.demo.hospitalmanagementtool.service.*;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -76,7 +78,16 @@ public class AdminAppointmentController {
     }
 
     @PostMapping("/save")
-    public String saveAppointment(@ModelAttribute("appointment") Appointment appointment) {
+    public String saveAppointment(@ModelAttribute("appointment") @Valid Appointment appointment, BindingResult result, Model model) {
+
+        if (result.hasErrors()) {
+            model.addAttribute("appointment", appointment);
+            model.addAttribute("doctors", doctorService.getAllDoctors());
+            model.addAttribute("patients", patientService.getAllPatients());
+            model.addAttribute("staff", staffService.getAllStaff());
+            return "admin/appointments/create";
+        }
+
         appointmentService.saveAppointment(appointment);
         return "redirect:/auth-appointments/list";
     }
@@ -109,7 +120,15 @@ public class AdminAppointmentController {
     }
 
     @PostMapping("/{id}/update")
-    public String updateAppointment(@PathVariable("id") Long id, @ModelAttribute("appointment") Appointment appointment) {
+    public String updateAppointment(@PathVariable("id") Long id, @ModelAttribute("appointment") @Valid Appointment appointment, BindingResult result, Model model) {
+
+        if (result.hasErrors()) {
+            model.addAttribute("appointment", appointment);
+            model.addAttribute("doctors", doctorService.getAllDoctors());
+            model.addAttribute("patients", patientService.getAllPatients());
+            model.addAttribute("staff", staffService.getAllStaff());
+            return "admin/appointments/edit";
+        }
         appointmentService.updateAppointment(id, appointment);
         return "redirect:/auth-appointments/list";
     }

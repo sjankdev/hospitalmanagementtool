@@ -34,14 +34,19 @@
     </tr>
     <tr>
         <td>Status:</td>
-        <td th:text="${appointment.status}"></td>
+        <td>
+            <span th:text="${appointment.status.toString().toLowerCase().equals('in_progress')} ? 'In Progress' : ''"></span>
+            <span th:text="${appointment.status.toString().toLowerCase().equals('scheduled')} ? 'Scheduled' : ''"></span>
+            <span th:text="${appointment.status.toString().toLowerCase().equals('completed')} ? 'Completed' : ''"></span>
+            <span th:text="${appointment.status.toString().toLowerCase().equals('cancelled')} ? 'Cancelled' : ''"></span>
+        </td>
     </tr>
     <tr>
         <td>Medical Record:</td>
         <td>
                 <span th:if="${appointment.medicalRecord != null}">
                     <a th:href="@{/auth-medicalrecords/{id}/details(id=${appointment.medicalRecord.id})}"
-                       th:text="${appointment.medicalRecord.notes}"></a>
+                       th:text="${appointment.medicalRecord.patient.email}"></a>
                 </span>
             <span th:if="${appointment.medicalRecord == null}">None</span>
         </td>

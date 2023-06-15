@@ -36,7 +36,14 @@
         <td th:text="${appointment.patient != null ? appointment.patient.firstName : ''}"></td>
         <td th:text="${appointment.doctor != null ? appointment.doctor.firstName : ''}"></td>
         <td th:text="${appointment.dateTime}"></td>
-        <td th:text="${appointment.status}"></td>
+        <td>
+            <span th:text="${appointment.status.toString().toLowerCase().equals('in_progress')} ? 'In Progress' : ''"></span>
+            <span th:text="${appointment.status.toString().toLowerCase().equals('scheduled')} ? 'Scheduled' : ''"></span>
+            <span th:text="${appointment.status.toString().toLowerCase().equals('completed')} ? 'Completed' : ''"></span>
+            <span th:text="${appointment.status.toString().toLowerCase().equals('cancelled')} ? 'Cancelled' : ''"></span>
+        </td>
+
+
         <td style="display: flex; align-items: center;">
             <a th:href="@{/auth-appointments/{id}/details(id=${appointment.id})}" class="btn">View</a>
             <a th:href="@{/auth-appointments/{id}/edit(id=${appointment.id})}" class="btn">Edit</a>

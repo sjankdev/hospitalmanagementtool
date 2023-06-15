@@ -142,3 +142,10 @@ body {
  .delete-btn:hover {
      background-color: #c82333;
 }
+span.validation-error {
+    display: block;
+    color: red;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
