@@ -36,7 +36,7 @@
             <option value="">Select a Appointment...</option>
             <option th:each="appointment : ${appointments}"
                     th:value="${appointment.id}"
-                    th:text="${appointment.status} + ' ' + ${appointment.status}">
+                    th:text="${appointment.notes}">
             </option>
         </select>
     </div>
