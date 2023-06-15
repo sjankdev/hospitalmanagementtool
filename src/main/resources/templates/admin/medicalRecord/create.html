@@ -33,10 +33,10 @@
     <div>
         <label for="appointment">Appointment:</label>
         <select th:field="*{appointment.id}" id="appointment">
-            <option value="">Select a Appointment...</option>
+            <option value="">Select an Appointment...</option>
             <option th:each="appointment : ${appointments}"
                     th:value="${appointment.id}"
-                    th:text="${appointment.notes}">
+                    th:text="${appointment.title}">
             </option>
         </select>
     </div>

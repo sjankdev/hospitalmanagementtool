@@ -3,16 +3,19 @@ package com.demo.hospitalmanagementtool.service.impl;
 import com.demo.hospitalmanagementtool.entities.Appointment;
 import com.demo.hospitalmanagementtool.entities.AppointmentRequest;
 import com.demo.hospitalmanagementtool.entities.AppointmentRequestApprovalStatus;
+import com.demo.hospitalmanagementtool.entities.Patient;
 import com.demo.hospitalmanagementtool.exceptions.NotFoundException;
 import com.demo.hospitalmanagementtool.repository.AppointmentRepository;
 import com.demo.hospitalmanagementtool.repository.AppointmentRequestRepository;
+import com.demo.hospitalmanagementtool.repository.PatientRepository;
 import com.demo.hospitalmanagementtool.service.AppointmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.*;
+import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -23,6 +26,9 @@ public class AppointmentServiceImpl implements AppointmentService {
 
     @Autowired
     AppointmentRequestRepository appointmentRequestRepository;
+
+    @Autowired
+    PatientRepository patientRepository;
 
 
     @Override
@@ -37,6 +43,19 @@ public class AppointmentServiceImpl implements AppointmentService {
 
     @Override
     public void saveAppointment(Appointment appointment) {
+        Long patientId = appointment.getPatient().getId();
+
+        Optional<Patient> optionalPatient = patientRepository.findById(patientId);
+        if (optionalPatient.isEmpty()) {
+            throw new IllegalArgumentException("Patient not found with ID: " + patientId);
+        }
+
+        Patient patient = optionalPatient.get();
+        appointment.setPatient(patient);
+
+        String title = patient.getEmail() + " - " + appointment.getDateTime();
+        appointment.setTitle(title);
+
         appointmentRepository.save(appointment);
     }
 
@@ -70,9 +89,7 @@ public class AppointmentServiceImpl implements AppointmentService {
 
     @Override
     public List<Appointment> filterAppointmentsByMonth(List<Appointment> appointments, int year, int month) {
-        return appointments.stream()
-                .filter(appointment -> appointment.getDateTime().toLocalDate().getYear() == year && appointment.getDateTime().toLocalDate().getMonthValue() == month)
-                .collect(Collectors.toList());
+        return appointments.stream().filter(appointment -> appointment.getDateTime().toLocalDate().getYear() == year && appointment.getDateTime().toLocalDate().getMonthValue() == month).collect(Collectors.toList());
     }
 
 }
