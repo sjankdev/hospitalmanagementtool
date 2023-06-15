@@ -1,87 +1,71 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Doctor Appointments</title>
-    <link rel="stylesheet" type="text/css" href="/css/appointment-calendar.css">
+    <meta charset="UTF-8">
+    <title>Appointment List</title>
+    <link rel="stylesheet" type="text/css" href="/css/list.css">
+
 </head>
 <body>
-<h1>Doctor Appointments</h1>
-<h2 th:text="${doctor.firstName} + ' ' + ${doctor.lastName}"></h2>
-<div class="center-container">
-    <h3>Current Month: <span th:text="${monthYear}"></span></h3>
-    <a th:href="@{/doctor/{doctorId}/appointments(doctorId=${doctorId},year=${previousYear}, month=${previousMonth})}">Previous
-        Month</a>
-    <a th:href="@{/doctor/{doctorId}/appointments(doctorId=${doctorId}, year=${nextYear}, month=${nextMonth})}">Next
-        Month</a>
-</div>
-<div th:each="entry : ${groupedAppointments}">
-    <h3 th:text="${entry.key}"></h3>
-    <ul>
-        <li th:each="appointment, stat : ${entry.value}" th:class="${stat.index < 2} ? '' : 'hidden'">
-            <div th:if="${appointment.notes}">
-                <p th:text="${appointment.notes}"></p>
-            </div>
-        </li>
-    </ul>
-    <div th:if="${entry.value.size() > 2}">
-        <button class="toggle-button">See More</button>
-        <ul class="hidden">
-            <li th:each="appointment, stat : ${entry.value}" th:class="${stat.index >= 2} ? '' : 'hidden'">
-                <div th:if="${appointment.notes}">
-                    <p th:text="${appointment.notes}"></p>
-                </div>
-            </li>
-        </ul>
-    </div>
-</div>
-<div th:if="${approvedAppointmentsForMonth.size() > 2}">
-    <h3>Approved Appointments</h3>
-    <ul>
-        <li th:each="appointment, stat : ${approvedAppointmentsForMonth}" th:class="${stat.index < 2} ? '' : 'hidden'">
-            <div>
-                <p>Appointment ID: <span th:text="${appointment.id}"></span></p>
-                <p>Patient Name: <span th:text="${appointment.patient.firstName}"></span></p>
-                <p>Appointment Date/Time: <span th:text="${appointment.dateTime}"></span></p>
-            </div>
-        </li>
-    </ul>
-    <button class="toggle-button">See More</button>
-    <ul class="hidden">
-        <li th:each="appointment, stat : ${approvedAppointmentsForMonth}" th:class="${stat.index >= 2} ? '' : 'hidden'">
-            <div>
-                <p>Appointment ID: <span th:text="${appointment.id}"></span></p>
-                <p>Patient Name: <span th:text="${appointment.patient.firstName}"></span></p>
-                <p>Appointment Date/Time: <span th:text="${appointment.dateTime}"></span></p>
-            </div>
-        </li>
-    </ul>
-</div>
-<div th:unless="${approvedAppointmentsForMonth.size() > 2}">
-    <h3>Approved Appointments</h3>
-    <ul>
-        <li th:each="appointment : ${approvedAppointmentsForMonth}">
-            <div>
-                <p>Appointment ID: <span th:text="${appointment.id}"></span></p>
-                <p>Patient Name: <span th:text="${appointment.patient.firstName}"></span></p>
-                <p>Appointment Date/Time: <span th:text="${appointment.dateTime}"></span></p>
-            </div>
-        </li>
-    </ul>
-</div>
-
-
+<h1>Appointment List</h1>
 <div class="buttons-switch">
-    <a th:href="@{/doctor/index}" class="btn">Back to homepage</a>
+    <a th:href="@{/auth-appointments/create}" class="btn">New Appointments</a>
+    <a th:href="@{/doctor/index}" class="btn" style="margin-left: 10px;">Back to homepage</a>
 </div>
+
+<h2>Appointments</h2>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Patient</th>
+        <th>Date and Time</th>
+        <th>Status</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="appointment : ${appointments}">
+        <td th:text="${appointment.id}"></td>
+        <td th:text="${appointment.patient.firstName}"></td>
+        <td th:text="${appointment.dateTime}"></td>
+        <td>
+            <span th:text="${appointment.status.toString().toLowerCase().equals('in_progress')} ? 'In Progress' : ''"></span>
+            <span th:text="${appointment.status.toString().toLowerCase().equals('scheduled')} ? 'Scheduled' : ''"></span>
+            <span th:text="${appointment.status.toString().toLowerCase().equals('completed')} ? 'Completed' : ''"></span>
+            <span th:text="${appointment.status.toString().toLowerCase().equals('cancelled')} ? 'Cancelled' : ''"></span>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<h2>Appointment Requests</h2>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Patient</th>
+        <th>Date and Time</th>
+        <th>Reason</th>
+        <th>Status</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="request : ${approvedRequests}">
+        <td th:text="${request.id}"></td>
+        <td th:text="${request.patient.firstName}"></td>
+        <td th:text="${request.dateTime}"></td>
+        <td th:text="${request.reason}"></td>
+        <td th:text="${request.appointmentRequestApprovalStatus}"></td>
+    </tr>
+    </tbody>
+</table>
 
 <a href="javascript: document.logoutForm.submit()" class="logout-button" role="menuitem">Logout</a>
 
 <form name="logoutForm" th:action="@{/api/auth/signout}" method="post" th:hidden="true">
     <input hidden type="submit" value="Sign Out"/>
 </form>
-
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script type="text/javascript" th:src="@{/js/doctorAppointments.js}"></script>
 </body>
 </html>

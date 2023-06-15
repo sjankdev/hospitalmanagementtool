@@ -3,11 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link rel="stylesheet" type="text/css" href="/css/doctorIndex.css">
+    <link rel="stylesheet" type="text/css" href="/css/index.css">
 </head>
 <body>
-<h1>Welcome, <span th:text="${doctor.firstName}"></span>!</h1>
-<a class="button" th:href="@{/doctor/{doctorId}/requests(doctorId=${doctorId})}">View Appointment Requests</a>
-<a class="button" th:href="@{/doctor/{doctorId}/appointments(doctorId=${doctor.id})}">Appointments</a>
+<header>
+    <h1>Welcome, <span th:text="${doctor.firstName}"></span>!</h1>
+</header>
+<nav>
+    <ul>
+        <li>
+            <div class="dropdown">
+                <a th:href="@{/doctor/{doctorId}/requests(doctorId=${doctorId})}">My Appointment Requests</a>
+                <div class="dropdown-content">
+                    <a th:href="@{/doctor/{doctorId}/appointments(doctorId=${doctor.id})}">Appointments</a>
+                </div>
+            </div>
+            <div class="dropdown">
+                <a href="/auth-patients/list">Patients</a>
+                <div class="dropdown-content">
+                    <a href="/auth-patients/create">Create Patient</a>
+                </div>
+            </div>
+            <div class="dropdown">
+                <a href="/auth-appointments/list">Appointments</a>
+                <div class="dropdown-content">
+                    <a href="/auth-appointments/create">Create Appointment</a>
+                </div>
+            </div>
+            <div class="dropdown">
+                <a href="/auth-medicalrecords/list">Medical Records</a>
+                <div class="dropdown-content">
+                    <a href="/auth-medicalrecords/create">Create Medical Record</a>
+                </div>
+            </div>
+            <div class="dropdown">
+                <a href="javascript: document.logoutForm.submit()" role="menuitem">Logout</a>
+            </div>
+        </li>
+    </ul>
+</nav>
 </body>
 </html>
