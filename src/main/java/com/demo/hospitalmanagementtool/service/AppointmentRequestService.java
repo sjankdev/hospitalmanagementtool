@@ -23,6 +23,10 @@ public interface AppointmentRequestService {
     void deleteRequestAppointment(Long id);
 
     List<Appointment> getApprovedAppointmentsForDoctor(Doctor doctor);
+
+    List<Appointment> getAppointmentsByDoctor(Doctor doctor);
+
+    List<AppointmentRequest> getApprovedAppointmentRequests();
 }
 
 

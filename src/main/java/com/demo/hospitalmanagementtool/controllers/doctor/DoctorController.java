@@ -1,7 +1,8 @@
 package com.demo.hospitalmanagementtool.controllers.doctor;
 
-import com.demo.hospitalmanagementtool.entities.*;
-import com.demo.hospitalmanagementtool.repository.AppointmentRequestRepository;
+import com.demo.hospitalmanagementtool.entities.Appointment;
+import com.demo.hospitalmanagementtool.entities.AppointmentRequest;
+import com.demo.hospitalmanagementtool.entities.Doctor;
 import com.demo.hospitalmanagementtool.security.token.services.DoctorSecurityService;
 import com.demo.hospitalmanagementtool.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,11 +11,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
-import java.time.LocalDate;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/doctor")
@@ -96,19 +94,11 @@ public class DoctorController {
         Doctor doctor = doctorSecurityService.validateDoctor(doctorId, principal);
 
         if (doctor != null) {
-            List<Appointment> appointments = calendarService.getAppointmentsByDoctor(doctor);
-            LocalDate firstDayOfMonth = LocalDate.of(year, month, 1);
-            LocalDate lastDayOfMonth = firstDayOfMonth.withDayOfMonth(firstDayOfMonth.lengthOfMonth());
-            List<Appointment> appointmentsForMonth = calendarService.getAppointmentsForMonth(appointments, firstDayOfMonth, lastDayOfMonth);
-            Map<String, List<Appointment>> appointmentsByDate = calendarService.groupAppointmentsByDate(appointmentsForMonth);
+            List<Appointment> appointments = appointmentRequestService.getAppointmentsByDoctor(doctor);
+            List<AppointmentRequest> approvedRequests = appointmentRequestService.getApprovedAppointmentRequests();
 
-            List<Appointment> approvedAppointments = appointmentRequestService.getApprovedAppointmentsForDoctor(doctor);
-            List<Appointment> approvedAppointmentsForMonth = appointmentService.filterAppointmentsByMonth(approvedAppointments, year, month);
-
-            model.addAttribute("approvedAppointmentsForMonth", approvedAppointmentsForMonth);
-
-            calendarService.setModelAttributesDoctor(model, doctor, appointmentsByDate, year, month);
-            model.addAttribute("approvedAppointments", approvedAppointments);
+            model.addAttribute("appointments", appointments);
+            model.addAttribute("approvedRequests", approvedRequests);
 
             return "admin/appointments/doctor-appointment-calendar";
         } else {
