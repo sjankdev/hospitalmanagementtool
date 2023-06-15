@@ -110,7 +110,7 @@ public class DoctorController {
             calendarService.setModelAttributesDoctor(model, doctor, appointmentsByDate, year, month);
             model.addAttribute("approvedAppointments", approvedAppointments);
 
-            return "doctor-appointment-calendar";
+            return "admin/appointments/doctor-appointment-calendar";
         } else {
             return "error/unauthorized-access";
         }
