@@ -120,7 +120,15 @@ public class AdminAppointmentController {
     }
 
     @PostMapping("/{id}/update")
-    public String updateAppointment(@PathVariable("id") Long id, @ModelAttribute("appointment") Appointment appointment) {
+    public String updateAppointment(@PathVariable("id") Long id, @ModelAttribute("appointment") @Valid Appointment appointment, BindingResult result, Model model) {
+
+        if (result.hasErrors()) {
+            model.addAttribute("appointment", appointment);
+            model.addAttribute("doctors", doctorService.getAllDoctors());
+            model.addAttribute("patients", patientService.getAllPatients());
+            model.addAttribute("staff", staffService.getAllStaff());
+            return "admin/appointments/edit";
+        }
         appointmentService.updateAppointment(id, appointment);
         return "redirect:/auth-appointments/list";
     }
