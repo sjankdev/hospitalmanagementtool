@@ -36,6 +36,11 @@
         <td>Email:</td>
         <td th:text="${patient.email}"></td>
     </tr>
+
+    <tr th:each="record : ${patient.medicalRecords}">
+        <td>Medical record</td>
+        <td><a th:href="@{/auth-medicalrecords/{id}/details(id=${record.id})}">View Medical Record</a></td>
+    </tr>
 </table>
 <div class="button-container">
     <a th:href="@{/auth-patients/{id}/edit(id=${patient.id})}" class="btn">Edit</a>
