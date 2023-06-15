@@ -18,7 +18,11 @@
     </tr>
     <tr>
         <th>Appointment</th>
-        <td th:text="${medicalRecord.appointment.notes}"></td>
+        <td>
+            <a th:href="@{/auth-appointments/{id}/details(id=${medicalRecord.appointment.id})}">
+                <span th:text="${medicalRecord.appointment.title}"></span>
+            </a>
+        </td>
     </tr>
     <tr>
         <th>Medical History</th>
