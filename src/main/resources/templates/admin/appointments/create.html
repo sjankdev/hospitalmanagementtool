@@ -11,7 +11,7 @@
 
     <div>
         <label for="patient">Patient:</label>
-        <select th:field="*{patient.id}" id="patient">
+        <select th:field="*{patient.id}" id="patient" required>
             <option value="">Select a patient...</option>
             <option th:each="patient : ${patients}"
                     th:value="${patient.id}"
@@ -22,7 +22,7 @@
 
     <div>
         <label for="doctor">Doctor:</label>
-        <select th:field="*{doctor.id}" id="doctor">
+        <select th:field="*{doctor.id}" id="doctor" required>
             <option value="">Select a doctor...</option>
             <option th:each="doctor : ${doctors}"
                     th:value="${doctor.id}"
@@ -33,7 +33,7 @@
 
     <div>
         <label for="staff">Staff:</label>
-        <select th:field="*{staff.id}" id="staff">
+        <select th:field="*{staff.id}" id="staff" required>
             <option value="">Select a staff...</option>
             <option th:each="staff : ${staff}"
                     th:value="${staff.id}"
@@ -44,18 +44,25 @@
 
     <div>
         <label for="dateTime">Date and Time:</label>
+        <span class="validation-error" th:if="${#fields.hasErrors('dateTime')}"
+              th:errors="*{dateTime}"></span>
         <input type="datetime-local" id="dateTime" name="dateTime" th:field="*{dateTime}" required>
     </div>
 
     <div>
         <label for="reasonForVisit">Reason for Visit:</label>
+        <span class="validation-error" th:if="${#fields.hasErrors('reasonForVisit')}"
+              th:errors="*{reasonForVisit}"></span>
         <input type="text" id="reasonForVisit" name="reasonForVisit" th:field="*{reasonForVisit}" required>
+
     </div>
 
     <div>
         <label for="notes">Notes:</label>
+        <span class="validation-error" th:if="${#fields.hasErrors('notes')}" th:errors="*{notes}"></span>
         <textarea id="notes" name="notes" th:field="*{notes}" required></textarea>
     </div>
+
 
     <div>
         <label for="status">Status:</label>
