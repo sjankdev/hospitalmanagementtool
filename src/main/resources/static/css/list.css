@@ -37,9 +37,6 @@ h1 {
  td:nth-child(4), th:nth-child(4) {
      width: 25%;
 }
- td:nth-child(5), th:nth-child(5) {
-     width: 15%;
-}
  td:last-child, th:last-child {
      text-align: center;
 }

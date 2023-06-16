@@ -2,35 +2,42 @@ package com.demo.hospitalmanagementtool.controllers.admin;
 
 import com.demo.hospitalmanagementtool.entities.Appointment;
 import com.demo.hospitalmanagementtool.entities.AppointmentRequest;
+import com.demo.hospitalmanagementtool.entities.Doctor;
 import com.demo.hospitalmanagementtool.exceptions.NotFoundException;
+import com.demo.hospitalmanagementtool.security.token.services.DoctorSecurityService;
 import com.demo.hospitalmanagementtool.service.*;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
+import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/auth-appointments")
 public class AdminAppointmentController {
 
     @Autowired
+    AppointmentRequestService appointmentRequestService;
+    @Autowired
+    DoctorSecurityService doctorSecurityService;
+    @Autowired
     private AppointmentService appointmentService;
-
     @Autowired
     private DoctorService doctorService;
-
     @Autowired
     private PatientService patientService;
-
     @Autowired
     private StaffService staffService;
-
-    @Autowired
-    AppointmentRequestService appointmentRequestService;
 
     @GetMapping("/list")
     public String getAllAppointments(Model model) {
@@ -134,10 +141,12 @@ public class AdminAppointmentController {
     }
 
     @PostMapping("/{id}/update-appointment-request")
-    public String updateAppointmentRequest(@PathVariable("id") Long id, @ModelAttribute("appointmentRequest") AppointmentRequest appointmentRequest) {
+    public String updateAppointmentRequest(@PathVariable("id") Long id, @ModelAttribute("appointmentRequest") AppointmentRequest appointmentRequest, Principal principal) {
         appointmentRequestService.updateRequestAppointment(id, appointmentRequest);
-        return "redirect:/auth-appointments/list";
+        return determineRedirectURL();
+
     }
+
 
     @PostMapping("/{id}/delete")
     public String deleteAppointment(@PathVariable("id") Long id) {
@@ -148,8 +157,22 @@ public class AdminAppointmentController {
     @PostMapping("/{id}/delete-appointment-request")
     public String deleteAppointmentRequest(@PathVariable("id") Long id) {
         appointmentRequestService.deleteRequestAppointment(id);
-        return "redirect:/auth-appointments/list";
+        return determineRedirectURL();
     }
 
-
+    private String determineRedirectURL() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        if (request.isUserInRole("ROLE_DOCTOR")) {
+            String username = authentication.getName();
+            Optional<Doctor> doctor = doctorService.getDoctorByUsername(username);
+            if (doctor.isPresent()) {
+                Long doctorId = doctor.get().getId();
+                return "redirect:/doctor/" + doctorId + "/appointments";
+            }
+        }
+        return "redirect:/auth-appointments/list";
+    }
 }
+
+
