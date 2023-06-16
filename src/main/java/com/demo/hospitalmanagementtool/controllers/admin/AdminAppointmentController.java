@@ -27,22 +27,17 @@ import java.util.Optional;
 public class AdminAppointmentController {
 
     @Autowired
-    private AppointmentService appointmentService;
-
-    @Autowired
-    private DoctorService doctorService;
-
-    @Autowired
-    private PatientService patientService;
-
-    @Autowired
-    private StaffService staffService;
-
-    @Autowired
     AppointmentRequestService appointmentRequestService;
-
     @Autowired
     DoctorSecurityService doctorSecurityService;
+    @Autowired
+    private AppointmentService appointmentService;
+    @Autowired
+    private DoctorService doctorService;
+    @Autowired
+    private PatientService patientService;
+    @Autowired
+    private StaffService staffService;
 
     @GetMapping("/list")
     public String getAllAppointments(Model model) {
@@ -178,8 +173,24 @@ public class AdminAppointmentController {
     @PostMapping("/{id}/delete-appointment-request")
     public String deleteAppointmentRequest(@PathVariable("id") Long id) {
         appointmentRequestService.deleteRequestAppointment(id);
-        return "redirect:/auth-appointments/list";
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication.getPrincipal() instanceof UserDetails userDetails) {
+            Collection<? extends GrantedAuthority> authorities = SecurityContextHolder.getContext().getAuthentication().getAuthorities();
+            String username = userDetails.getUsername();
+            Optional<Doctor> doctor = doctorService.getDoctorByUsername(username);
+
+            boolean isDoctor = authorities.stream()
+                    .anyMatch(authority -> authority.getAuthority().equals("ROLE_DOCTOR"));
+            if (isDoctor) {
+                Long doctorId = doctor.get().getId();
+                return "redirect:/doctor/" + doctorId + "/appointments";
+            } else {
+                return "redirect:/auth-appointments/list";
+            }
+        } else {
+            return "redirect:/auth-appointments/list";
+        }
     }
-
-
 }
+
+
