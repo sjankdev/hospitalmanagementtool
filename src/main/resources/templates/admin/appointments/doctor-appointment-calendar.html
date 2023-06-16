@@ -35,6 +35,16 @@
             <span th:text="${appointment.status.toString().toLowerCase().equals('completed')} ? 'Completed' : ''"></span>
             <span th:text="${appointment.status.toString().toLowerCase().equals('cancelled')} ? 'Cancelled' : ''"></span>
         </td>
+        <td style="display: flex; align-items: center;">
+            <a th:href="@{/auth-appointments/{id}/details(id=${appointment.id})}" class="btn">View</a>
+            <a th:href="@{/auth-appointments/{id}/edit(id=${appointment.id})}" class="btn">Edit</a>
+            <form th:action="@{/auth-appointments/{id}/delete(id=${appointment.id})}" method="post">
+                <input type="hidden" name="_method" value="delete"/>
+                <button type="submit" class="btn delete-btn"
+                        onclick="return confirm('Are you sure you want to delete this item?')">Delete
+                </button>
+            </form>
+        </td>
     </tr>
     </tbody>
 </table>
@@ -58,6 +68,16 @@
         <td th:text="${request.dateTime}"></td>
         <td th:text="${request.reason}"></td>
         <td th:text="${request.appointmentRequestApprovalStatus}"></td>
+        <td style="display: flex; align-items: center;">
+        <a th:href="@{/auth-appointments/{id}/appointment-request-details(id=${request.id})}" class="btn">View</a>
+        <a th:href="@{/auth-appointments/{id}/edit-appointment-request(id=${request.id})}" class="btn">Edit</a>
+        <form th:action="@{/auth-appointments/{id}/delete-appointment-request(id=${request.id})}" method="post">
+            <input type="hidden" name="_method" value="delete"/>
+            <button type="submit" class="btn delete-btn"
+                    onclick="return confirm('Are you sure you want to delete this item?')">Delete
+            </button>
+        </form>
+    </td>
     </tr>
     </tbody>
 </table>

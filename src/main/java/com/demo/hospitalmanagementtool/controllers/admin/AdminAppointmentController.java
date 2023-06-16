@@ -2,15 +2,21 @@ package com.demo.hospitalmanagementtool.controllers.admin;
 
 import com.demo.hospitalmanagementtool.entities.Appointment;
 import com.demo.hospitalmanagementtool.entities.AppointmentRequest;
+import com.demo.hospitalmanagementtool.entities.Doctor;
 import com.demo.hospitalmanagementtool.exceptions.NotFoundException;
+import com.demo.hospitalmanagementtool.security.token.services.DoctorSecurityService;
 import com.demo.hospitalmanagementtool.service.*;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
+import java.util.Collection;
 import java.util.List;
 
 @Controller
@@ -31,6 +37,9 @@ public class AdminAppointmentController {
 
     @Autowired
     AppointmentRequestService appointmentRequestService;
+
+    @Autowired
+    DoctorSecurityService doctorSecurityService;
 
     @GetMapping("/list")
     public String getAllAppointments(Model model) {
@@ -134,10 +143,23 @@ public class AdminAppointmentController {
     }
 
     @PostMapping("/{id}/update-appointment-request")
-    public String updateAppointmentRequest(@PathVariable("id") Long id, @ModelAttribute("appointmentRequest") AppointmentRequest appointmentRequest) {
+    public String updateAppointmentRequest(@PathVariable("id") Long id, @ModelAttribute("appointmentRequest") AppointmentRequest appointmentRequest, Principal principal) {
         appointmentRequestService.updateRequestAppointment(id, appointmentRequest);
-        return "redirect:/auth-appointments/list";
+
+        Collection<? extends GrantedAuthority> authorities = SecurityContextHolder.getContext().getAuthentication().getAuthorities();
+        Doctor doctor = doctorSecurityService.validateDoctor(id, principal);
+
+        boolean isDoctor = authorities.stream()
+                .anyMatch(authority -> authority.getAuthority().equals("ROLE_DOCTOR"));
+
+        if (isDoctor) {
+            Long doctorId = doctor.getId();
+            return "redirect:/doctor/" + doctorId + "/appointments";
+        } else {
+            return "redirect:/auth-appointments/list";
+        }
     }
+
 
     @PostMapping("/{id}/delete")
     public String deleteAppointment(@PathVariable("id") Long id) {
