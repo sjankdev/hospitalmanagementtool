@@ -6,19 +6,19 @@ import com.demo.hospitalmanagementtool.entities.Doctor;
 import com.demo.hospitalmanagementtool.exceptions.NotFoundException;
 import com.demo.hospitalmanagementtool.security.token.services.DoctorSecurityService;
 import com.demo.hospitalmanagementtool.service.*;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import java.security.Principal;
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -143,24 +143,8 @@ public class AdminAppointmentController {
     @PostMapping("/{id}/update-appointment-request")
     public String updateAppointmentRequest(@PathVariable("id") Long id, @ModelAttribute("appointmentRequest") AppointmentRequest appointmentRequest, Principal principal) {
         appointmentRequestService.updateRequestAppointment(id, appointmentRequest);
+        return determineRedirectURL();
 
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication.getPrincipal() instanceof UserDetails userDetails) {
-            Collection<? extends GrantedAuthority> authorities = SecurityContextHolder.getContext().getAuthentication().getAuthorities();
-            String username = userDetails.getUsername();
-            Optional<Doctor> doctor = doctorService.getDoctorByUsername(username);
-
-            boolean isDoctor = authorities.stream()
-                    .anyMatch(authority -> authority.getAuthority().equals("ROLE_DOCTOR"));
-            if (isDoctor) {
-                Long doctorId = doctor.get().getId();
-                return "redirect:/doctor/" + doctorId + "/appointments";
-            } else {
-                return "redirect:/auth-appointments/list";
-            }
-        } else {
-            return "redirect:/auth-appointments/list";
-        }
     }
 
 
@@ -173,23 +157,21 @@ public class AdminAppointmentController {
     @PostMapping("/{id}/delete-appointment-request")
     public String deleteAppointmentRequest(@PathVariable("id") Long id) {
         appointmentRequestService.deleteRequestAppointment(id);
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication.getPrincipal() instanceof UserDetails userDetails) {
-            Collection<? extends GrantedAuthority> authorities = SecurityContextHolder.getContext().getAuthentication().getAuthorities();
-            String username = userDetails.getUsername();
-            Optional<Doctor> doctor = doctorService.getDoctorByUsername(username);
+        return determineRedirectURL();
+    }
 
-            boolean isDoctor = authorities.stream()
-                    .anyMatch(authority -> authority.getAuthority().equals("ROLE_DOCTOR"));
-            if (isDoctor) {
+    private String determineRedirectURL() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        if (request.isUserInRole("ROLE_DOCTOR")) {
+            String username = authentication.getName();
+            Optional<Doctor> doctor = doctorService.getDoctorByUsername(username);
+            if (doctor.isPresent()) {
                 Long doctorId = doctor.get().getId();
                 return "redirect:/doctor/" + doctorId + "/appointments";
-            } else {
-                return "redirect:/auth-appointments/list";
             }
-        } else {
-            return "redirect:/auth-appointments/list";
         }
+        return "redirect:/auth-appointments/list";
     }
 }
 
