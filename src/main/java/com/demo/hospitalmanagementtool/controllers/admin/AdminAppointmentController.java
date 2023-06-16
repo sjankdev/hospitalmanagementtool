@@ -8,8 +8,10 @@ import com.demo.hospitalmanagementtool.security.token.services.DoctorSecuritySer
 import com.demo.hospitalmanagementtool.service.*;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import java.security.Principal;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/auth-appointments")
@@ -146,15 +149,20 @@ public class AdminAppointmentController {
     public String updateAppointmentRequest(@PathVariable("id") Long id, @ModelAttribute("appointmentRequest") AppointmentRequest appointmentRequest, Principal principal) {
         appointmentRequestService.updateRequestAppointment(id, appointmentRequest);
 
-        Collection<? extends GrantedAuthority> authorities = SecurityContextHolder.getContext().getAuthentication().getAuthorities();
-        Doctor doctor = doctorSecurityService.validateDoctor(id, principal);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication.getPrincipal() instanceof UserDetails userDetails) {
+            Collection<? extends GrantedAuthority> authorities = SecurityContextHolder.getContext().getAuthentication().getAuthorities();
+            String username = userDetails.getUsername();
+            Optional<Doctor> doctor = doctorService.getDoctorByUsername(username);
 
-        boolean isDoctor = authorities.stream()
-                .anyMatch(authority -> authority.getAuthority().equals("ROLE_DOCTOR"));
-
-        if (isDoctor) {
-            Long doctorId = doctor.getId();
-            return "redirect:/doctor/" + doctorId + "/appointments";
+            boolean isDoctor = authorities.stream()
+                    .anyMatch(authority -> authority.getAuthority().equals("ROLE_DOCTOR"));
+            if (isDoctor) {
+                Long doctorId = doctor.get().getId();
+                return "redirect:/doctor/" + doctorId + "/appointments";
+            } else {
+                return "redirect:/auth-appointments/list";
+            }
         } else {
             return "redirect:/auth-appointments/list";
         }
